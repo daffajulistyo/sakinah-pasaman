@@ -8,6 +8,14 @@
             formState : 'save',
             loadingState: false,
             idData : null,
+            successAlert: {
+                open: false,
+                message: ''
+            },
+            failedAlert: {
+                open: false,
+                message: ''
+            },
             
             confirmDelete(user_id, id_roleplay) {
                 this.loadingState = true

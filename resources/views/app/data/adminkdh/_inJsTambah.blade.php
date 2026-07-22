@@ -16,6 +16,10 @@
                 open: false,
                 message: ''
             },
+            failedAlert: {
+                open: false,
+                message: ''
+            },
             confirmAdd(id = 0) {
                 this.idData = id
                 this.loadingState = true

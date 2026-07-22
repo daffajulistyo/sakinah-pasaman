@@ -261,7 +261,7 @@ class UserSakipController extends Controller
                     $join->on('b.role_id', '=', 'c.id');
                     $join->where('c.type', '=', 'common');
                 })
-                ->groupBy(['a.id', 'us.id', 'opd.alias_opd']);
+                ->groupBy(['a.id', 'a.name', 'a.username', 'a.created_at', 'a.is_active', 'us.id', 'opd.alias_opd']);
 
         if($search != ''){
             $searchColumn->map(function($item, $index) use($search, $query){

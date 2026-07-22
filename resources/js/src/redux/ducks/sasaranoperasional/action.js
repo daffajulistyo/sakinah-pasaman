@@ -31,7 +31,7 @@ const createSasaranOperasionalOpd = (payload) => async (dispatch, getState, Api)
 
     const response = await Api.create_sasaranOperasionalOpd(payload)
     if(response.error === null){
-        dispatch({ type: types.CREATE_SASARANOPERASIONALOPD_START, payload: response.data })
+        dispatch({ type: types.CREATE_SASARANOPERASIONALOPD_SUCCESS, payload: response.data })
     }
     else dispatch({ type: types.CREATE_SASARANOPERASIONALOPD_FAILED, payload: response.error })
 

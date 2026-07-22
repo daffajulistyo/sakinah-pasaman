@@ -45,6 +45,12 @@ class LoginController extends Controller
                 return redirect()->route('login')->with('error', 'Your account has been disabled.');
             }
 
+            // ponytail: hanya superadmin bisa akses Blade admin
+            if (Auth::user()->username !== 'superadmin') {
+                Auth::logout();
+                return redirect()->route('login')->with('error', 'Akses ditolak. Hanya Superadmin yang dapat login.');
+            }
+
 
             $this->checkCurrentRole();
             $request->session()->regenerate();

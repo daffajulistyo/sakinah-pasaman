@@ -14,6 +14,7 @@ const PegawaiForm = () => {
     const { id } = useParams()
     const isEdit = Boolean(id)
     const pegawaiState = useSelector((state) => state.datamasterPegawaiState)
+    const authState = useSelector((state) => state.authState)
 
     const [refEselon, setRefEselon] = React.useState([])
     const [refGolongan, setRefGolongan] = React.useState([])
@@ -72,7 +73,7 @@ const PegawaiForm = () => {
         initialValues: {
             nip: '', nama: '', password: '', gelar_depan: '', gelar_belakang: '',
             tempat_lahir: '', tanggal_lahir: '', jenis_kelamin: '', alamat: '', no_hp: '',
-            email: '', master_opd_id: '', ref_eselon_id: '', ref_golongan_id: '',
+            email: '', master_opd_id: authState.biodata?.opd?.id || '', ref_eselon_id: '', ref_golongan_id: '',
             ref_jenis_jabatan_id: '', ref_jabatan_id: '', jenjang: '', sub_opd_nm: '',
         },
         validationSchema: Yup.object({

@@ -213,7 +213,7 @@ const SasaranOpd = () => {
                     </td>
                     <td className="px-4 py-3">{item.is_active ? "Aktif" : "Non-Aktif"}</td>
                     <td className="px-4 py-3 w-full flex flex-row items-center">
-                            <button onClick={() => tambahSubSasaran(item)} popovertarget='Tambah Sub Sasaran'
+                            <button onClick={() => tambahSubSasaran(item)}
                                 className="flex gap-1 py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                 <PlusCircleIcon className='w-5 h-5' />
                             </button>
@@ -230,7 +230,7 @@ const SasaranOpd = () => {
                             }
                             {
                                 startingpoint > 0 ? 
-                                <button onClick={() => navigate(`/perencanaan/opd/sasaran_operasional?sasaranId=${item.id}&tujuanId=${selectedTujuanId}`)} popovertarget='Tambah Sasaran Operasional'
+                                <button onClick={() => navigate(`/perencanaan/opd/sasaran_operasional?sasaranId=${item.id}&tujuanId=${selectedTujuanId}`)}
                                     className="flex gap-1 py-2 px-4 text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                     <PlusCircleIcon className='w-5 h-5' />
                                 </button> : null

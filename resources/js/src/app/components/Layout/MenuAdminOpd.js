@@ -1,8 +1,14 @@
 import { PresentationIcon, CalcIcon, MydocumentIcon } from "../Icons"
-
+import { FileIcon } from "../Icons"
 
 const MenuAdminOpd = 
         [
+            {
+                name: "Data Pegawai",
+                url: "/datamaster/pegawai",
+                icon: FileIcon,
+                external: false
+            },
             {
                 name: "Perencanaan",
                 url: "/perencanaan/opd",

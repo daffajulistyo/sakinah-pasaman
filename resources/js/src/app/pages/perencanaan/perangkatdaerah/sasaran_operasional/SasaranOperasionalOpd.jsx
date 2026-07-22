@@ -119,7 +119,7 @@ const SasaranOperasionalOpd = () => {
                         className="flex gap-1 py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                         <TrashIcon className='w-5 h-5' />
                     </button>
-                    <button onClick={() => navigate(`/perencanaan/opd/indikator_operasional?sasaranId=${selectedSasaranId}&sasaranOpId=${item.id}`)} popovertarget='Tambah Sub Sasaran'
+                    <button onClick={() => navigate(`/perencanaan/opd/indikator_operasional?sasaranId=${selectedSasaranId}&sasaranOpId=${item.id}`)}
                         className="flex gap-1 py-2 px-4 text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                         <PlusCircleIcon className='w-5 h-5' />
                     </button>
@@ -297,7 +297,7 @@ const SasaranOperasionalOpd = () => {
                         </div>
                         
                         <div className="mt-5 sm:mt-6 flex justify-center">
-                            <PrimaryBtn onClick={()=> simpanData()} loading={sasaranOpdState.loading} >
+                            <PrimaryBtn onClick={()=> simpanData()} loading={loading} >
                                 Simpan Data
                             </PrimaryBtn>
                         </div>

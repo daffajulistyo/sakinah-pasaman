@@ -66,11 +66,14 @@ class PegawaiController extends Controller
                 'is_active' => true,
             ]);
 
-            if ($request->master_opd_id) {
+            // ponytail: auto-fill OPD from JWT payload (Admin OPD gets their OPD automatically)
+            $masterOpdId = $request->master_opd_id ?: ($jwtPayload->opd->id ?? null);
+
+            if ($masterOpdId) {
                 UserSakip::create([
                     'id' => Str::uuid(),
                     'user_id' => $user->id,
-                    'master_opd_id' => $request->master_opd_id,
+                    'master_opd_id' => $masterOpdId,
                     'created_by' => $createdBy,
                 ]);
             }
@@ -88,7 +91,7 @@ class PegawaiController extends Controller
                 'alamat' => $request->alamat,
                 'no_hp' => $request->no_hp,
                 'email' => $request->email,
-                'master_opd_id' => $request->master_opd_id,
+                'master_opd_id' => $masterOpdId,
                 'sub_opd_id' => $request->sub_opd_id,
                 'sub_opd_nm' => $request->sub_opd_nm,
                 'ref_eselon_id' => $request->ref_eselon_id,
@@ -187,6 +190,17 @@ class PegawaiController extends Controller
                         'id' => Str::uuid(),
                         'user_id' => $pegawai->user_id,
                         'master_opd_id' => $request->master_opd_id,
+                        'created_by' => $updatedBy,
+                    ]);
+                }
+            } elseif ($jwtPayload->opd->id ?? null) {
+                // ponytail: ensure user_sakip exists for OPD auto-assignment
+                $userSakip = UserSakip::where('user_id', $pegawai->user_id)->first();
+                if (!$userSakip) {
+                    UserSakip::create([
+                        'id' => Str::uuid(),
+                        'user_id' => $pegawai->user_id,
+                        'master_opd_id' => $jwtPayload->opd->id,
                         'created_by' => $updatedBy,
                     ]);
                 }
