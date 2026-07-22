@@ -22,7 +22,7 @@ class BaseController extends Controller
 {
     public static function getCurrentVisi()
     {    
-          $visi = PohonKinerjaVisi::where('is_active',  '=', 'true')->first();
+          $visi = PohonKinerjaVisi::where('is_active', 1)->first();
 
           return $visi;                
     }
@@ -33,8 +33,8 @@ class BaseController extends Controller
           $dv = $pohon_kinerja->getCurrentVisi();
           $id_visi = $dv->id;
 
-           $misi = PohonKinerjaMisi::where('pohon_kinerja_visi_id',  '=', $id_visi)
-                                    ->where('is_active',  '=', 'true')     
+            $misi = PohonKinerjaMisi::where('pohon_kinerja_visi_id',  '=', $id_visi)
+                                    ->where('is_active', 1)     
                                     ->pluck('id')
                                     ->toArray();
           return $misi;                
@@ -46,7 +46,7 @@ class BaseController extends Controller
           $misi = $pohon_kinerja->getMisiPemda();
 
           $tujuan = PohonKinerjaTujuan::whereIn('pohon_kinerja_misi_id', $misi)
-                                    ->where('is_active',  '=', 'true')     
+                                    ->where('is_active', 1)     
                                     ->pluck('id')
                                     ->toArray();
           return $tujuan;                
@@ -140,7 +140,7 @@ class BaseController extends Controller
            }
 
            $satuan = MasterSatuan::where('id',  '=', $satuan_id)
-                                   ->where('is_active',  '=', 'true')->first();
+                                   ->where('is_active', 1)->first();
  
            return !empty($satuan) ? $satuan->satuan : '';                
      }

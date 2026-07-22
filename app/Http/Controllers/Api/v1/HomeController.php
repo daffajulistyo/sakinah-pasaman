@@ -68,12 +68,14 @@ class HomeController extends Controller
         $jns_jbtn_id = null;
         $jns_jbtn_nm = null;
         $jabatan_nm = null;
+        $jabatan_id = null;
         $eselon_id = '99';
         $eselon_nm = null;
 
         if ($pegawai) {
             $jns_jbtn_nm = $pegawai->refJenisJabatan->nama ?? null;
             $jabatan_nm = $pegawai->refJabatan->nama ?? null;
+            $jabatan_id = $pegawai->ref_jabatan_id;
             $eselon_id = $pegawai->refEselon->kode ?? '99';
             $eselon_nm = $pegawai->refEselon->nama ?? null;
         }
@@ -104,6 +106,7 @@ class HomeController extends Controller
             "level" => $role->role_name,
             "role" => $role->id,
             "opd" => $opd,
+            "jabatan_id" => $jabatan_id,
             "jns_jbtn_nm" => $jns_jbtn_nm,
             "jabatan_nm" => $jabatan_nm,
             "eselon_id" => $eselon_id,

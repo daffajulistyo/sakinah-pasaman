@@ -129,25 +129,25 @@ const PohonKinerjaPemda = () => {
 
 const renderVisi = (visi, id) => {
     return `
-    <a href="/perencanaan/kdh/pohonkinerja/misi?visiId=${id}" style="display : flex; flex; flex-direction: column; background-color: #E4E0E1; padding: 16px; border-radius: 35px; 
+    <div style="display : flex; flex; flex-direction: column; background-color: #E4E0E1; padding: 16px; border-radius: 35px; 
             width: 100%; height: 100%; justify-content: center; align-items: center; text-align: center; font-size: 48px; font-weight: 900;">
         Visi : <br />
         <span style="color: green;">
                 ${visi.toUpperCase()}
         </span>
-    </a>
+    </div>
     `
 }
 
 const renderMisi = (misi, urutan, id) => {
     return `
-    <a href="/perencanaan/kdh/pohonkinerja/tujuan?misiId=${id}" style="display : flex; flex; flex-direction: column; background-color: #D6C0B3; color: white; padding: 16px; border-radius: 35px; 
+    <div style="display : flex; flex; flex-direction: column; background-color: #D6C0B3; color: white; padding: 16px; border-radius: 35px; 
             width: 100%; height: 100%; justify-content: center; align-items: center; text-align: center; font-size:32px; ">
         Misi ${urutan} : <br />
         <span style="color: #31511E;">
                 ${misi.toUpperCase()}
         </span>
-    </a>
+    </div>
     `
 }
 
@@ -164,7 +164,7 @@ const renderTujuan = (tujuan, id, indikator) => {
         }
     }
     return `
-    <a href="/perencanaan/kdh/pohonkinerja/sasaran?tujuanId=${id}" style="display : flex; flex; flex-direction: column; background-color: #AB886D; color: white; padding: 4px; border-radius: 35px; width: 100%; height: 100%; justify-content: center; align-items: center; text-align: center;">
+    <div style="display : flex; flex; flex-direction: column; background-color: #AB886D; color: white; padding: 4px; border-radius: 35px; width: 100%; height: 100%; justify-content: center; align-items: center; text-align: center;">
         Tujuan : <br />
         <span style="color: #D4F6FF;">
                 ${tujuan}
@@ -176,7 +176,7 @@ const renderTujuan = (tujuan, id, indikator) => {
         <ol style="text-align:left;">
         ${indikatorRender}
         </ol>
-    </a>
+    </div>
     `
 }
 
@@ -193,7 +193,7 @@ const renderSasaran = (sasaran, urutan, tujuanId, sasaranId, indikator) => {
         }
     }
     return `
-    <a href="/perencanaan/kdh/pohonkinerja/indikator?tujuanId=${tujuanId}&sasaranId=${sasaranId}" style="display: flex; flex-direction: column; background-color: #493628; color: white; padding: 35px; border-radius: 35px; width: 100%; height: 100%; justify-content: center; align-items: center; text-align: center;">
+    <div style="display: flex; flex-direction: column; background-color: #493628; color: white; padding: 35px; border-radius: 35px; width: 100%; height: 100%; justify-content: center; align-items: center; text-align: center;">
         Sasaran ${urutan} : <br />
         <span style="color: #F0BB78;">
                 ${sasaran}
@@ -205,7 +205,7 @@ const renderSasaran = (sasaran, urutan, tujuanId, sasaranId, indikator) => {
         <ol style="text-align:left;">
         ${indikatorRender}
         </ol>
-    </a>
+    </div>
     `
 }
 

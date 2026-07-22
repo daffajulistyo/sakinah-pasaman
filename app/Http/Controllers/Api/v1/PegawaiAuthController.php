@@ -76,6 +76,7 @@ class PegawaiAuthController extends Controller
                 "level" => "Pegawai",
                 "role" => "39d57ab8-c480-4c61-a5d8-a662c5b66e27",
                 "opd" => $opd,
+                "jabatan_id" => $pegawai->ref_jabatan_id,
                 "eselon_id" => $eselonId,
                 "eselon_nm" => $eselonNm,
                 "golongan" => $golongan,

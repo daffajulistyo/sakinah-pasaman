@@ -79,6 +79,7 @@ class AuthController extends Controller
                     "name" => auth()->user()->name,
                     "nip" => $nip,
                     "jabatan" => $jabatan,
+                    "jabatan_id" => null,
                     "gender" => $gender,
                     "level" => $level,
                     "role" => $role,
