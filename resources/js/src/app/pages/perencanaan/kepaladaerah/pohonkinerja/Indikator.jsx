@@ -27,29 +27,38 @@ import MyUpload from '@/app/components/Form/MyUpload'
 import axios from 'axios'
 
 const Indikator = () => {
-    React.useLayoutEffect(() => {        
-        dispatch( getOptionsDatamasterSatuan() )
-    },[])
-    const [selectedSatuan, setSelectedSatuan] = React.useState({})
-    const datamastersatuan = useSelector((state) => state.datamasterSatuanState.options)
-    const optionsSatuan = () => (
-        datamastersatuan.length > 0 ?
-            datamastersatuan.map((item) => ({ label: item.satuan, value: item.id })) : []
-    )
-    const optionsOpd = () => (
-        datamasteropd.length > 0 ? 
-            datamasteropd.map((item) => ({ label: item.nama_opd, value: item.id })) : []
-    )
-    React.useLayoutEffect(() => {        
-        dispatch( getOptionsDatamasterOpd() )
-    },[])
-    const [selectedOpd, setSelectedOpd] = React.useState(undefined)
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const [selectedSatuan, setSelectedSatuan] = React.useState({})
+    const [selectedOpd, setSelectedOpd] = React.useState(undefined)
+    const [opdOptions, setOpdOptions] = React.useState([])
+    const [satuanOptions, setSatuanOptions] = React.useState([])
+
+    const reduxSatuan = useSelector((state) => state.datamasterSatuanState?.options || [])
+    const reduxOpd = useSelector((state) => state.datamasterOpdState?.options || [])
+
+    React.useEffect(() => {
+        dispatch(getOptionsDatamasterSatuan())
+        dispatch(getOptionsDatamasterOpd())
+    }, [])
+
+    React.useEffect(() => {
+        if (reduxOpd.length > 0 && opdOptions.length === 0) {
+            setOpdOptions(reduxOpd.map(item => ({ label: item.nama_opd, value: item.id })))
+        }
+    }, [reduxOpd])
+
+    React.useEffect(() => {
+        if (reduxSatuan.length > 0 && satuanOptions.length === 0) {
+            setSatuanOptions(reduxSatuan.map(item => ({ label: item.satuan, value: item.id })))
+        }
+    }, [reduxSatuan])
+
+    const optionsSatuan = () => satuanOptions
+    const optionsOpd = () => opdOptions
     const tujuanKdhState = useSelector((state) => state.tujuanKdhState)
     const sasaranKdhState = useSelector((state) => state.sasaranKdhState)
     const indikatorKdhState = useSelector((state) => state.indikatorKdhState)
-    const datamasteropd = useSelector((state) => state.datamasterOpdState.options)
     const [searchParams, setSearchParams] = useSearchParams()
     const [openModal, setOpenModal] = React.useState(false)
     const [formTitle, setFormTitle] = React.useState("FORM TAMBAH INDIKATOR")
@@ -554,6 +563,7 @@ const Indikator = () => {
                                 options={optionsOpd()}
                                 value={selectedOpd}
                                 onChange={setSelectedOpd}
+                                key={opdOptions.length}
                             />
                             <MyTextarea id="indikator" name="indikator" label="Indikator" placeholder='Inputkan indikator...' 
                                 value={formik.values.indikator} onChange={formik.handleChange} onBlur={formik.handleBlur}
@@ -564,13 +574,19 @@ const Indikator = () => {
                                     error={formik.errors.isActive}
                                     onChange={formik.handleChange} />
                             </div>
-                            <MySelect2
-                                id="satuan"
-                                label="Satuan"
-                                options={optionsSatuan()}
-                                value={selectedSatuan}
-                                onChange={setSelectedSatuan}
-                            />
+                            <div className="flex flex-col gap-1 sm:mb-4 mb-2">
+                                <label className="block text-sm font-medium text-gray-900 dark:text-white">Satuan</label>
+                                <select id="satuan" name="satuan"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                                    value={selectedSatuan?.value || ''}
+                                    onChange={(e) => {
+                                        const opt = satuanOptions.find(o => o.value === e.target.value)
+                                        setSelectedSatuan(opt || {})
+                                    }}>
+                                    <option value="">- Pilih Satuan -</option>
+                                    {satuanOptions.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
+                                </select>
+                            </div>
                             <div className="w-full">
                                 <h1 className="font-semibold py-2 dark:text-white">
                                 TARGET INDIKATOR

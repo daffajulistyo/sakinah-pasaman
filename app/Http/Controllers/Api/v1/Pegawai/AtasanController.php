@@ -18,9 +18,9 @@ class AtasanController extends Controller
    
     public function list(Request $request)
     {
-        $master_opd_id = $request->get('payload')->opd->id;
-        $username = $request->get('payload')->username;
-        $nip = $request->get('payload')->nip;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
+        $username = $request->attributes->get('payload')->username;
+        $nip = $request->attributes->get('payload')->nip;
 
          // cek existing opd
          $opd = MasterOpd::find($master_opd_id);
@@ -58,9 +58,9 @@ class AtasanController extends Controller
     {
         try {
 
-            $master_opd_id = $request->get('payload')->opd->id;
-            $username = $request->get('payload')->username;
-            $nip = $request->get('payload')->nip;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
+            $username = $request->attributes->get('payload')->username;
+            $nip = $request->attributes->get('payload')->nip;
 
                //validasi payload
             $form = $request->validate([
@@ -76,7 +76,7 @@ class AtasanController extends Controller
             // create uuid and assign author
             $form['nip_pegawai'] = $nip;
             $form['id'] = Str::uuid();
-            $form['created_by'] = $request->get('payload')->username;
+            $form['created_by'] = $request->attributes->get('payload')->username;
             
             // insert into table db
             $data = Atasan::create($form);

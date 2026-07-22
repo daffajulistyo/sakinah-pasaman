@@ -52,11 +52,11 @@ class UploadsController extends Controller
 
             // create uuid and assign author
             $form['id'] = Str::uuid();
-            $form['master_opd_id'] = $request->get('payload')->opd->id;
+            $form['master_opd_id'] = $request->attributes->get('payload')->opd->id;
             $form['slug'] = $slug;
             $form['type'] = 1;
             $form['tahun'] = $tahun;
-            $form['created_by'] = $request->get('payload')->username;
+            $form['created_by'] = $request->attributes->get('payload')->username;
             
             // insert into table db
             $data = DataUploads::create($form); 
@@ -91,7 +91,7 @@ class UploadsController extends Controller
                  ], 422);
              }
 
-             $username = $request->get('payload')->username;
+             $username = $request->attributes->get('payload')->username;
              // cek data ke database
              $detail = DataUploads::join('master_opd', 'master_opd.id', '=', 'data_uploads.master_opd_id')
                         ->where('data_uploads.id', $id)
@@ -182,7 +182,7 @@ class UploadsController extends Controller
                     $form['dokumen']    = basename($path);
             }
          
-            $form['updated_by'] = $request->get('payload')->username;
+            $form['updated_by'] = $request->attributes->get('payload')->username;
             $form['tahun'] = $tahun;
             $form['slug'] = $slug;
 
@@ -260,7 +260,7 @@ class UploadsController extends Controller
         $totalPage = 0;
         $totalRecord = 0;
 
-        $master_opd_id = $request->get('payload')->opd->id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
 
         try {
 

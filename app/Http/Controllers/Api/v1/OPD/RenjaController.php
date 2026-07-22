@@ -22,7 +22,7 @@ class RenjaController extends Controller
     public function showall(Request $request)
     {
         
-        $master_opd_id = $request->get('payload')->opd->id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
          // cek existing opd
          $opd = MasterOpd::find($master_opd_id);
          if (!$opd) {
@@ -49,7 +49,7 @@ class RenjaController extends Controller
 
         $sasaran = $sasaran->map(function($item) use ($request)
         {    
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
             $anggaran = RenjaProgram::where('sasaran_opd_id', '=', $item->id)
                             ->where('master_opd_id', '=',  $master_opd_id)
@@ -67,7 +67,7 @@ class RenjaController extends Controller
 
             $indikator_sasaran = $indikator_sasaran->map(function($is) use ($request)
             {   
-                $master_opd_id = $request->get('payload')->opd->id;
+                $master_opd_id = $request->attributes->get('payload')->opd->id;
 
                 $renja = Renja::where('indikator_opd_id', $is->id) 
                 ->where('master_opd_id', $master_opd_id) 
@@ -99,14 +99,14 @@ class RenjaController extends Controller
                         [
                             'indikator_sasaran' =>
                             function($query) use ($request) {
-                                $master_opd_id = $request->get('payload')->opd->id;
+                                $master_opd_id = $request->attributes->get('payload')->opd->id;
                                 $query->where('is_active', true);                 
                                 $query->where('master_opd_id', $master_opd_id);   
                                 
                                 $query->with([
                                     'renja' =>
                                     function($query) use ($request) {
-                                        $master_opd_id = $request->get('payload')->opd->id;
+                                        $master_opd_id = $request->attributes->get('payload')->opd->id;
 
                                         $query->where('master_opd_id', $master_opd_id);                                                   
                                         $query->where('tahun', $request->tahun);                                                   
@@ -117,7 +117,7 @@ class RenjaController extends Controller
                         , 
                         'anggaran_renja'=>
                         function($query) use ($request) {
-                            //$master_opd_id = $request->get('payload')->opd->id;                           
+                            //$master_opd_id = $request->attributes->get('payload')->opd->id;                           
                             $query->select(['sasaran_opd_id', 'anggaran']);                                                        
                             $query->get();
                             $query->first();
@@ -139,7 +139,7 @@ class RenjaController extends Controller
     public function create(Request $request)
     {
         try {
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
              // cek validasi jika id berformar uuid atau tidak
              if(!Str::isUuid($request->sasaran_opd_id)){
@@ -201,7 +201,7 @@ class RenjaController extends Controller
 
                 // create uuid and assign author
                 $form['id'] = Str::uuid();
-                $form['created_by'] = $request->get('payload')->username;
+                $form['created_by'] = $request->attributes->get('payload')->username;
                 
                 // insert into table db
                 $data = Renja::create($form);
@@ -239,7 +239,7 @@ class RenjaController extends Controller
     {
         try {
 
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
             // cek validasi jika id berformar uuid atau tidak
             if(!Str::isUuid($request->sasaran_opd_id)){
@@ -299,7 +299,7 @@ class RenjaController extends Controller
 
                 // create uuid and assign author
                 $form['id'] = Str::uuid();
-                $form['created_by'] = $request->get('payload')->username;
+                $form['created_by'] = $request->attributes->get('payload')->username;
                 
                 // insert into table db
                 $data = RenjaProgram::create($form);
@@ -338,7 +338,7 @@ class RenjaController extends Controller
 
     public function listProgram(Request $request)
     {
-        $master_opd_id = $request->get('payload')->opd->id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
 
          // cek existing opd
          $opd = MasterOpd::find($master_opd_id);
@@ -395,7 +395,7 @@ class RenjaController extends Controller
        /* $rawActions = SasaranOPD::with(
                         ['program_renja' =>
                         function($query) use ($request) {
-                            $master_opd_id = $request->get('payload')->opd->id;
+                            $master_opd_id = $request->attributes->get('payload')->opd->id;
                             $query->where('master_opd_id', $master_opd_id);                                                   
                             $query->where('tahun', $request->tahun);                                                   
                             $query->where('murni', $request->murni);   
@@ -416,7 +416,7 @@ class RenjaController extends Controller
 
     public function generate_pdf(Request $request)
     {        
-        $master_opd_id = $request->get('payload')->opd->id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
          // cek existing opd
          $opd = MasterOpd::find($master_opd_id);
          if (!$opd) {
@@ -444,7 +444,7 @@ class RenjaController extends Controller
 
         $sasaran = $sasaran->map(function($item) use ($request, $tahun, $murni)
         {    
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
             
 
@@ -464,7 +464,7 @@ class RenjaController extends Controller
 
             $indikator_sasaran = $indikator_sasaran->map(function($is) use ($request, $tahun, $murni)
             {   
-                $master_opd_id = $request->get('payload')->opd->id;
+                $master_opd_id = $request->attributes->get('payload')->opd->id;
 
                 $renja = Renja::where('indikator_opd_id', $is->id) 
                 ->where('master_opd_id', $master_opd_id) 

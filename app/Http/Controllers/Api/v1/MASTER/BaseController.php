@@ -26,7 +26,7 @@ class BaseController extends Controller
            }
 
            $satuan = MasterSatuan::where('id',  '=', $satuan_id)
-                                   ->where('is_active',  '=', 'true')->first();
+                                   ->where('is_active', true)->first();
  
            return !empty($satuan) ? $satuan->satuan : '';                
      }
@@ -46,7 +46,7 @@ class BaseController extends Controller
           $id_visi = !empty($dv[0]) ? $dv[0]['id'] : '';
 
            $misi = PohonKinerjaMisi::where('pohon_kinerja_visi_id',  '=', $id_visi)
-                                    ->where('is_active',  '=', 'true')     
+                                    ->where('is_active', true)
                                     ->pluck('id')
                                     ->toArray();
           return $misi;                
@@ -58,7 +58,7 @@ class BaseController extends Controller
           $misi = $pohon_kinerja->getMisiPemda();
 
           $tujuan = PohonKinerjaTujuan::whereIn('pohon_kinerja_misi_id', $misi)
-                                    ->where('is_active',  '=', 'true')     
+                                    ->where('is_active', true)     
                                     ->pluck('id')
                                     ->toArray();
           return $tujuan;                
@@ -70,7 +70,7 @@ class BaseController extends Controller
           $tujuan = $pohon_kinerja->getTujuanPemda();
 
           $indikator = PohonKinerjaIndikator::whereIn('pohon_kinerja_tujuan_id', $tujuan)
-                                    ->where('is_active',  '=', 'true')     
+                                    ->where('is_active', true)     
                                     ->pluck('id')
                                     ->toArray();
           return $indikator;                
@@ -99,7 +99,7 @@ class BaseController extends Controller
 
    public static function visi()
    {
-        $visi = PohonKinerjaVisi::where('is_active',  '=', 'true')
+        $visi = PohonKinerjaVisi::where('is_active', true)
                 ->limit(1) 
                 ->get();
 

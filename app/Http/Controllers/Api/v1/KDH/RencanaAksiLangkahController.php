@@ -72,7 +72,7 @@ class RencanaAksiLangkahController extends Controller
 
             // create uuid and assign author
             $form['id'] = Str::uuid();
-            $form['created_by'] = $request->get('payload')->username;
+            $form['created_by'] = $request->attributes->get('payload')->username;
             
             // insert into table db
             $data = RencanaAksiLangkah::create($form);
@@ -158,7 +158,7 @@ class RencanaAksiLangkahController extends Controller
                 "target_tw4" => "required"
             ]);
             
-            $form['updated_by'] = $request->get('payload')->username;
+            $form['updated_by'] = $request->attributes->get('payload')->username;
 
             $langkah->update($form);
 

@@ -11,7 +11,7 @@ class AnggaranController extends Controller
     //
     public function index($tahun, $periode, Request $request)
     {
-        $kode_skpd = $request->get('payload')->opd->kode_opd;
+        $kode_skpd = $request->attributes->get('payload')->opd->kode_opd;
         $response = Http::withoutVerifying()
                     ->withHeaders([
                         'Authorization' => 'Bearer '

@@ -26,7 +26,7 @@ class RealisasiController extends Controller
     {
         try {
 
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
             $detail = Rencana::find($id);
             if (!$detail) {
@@ -152,7 +152,7 @@ class RealisasiController extends Controller
 
     public function list(Request $request)
     {
-        $master_opd_id = $request->get('payload')->opd->id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
 
          // cek existing opd
         $opd = MasterOpd::find($master_opd_id);
@@ -178,7 +178,7 @@ class RealisasiController extends Controller
 
         $sasaran = $sasaran->map(function($item) use ($request)
         {    
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
             $indikator_sasaran = IndikatorOpd::join('pk_opd', 'pk_opd.indikator_opd_id', '=', 'indikator_opd.id') 
                                 ->where('indikator_opd.sasaran_opd_id', $item->id) 
@@ -204,7 +204,7 @@ class RealisasiController extends Controller
 
             $indikator_sasaran = $indikator_sasaran->map(function($is) use ($request)
             {   
-                $master_opd_id = $request->get('payload')->opd->id;
+                $master_opd_id = $request->attributes->get('payload')->opd->id;
 
                 $rencana_aksi = Rencana::where('indikator_opd_id', $is->id) 
                 ->where('master_opd_id', $master_opd_id) 
@@ -261,7 +261,7 @@ class RealisasiController extends Controller
     public function generate_pdf(Request $request)
     {
         try{
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
             // cek existing opd
             $opd = MasterOpd::find($master_opd_id);
@@ -287,7 +287,7 @@ class RealisasiController extends Controller
 
             $sasaran = $sasaran->map(function($item) use ($request)
             {    
-                $master_opd_id = $request->get('payload')->opd->id;
+                $master_opd_id = $request->attributes->get('payload')->opd->id;
 
                 $indikator_sasaran = IndikatorOpd::join('pk_opd', 'pk_opd.indikator_opd_id', '=', 'indikator_opd.id') 
                                     ->where('indikator_opd.sasaran_opd_id', $item->id) 
@@ -313,7 +313,7 @@ class RealisasiController extends Controller
 
                 $indikator_sasaran = $indikator_sasaran->map(function($is) use ($request)
                 {   
-                    $master_opd_id = $request->get('payload')->opd->id;
+                    $master_opd_id = $request->attributes->get('payload')->opd->id;
 
                     $rencana_aksi = Rencana::where('indikator_opd_id', $is->id) 
                     ->where('master_opd_id', $master_opd_id) 

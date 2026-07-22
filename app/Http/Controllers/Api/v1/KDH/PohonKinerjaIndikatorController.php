@@ -131,7 +131,7 @@ class PohonKinerjaIndikatorController extends Controller
             $form['id'] = Str::uuid();
             $form['is_tujuan'] = $request->is_tujuan;
             $form['parent_id'] = 0;
-            $form['created_by'] = $request->get('payload')->username;
+            $form['created_by'] = $request->attributes->get('payload')->username;
             
             // insert into table db
             $data = PohonKinerjaIndikator::create($form); 
@@ -142,7 +142,7 @@ class PohonKinerjaIndikatorController extends Controller
                         "id" => Str::uuid(),
                         "pohon_kinerja_sasaran_id" => $request->pohon_kinerja_sasaran_id,
                         "master_opd_id" => $item,
-                        "created_by"=>$request->get('payload')->username,
+                        "created_by"=>$request->attributes->get('payload')->username,
                         "is_active" => true,
                     ];
                 });
@@ -301,7 +301,7 @@ class PohonKinerjaIndikatorController extends Controller
                             "pohon_kinerja_indikator_id" => $request->id,
                             "pohon_kinerja_sasaran_id" => $request->pohon_kinerja_sasaran_id,
                             "master_opd_id" => $item,
-                            "updated_by" => $request->get('payload')->username,
+                            "updated_by" => $request->attributes->get('payload')->username,
                             "is_active" => true,
                         ];
                     });
@@ -334,7 +334,7 @@ class PohonKinerjaIndikatorController extends Controller
             $form['rilis']    = $request->rilis;
            
 
-            $form['updated_by'] = $request->get('payload')->username;
+            $form['updated_by'] = $request->attributes->get('payload')->username;
 
             $indikator->update($form);
 
@@ -454,9 +454,7 @@ class PohonKinerjaIndikatorController extends Controller
 
            // $query = PohonKinerjaIndikator::with(['opd_pendukung'])->get();
 
-           $query = PohonKinerjaIndikator::with(['opd_pendukung'], function ($q) use ($request) {
-                    $query();
-            });
+           $query = PohonKinerjaIndikator::with(['opd_pendukung']);
             
             //$query = PohonKinerjaIndikator::query()->toArray();
            
@@ -635,7 +633,7 @@ class PohonKinerjaIndikatorController extends Controller
                 ]);
             }
 
-            $form['updated_by'] = $request->get('payload')->username;
+            $form['updated_by'] = $request->attributes->get('payload')->username;
 
             $indikator->where('id', $id)->update($form);
 

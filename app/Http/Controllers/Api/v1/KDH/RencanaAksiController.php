@@ -85,7 +85,7 @@ class RencanaAksiController extends Controller
     
                 // create uuid and assign author
                 $form['id'] = Str::uuid();
-                $form['created_by'] = $request->get('payload')->username;
+                $form['created_by'] = $request->attributes->get('payload')->username;
                 
                 // insert into table db
                 $data = RencanaAksi::create($form);

@@ -21,7 +21,7 @@ class PengampuController extends Controller
     public function create(Request $request)
     {
         try {
-                $master_opd_id = $request->get('payload')->opd->id;
+                $master_opd_id = $request->attributes->get('payload')->opd->id;
 
                 $opd = MasterOpd::find($master_opd_id);
                 if (!$opd) {
@@ -118,7 +118,7 @@ class PengampuController extends Controller
 
             // create uuid and assign author
             $form['id'] = Str::uuid();
-            $form['created_by'] = $request->get('payload')->username;
+            $form['created_by'] = $request->attributes->get('payload')->username;
             
             // insert into table db
             $data = Pengampu::create($form); 
@@ -145,7 +145,7 @@ class PengampuController extends Controller
     public function update($id, Request $request)
     {
         try {
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
             // cek validasi jika id berformar uuid atau tidak
             if(!Str::isUuid($id)){
@@ -258,7 +258,7 @@ class PengampuController extends Controller
             $form['sasaran_opd_id'] = $request->sasaran_opd_id;
             $form['master_opd_id'] = $master_opd_id;
              $form['is_ketua'] = !empty($request->is_ketua) ? $request->is_ketua : false;
-            $form['updated_by'] = $request->get('payload')->username;
+            $form['updated_by'] = $request->attributes->get('payload')->username;
 
             $pengampu->update($form);
 
@@ -280,7 +280,7 @@ class PengampuController extends Controller
     {
         try {
 
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
             $opd = MasterOpd::find($master_opd_id);
                 if (!$opd) {
                     // jika data tidak ditamukan di dalam database
@@ -340,7 +340,7 @@ class PengampuController extends Controller
     {
         try {
 
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
             $cek = Pengampu::where('master_opd_id', '=', $master_opd_id)
                         ->where('id', '=', $id)
@@ -391,7 +391,7 @@ class PengampuController extends Controller
         $searchColumn = collect(['nama']);
         
         $indikator_opd_id = $request->get('indikator_opd_id');
-        $master_opd_id = $request->get('payload')->opd->id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
         $search = $request->get('search', '');
         try {
 

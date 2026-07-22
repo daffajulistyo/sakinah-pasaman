@@ -22,10 +22,10 @@ class LangkahController extends Controller
     {
         try {
 
-            $master_opd_id = $request->get('payload')->opd->id;
-            $username = $request->get('payload')->username;
-            $nip = $request->get('payload')->nip;
-            $jabatan_id = $request->get('payload')->jabatan_id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
+            $username = $request->attributes->get('payload')->username;
+            $nip = $request->attributes->get('payload')->nip;
+            $jabatan_id = $request->attributes->get('payload')->jabatan_id;
 
 
             // cek validasi jika id berformar uuid atau tidak
@@ -124,7 +124,7 @@ class LangkahController extends Controller
 
             // create uuid and assign author
             $form['id'] = Str::uuid();
-            $form['created_by'] = $request->get('payload')->username;
+            $form['created_by'] = $request->attributes->get('payload')->username;
             
             // insert into table db
             $data = RencanaLangkah::create($form);
@@ -150,9 +150,9 @@ class LangkahController extends Controller
     {
         try {
 
-            $username = $request->get('payload')->username;
-            $nip = $request->get('payload')->nip;
-            $jabatan_id = $request->get('payload')->jabatan_id;
+            $username = $request->attributes->get('payload')->username;
+            $nip = $request->attributes->get('payload')->nip;
+            $jabatan_id = $request->attributes->get('payload')->jabatan_id;
 
             // cek validasi jika id berformar uuid atau tidak
             if(!Str::isUuid($id)){
@@ -204,9 +204,9 @@ class LangkahController extends Controller
     {
         try {
 
-            $username = $request->get('payload')->username;
-            $nip = $request->get('payload')->nip;
-            $jabatan_id = $request->get('payload')->jabatan_id;
+            $username = $request->attributes->get('payload')->username;
+            $nip = $request->attributes->get('payload')->nip;
+            $jabatan_id = $request->attributes->get('payload')->jabatan_id;
 
             // cek validasi jika id berformar uuid atau tidak
             if(!Str::isUuid($id)){
@@ -247,7 +247,7 @@ class LangkahController extends Controller
             ]);
             
             $form['satuan_id'] = $request->satuan_id;
-            $form['updated_by'] = $request->get('payload')->username;
+            $form['updated_by'] = $request->attributes->get('payload')->username;
 
             $langkah->update($form);
 
@@ -269,9 +269,9 @@ class LangkahController extends Controller
     {
         try {
 
-            $username = $request->get('payload')->username;
-            $nip = $request->get('payload')->nip;
-            $jabatan_id = $request->get('payload')->jabatan_id;
+            $username = $request->attributes->get('payload')->username;
+            $nip = $request->attributes->get('payload')->nip;
+            $jabatan_id = $request->attributes->get('payload')->jabatan_id;
 
             $cek_pengampu = RencanaLangkah::where('id', '=', $id)
                         ->where('created_by', '=', $username)
@@ -325,13 +325,13 @@ class LangkahController extends Controller
         $sasaran_id = $request->get('sasaran_opd_id');
         $indikator_id = $request->get('indikator_opd_id');
         $tahun = $request->get('tahun');
-        $master_opd_id = $request->get('payload')->opd->id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
        
         try {
 
-            $username = $request->get('payload')->username;
-            $nip = $request->get('payload')->nip;
-            $jabatan_id = $request->get('payload')->jabatan_id;
+            $username = $request->attributes->get('payload')->username;
+            $nip = $request->attributes->get('payload')->nip;
+            $jabatan_id = $request->attributes->get('payload')->jabatan_id;
 
             $cek_pengampu = Pengampu::where('sasaran_opd_id', '=', $sasaran_id)
                         ->where('indikator_opd_id', '=', $indikator_id)

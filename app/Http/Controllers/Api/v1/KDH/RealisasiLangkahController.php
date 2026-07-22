@@ -52,7 +52,7 @@ class RealisasiLangkahController extends Controller
             $capaian_tw3 = !empty($target_tw3) ? ($request->realisasi_tw3/ $target_tw3) * 100 : '0';
             $capaian_tw4 = !empty($target_tw4) ? ($request->realisasi_tw4/ $target_tw4) * 100 : '0';
             
-            $form['updated_by'] = $request->get('payload')->username;
+            $form['updated_by'] = $request->attributes->get('payload')->username;
             $form['capaian_tw1'] = $capaian_tw1;
             $form['capaian_tw2'] = $capaian_tw2;
             $form['capaian_tw3'] = $capaian_tw3;

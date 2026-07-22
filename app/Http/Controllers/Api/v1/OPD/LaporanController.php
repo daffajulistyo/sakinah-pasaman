@@ -23,7 +23,7 @@ class LaporanController extends Controller
     {
          try {
 
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
             // cek existing opd
             $opd = MasterOpd::find($master_opd_id);
@@ -174,7 +174,7 @@ class LaporanController extends Controller
     {
          try {
 
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
             // cek existing opd
             $opd = MasterOpd::find($master_opd_id);
@@ -339,7 +339,7 @@ class LaporanController extends Controller
 
     public function update_realisasi($id, Request $request)
     {
-        $master_opd_id = $request->get('payload')->opd->id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
 
         // cek existing opd
         $opd = MasterOpd::find($master_opd_id);
@@ -418,7 +418,7 @@ class LaporanController extends Controller
             $form['realisasi_5'] = $request->realisasi_5;
             $form['realisasi_6'] = $request->realisasi_6;
 
-            $form['updated_by'] = $request->get('payload')->username;
+            $form['updated_by'] = $request->attributes->get('payload')->username;
 
             $indikator->update($form);
 
@@ -442,7 +442,7 @@ class LaporanController extends Controller
          try {
 
             $tahun = $request->tahun;
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
             // cek existing opd
             $opd = MasterOpd::find($master_opd_id);

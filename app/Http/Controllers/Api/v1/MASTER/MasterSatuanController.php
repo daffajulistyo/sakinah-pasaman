@@ -25,7 +25,7 @@ class MasterSatuanController extends Controller
             
             // create uuid and assign author
             $form['id'] = Str::uuid();
-            $form['created_by'] = $request->get('payload')->username;
+            $form['created_by'] = $request->attributes->get('payload')->username;
             
             // insert into table db
             $data = MasterSatuan::create($form);
@@ -110,7 +110,7 @@ class MasterSatuanController extends Controller
                 "satuan" => "required|string",
                 "is_active" => "required|boolean"
             ]);
-            $payload = $request->get('payload');
+            $payload = $request->attributes->get('payload');
             $form['updated_by'] = $payload->username;
 
             $satuan->update($form);
@@ -186,8 +186,9 @@ class MasterSatuanController extends Controller
             });
         }
         
-        if($is_active!="")
-            $query->where('is_active', $is_active);
+        if($is_active != ""){
+            $query->where('is_active', filter_var($is_active, FILTER_VALIDATE_BOOLEAN));
+        }
 
         $query->orderBy('created_at', 'desc');
         $objData = $query->paginate($perPage);

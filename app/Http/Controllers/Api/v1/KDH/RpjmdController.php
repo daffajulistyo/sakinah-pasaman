@@ -72,7 +72,7 @@ class RpjmdController extends Controller
             $form['target_5'] = $request->target_5;
             $form['target_6'] = $request->target_6;
 
-            $form['updated_by'] = $request->get('payload')->username;
+            $form['updated_by'] = $request->attributes->get('payload')->username;
 
             $indikator->update($form);
 
@@ -104,6 +104,10 @@ class RpjmdController extends Controller
                         function($query) {
                             $query->where('is_active', true);                 
                             $query->with([
+                               'indikator_tujuan' => function($query){
+                                 $query->where('is_active', true);
+                                 $query->with(['satuan']);
+                               },
                                'sasaran' => 
                                function($query) {
                                    $query->where('is_active', true);                 
@@ -142,6 +146,10 @@ class RpjmdController extends Controller
                         function($query) {
                             $query->where('is_active', true);                 
                             $query->with([
+                               'indikator_tujuan' => function($query){
+                                 $query->where('is_active', true);
+                                 $query->with(['satuan']);
+                               },
                                'sasaran' => 
                                function($query) {
                                    $query->where('is_active', true);                 

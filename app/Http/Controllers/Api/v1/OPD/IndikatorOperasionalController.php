@@ -26,7 +26,7 @@ class IndikatorOperasionalController extends Controller
         try {
             
 
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
 
             /*------------ cek validasi Tujuan-------------------------------------*/
@@ -109,7 +109,7 @@ class IndikatorOperasionalController extends Controller
             $form['is_indikator_kinerja_utama'] =false;
             $form['is_tujuan'] =false;
             $form['diampu_tim'] = false;            
-            $form['created_by'] = $request->get('payload')->username;
+            $form['created_by'] = $request->attributes->get('payload')->username;
             
             
             // insert into table db
@@ -137,7 +137,7 @@ class IndikatorOperasionalController extends Controller
     public function update($id, Request $request)
     {
         try {
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
             // cek validasi jika id berformar uuid atau tidak
             if(!Str::isUuid($id)){
@@ -232,7 +232,7 @@ class IndikatorOperasionalController extends Controller
            $form['tujuan_opd_id'] = $request->tujuan_opd_id;
            $form['master_opd_id'] = $master_opd_id;
            $form['pohon_kinerja_visi_id'] = $visi_id;
-           $form['updated_by'] = $request->get('payload')->username;
+           $form['updated_by'] = $request->attributes->get('payload')->username;
 
            $form['is_indikator_kinerja_utama'] = false;
            $form['diampu_tim'] = false;
@@ -259,7 +259,7 @@ class IndikatorOperasionalController extends Controller
     {
         try {
 
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
             // cek validasi jika id berformar uuid atau tidak
             if(!Str::isUuid($id)){
@@ -311,7 +311,7 @@ class IndikatorOperasionalController extends Controller
     {
         try {
 
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
             $cek_sasaran = IndikatorOpd::where('master_opd_id', '=', $master_opd_id)
                         ->where('id', '=', $id)
@@ -375,7 +375,7 @@ class IndikatorOperasionalController extends Controller
         //////
         $searchColumn = collect(['sasaran']);        
         $sasaran_opd_id = $request->get('sasaran_opd_id');
-        $master_opd_id = $request->get('payload')->opd->id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
         $currentPage = $request->get('page', 1);
         $perPage = $request->get('per_page', 10);
         $search = $request->get('search', '');

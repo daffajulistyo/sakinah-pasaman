@@ -19,29 +19,32 @@ class HomeController extends Controller
         return response()->json([
             "success" => true,
             "message" => "My Verified Profile",
-            "data" => $request->get('payload')
+            "data" => $request->attributes->get('payload')
         ], 200);
     }
 
     public function getMyRoles(Request $request)
     {
-        $payload = $request->get('payload');
+        $payload = $request->attributes->get('payload');
 
         $user = User::where('username', $payload->username)->first();
         if (!$user) {
             return response()->json(['success' => false, 'message' => 'User not found'], 404);
         }
+        // ponytail: exclude legacy 'Admin' role, show only operational roles matching ref
         $roles = Roleplay::select('roleplay.id', 'roleplay.role_id', 'roles.role_name')
             ->from('roleplay')
             ->join('roles', 'roles.id', '=', 'roleplay.role_id')
-            ->where('user_id', $user->id)->get();
+            ->where('user_id', $user->id)
+            ->whereNotIn('roles.role_name', ['Admin'])
+            ->get();
 
         return response()->json(['success' => true, 'data' => $roles]);
     }
 
     public function changeMyRole(Request $request)
     {
-        $payload = $request->get('payload');
+        $payload = $request->attributes->get('payload');
         $current_role = $payload->role;
         $new_role = $request->get('role_id');
         if ($current_role == $new_role) {

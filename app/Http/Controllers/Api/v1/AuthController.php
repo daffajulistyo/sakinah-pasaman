@@ -45,6 +45,16 @@ class AuthController extends Controller
                 $myroles = auth()->user()->roleplay->load('roles');
                 $thisroles = $myroles->pluck('roles')->toArray();
 
+                // ponytail: prefer operational role (Admin_KDH > Admin_OPD > Pegawai) over generic Admin
+                $priority = ['Admin_KDH', 'Admin_OPD', 'Pegawai', 'Superadmin', 'Admin'];
+                usort($thisroles, function ($a, $b) use ($priority) {
+                    $ai = array_search($a['role_name'], $priority);
+                    $bi = array_search($b['role_name'], $priority);
+                    $ai = $ai === false ? 999 : $ai;
+                    $bi = $bi === false ? 999 : $bi;
+                    return $ai - $bi;
+                });
+
                 //get OPD
                 $opd = null;
                 if($usersakip->master_opd_id !== null){

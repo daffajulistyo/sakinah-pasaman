@@ -61,7 +61,7 @@ class RkpdKegiatanController extends Controller
 
                 // create uuid and assign author
                 $form['id'] = Str::uuid();
-                $form['created_by'] = $request->get('payload')->username;
+                $form['created_by'] = $request->attributes->get('payload')->username;
                 
                 // insert into table db
                 $data = RkpdKegiatan::create($form);
@@ -174,7 +174,7 @@ class RkpdKegiatanController extends Controller
                 $form['pohon_kinerja_sasaran_id'] = $request->pohon_kinerja_sasaran_id;
                 $form['tahun'] = $request->tahun;
                 $form['anggaran'] = $request->anggaran;
-                $form['updated_by'] = $request->get('payload')->username;
+                $form['updated_by'] = $request->attributes->get('payload')->username;
 
                 $rkpd->update($form);
 

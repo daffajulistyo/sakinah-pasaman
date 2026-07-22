@@ -26,7 +26,7 @@ class RencanaAksiController extends Controller
     {
         try {
 
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
             // cek validasi jika id berformar uuid atau tidak
             if(!Str::isUuid($request->sasaran_opd_id)){
@@ -104,7 +104,7 @@ class RencanaAksiController extends Controller
     
                 // create uuid and assign author
                 $form['id'] = Str::uuid();
-                $form['created_by'] = $request->get('payload')->username;
+                $form['created_by'] = $request->attributes->get('payload')->username;
                 
                 // insert into table db
                 $data = Rencana::create($form);
@@ -144,7 +144,7 @@ class RencanaAksiController extends Controller
 
     public function list(Request $request)
     {
-        $master_opd_id = $request->get('payload')->opd->id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
 
          // cek existing opd
          $opd = MasterOpd::find($master_opd_id);
@@ -170,7 +170,7 @@ class RencanaAksiController extends Controller
 
         $sasaran = $sasaran->map(function($item) use ($request)
         {    
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
             $indikator_sasaran = IndikatorOpd::join('pk_opd', 'pk_opd.indikator_opd_id', '=', 'indikator_opd.id') 
                                 ->where('indikator_opd.sasaran_opd_id', $item->id) 
@@ -196,7 +196,7 @@ class RencanaAksiController extends Controller
 
             $indikator_sasaran = $indikator_sasaran->map(function($is) use ($request)
             {   
-                $master_opd_id = $request->get('payload')->opd->id;
+                $master_opd_id = $request->attributes->get('payload')->opd->id;
 
                 $rencana_aksi = Rencana::where('indikator_opd_id', $is->id) 
                 ->where('master_opd_id', $master_opd_id) 
@@ -256,7 +256,7 @@ class RencanaAksiController extends Controller
 
      public function generate_pdf(Request $request)
     {
-        $master_opd_id = $request->get('payload')->opd->id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
 
          // cek existing opd
          $opd = MasterOpd::find($master_opd_id);
@@ -284,7 +284,7 @@ class RencanaAksiController extends Controller
 
         $sasaran = $sasaran->map(function($item) use ($request, $tahun)
         {    
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
             $indikator_sasaran = IndikatorOpd::join('pk_opd', 'pk_opd.indikator_opd_id', '=', 'indikator_opd.id') 
                                 ->where('indikator_opd.sasaran_opd_id', $item->id) 
@@ -310,7 +310,7 @@ class RencanaAksiController extends Controller
 
             $indikator_sasaran = $indikator_sasaran->map(function($is) use ($request, $tahun)
             {   
-                $master_opd_id = $request->get('payload')->opd->id;
+                $master_opd_id = $request->attributes->get('payload')->opd->id;
 
                 $rencana_aksi = Rencana::where('indikator_opd_id', $is->id) 
                 ->where('master_opd_id', $master_opd_id) 

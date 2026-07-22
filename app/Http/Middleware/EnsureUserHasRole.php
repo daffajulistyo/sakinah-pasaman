@@ -27,6 +27,19 @@ class EnsureUserHasRole
                 "error" => 'Unregistred Role'
             ],403);
         }
+        // ponytail: Superadmin bypass all role checks
+        if ($thisRole->role_name === 'Superadmin') {
+            $user = User::where('username', $payloadToken->username)->first();
+            $assignedRole = Roleplay::where(['user_id' => $user->id, 'role_id' => $thisRole->id])->first();
+            if($assignedRole === null){
+                return response()->json([
+                    "status" => false,
+                    "message" => "Akun tidak terdaftar",
+                    "error" => 'Unassigned Role'
+                ],403);
+            }
+            return $next($request);
+        }
         if( !in_array($thisRole->role_name, $roles) ){
             return response()->json([
                 "status" => false,

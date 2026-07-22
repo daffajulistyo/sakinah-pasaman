@@ -22,7 +22,7 @@ class PerjanjianKinerjaController extends Controller
 
     public function showall(Request $request)
     {
-        $master_opd_id = $request->get('payload')->opd->id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
 
         $eselon = $request->eselon;
 
@@ -53,7 +53,7 @@ class PerjanjianKinerjaController extends Controller
                             $query->with([
                                 'perjanjian_kinerja' =>
                                 function($query) use ($request) {
-                                    $master_opd_id = $request->get('payload')->opd->id;
+                                    $master_opd_id = $request->attributes->get('payload')->opd->id;
                                     $query->where('master_opd_id', $master_opd_id);                                                   
                                     $query->where('tahun', $request->tahun);                                                   
                                     $query->where('murni', $request->murni);                                                                                                                                       
@@ -78,7 +78,7 @@ class PerjanjianKinerjaController extends Controller
 
         $sasaran = $sasaran->map(function($item) use ($request)
         {    
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
             $anggaran = PerjanjianKinerjaProgram::where('sasaran_opd_id', '=', $item->id)
                             ->where('master_opd_id', '=',  $master_opd_id)
                             ->where('tahun', '=',          $request->tahun)
@@ -97,7 +97,7 @@ class PerjanjianKinerjaController extends Controller
 
             $indikator_sasaran = $indikator_sasaran->map(function($is) use ($request)
             {   
-                $master_opd_id = $request->get('payload')->opd->id;
+                $master_opd_id = $request->attributes->get('payload')->opd->id;
 
                 $perjanjian_kinerja = PerjanjianKinerja::where('indikator_opd_id', $is->id) 
                 ->where('master_opd_id', $master_opd_id) 
@@ -137,7 +137,7 @@ class PerjanjianKinerjaController extends Controller
     public function create(Request $request)
     {
         try {
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
              // cek validasi jika id berformar uuid atau tidak
              if(!Str::isUuid($request->sasaran_opd_id)){
@@ -213,7 +213,7 @@ class PerjanjianKinerjaController extends Controller
 
                 // create uuid and assign author
                 $form['id'] = Str::uuid();
-                $form['created_by'] = $request->get('payload')->username;
+                $form['created_by'] = $request->attributes->get('payload')->username;
                 
                 // insert into table db
                 $data = PerjanjianKinerja::create($form);
@@ -252,7 +252,7 @@ class PerjanjianKinerjaController extends Controller
     {
         try {
 
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
             // cek validasi jika id berformar uuid atau tidak
             if(!Str::isUuid($request->sasaran_opd_id)){
@@ -312,7 +312,7 @@ class PerjanjianKinerjaController extends Controller
 
                 // create uuid and assign author
                 $form['id'] = Str::uuid();
-                $form['created_by'] = $request->get('payload')->username;
+                $form['created_by'] = $request->attributes->get('payload')->username;
                 
                 // insert into table db
                 $data = PerjanjianKinerjaProgram::create($form);
@@ -350,7 +350,7 @@ class PerjanjianKinerjaController extends Controller
 
     public function listProgram(Request $request)
     {
-        $master_opd_id = $request->get('payload')->opd->id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
 
          // cek existing opd
          $opd = MasterOpd::find($master_opd_id);
@@ -367,7 +367,7 @@ class PerjanjianKinerjaController extends Controller
         $rawActions = SasaranOPD::with(
                         ['program_perjanjian_kinerja' =>
                         function($query) use ($request) {
-                            $master_opd_id = $request->get('payload')->opd->id;
+                            $master_opd_id = $request->attributes->get('payload')->opd->id;
                             $query->where('master_opd_id', $master_opd_id);                                                   
                             $query->where('tahun', $request->tahun);                                                   
                             $query->where('murni', $request->murni);   
@@ -432,7 +432,7 @@ class PerjanjianKinerjaController extends Controller
 
     public function generate_pdf(Request $request)
     {
-        $master_opd_id = $request->get('payload')->opd->id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
 
         $eselon = $request->eselon;
 
@@ -468,7 +468,7 @@ class PerjanjianKinerjaController extends Controller
 
         $sasaran = $sasaran->map(function($item) use ($request, $tahun, $murni)
         {    
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
             $anggaran = PerjanjianKinerjaProgram::where('sasaran_opd_id', '=', $item->id)
                             ->where('master_opd_id', '=',  $master_opd_id)
                             ->where('tahun', '=',        $tahun)
@@ -486,7 +486,7 @@ class PerjanjianKinerjaController extends Controller
 
             $indikator_sasaran = $indikator_sasaran->map(function($is) use ($request, $tahun, $murni)
             {   
-                $master_opd_id = $request->get('payload')->opd->id;
+                $master_opd_id = $request->attributes->get('payload')->opd->id;
 
                 $perjanjian_kinerja = PerjanjianKinerja::where('indikator_opd_id', $is->id) 
                 ->where('master_opd_id', $master_opd_id) 

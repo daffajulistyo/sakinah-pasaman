@@ -47,6 +47,7 @@ const AddCascadingKdh = () => {
                 label: item.sasaran
             }))
         }
+        return []
     }
 
     const opdOptions = () => {

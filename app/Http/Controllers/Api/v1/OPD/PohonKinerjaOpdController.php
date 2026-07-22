@@ -20,7 +20,7 @@ class PohonKinerjaOpdController extends Controller
 
     public function index(Request $request)
     {   
-        $master_opd_id = $request->get('payload')->opd->id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
         
          // cek existing opd
          $opd = MasterOpd::find($master_opd_id);
@@ -162,7 +162,7 @@ class PohonKinerjaOpdController extends Controller
 
     private function getSubSasaran($parent_id, $request)
     {   
-        $master_opd_id = $request->get('payload')->opd->id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
 
         $sasaran = SasaranOpd::where('parent_id', '=', $parent_id)
                             ->where('master_opd_id', '=', $master_opd_id)
@@ -233,7 +233,7 @@ class PohonKinerjaOpdController extends Controller
 
     public function index2(Request $request)
     {   
-        $master_opd_id = $request->get('payload')->opd->id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
         
          // cek existing opd
          $opd = MasterOpd::find($master_opd_id);
@@ -278,7 +278,7 @@ class PohonKinerjaOpdController extends Controller
 
      public function tujuan_opd(Request $request)
     {   
-        $master_opd_id = $request->get('payload')->opd->id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
         
          // cek existing opd
          $opd = MasterOpd::find($master_opd_id);
@@ -377,7 +377,7 @@ class PohonKinerjaOpdController extends Controller
 
      public function sasaran_opd(Request $request)
      {   
-        $master_opd_id = $request->get('payload')->opd->id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
         
          // cek existing opd
          $opd = MasterOpd::find($master_opd_id);

@@ -40,4 +40,9 @@ class RefController extends Controller
         }
         return response()->json(['success' => true, 'data' => $query->orderBy('nama')->get()]);
     }
+
+    public function roles()
+    {
+        return response()->json(['success' => true, 'data' => DB::table('roles')->orderBy('role_name')->get(['id', 'role_name as name'])]);
+    }
 }

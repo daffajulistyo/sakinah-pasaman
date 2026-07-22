@@ -24,10 +24,10 @@ class PerjanjianController extends Controller
 {
     public function showall(Request $request)
     {
-        $master_opd_id = $request->get('payload')->opd->id;
-        $nip = $request->get('payload')->nip;
-        $jns_jbtn_id = $request->get('payload')->jns_jbtn_id;
-        $jabatan_id = $request->get('payload')->jabatan_id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
+        $nip = $request->attributes->get('payload')->nip;
+        $jns_jbtn_id = $request->attributes->get('payload')->jns_jbtn_id;
+        $jabatan_id = $request->attributes->get('payload')->jabatan_id;
 
         // cek existing opd
         $opd = MasterOpd::find($master_opd_id);
@@ -52,11 +52,11 @@ class PerjanjianController extends Controller
                 $sasaran = $sasaran->map(function($item) use ($request)
                 {      
                     
-                    $master_opd_id = $request->get('payload')->opd->id;
-                    $nip = $request->get('payload')->nip;
-                    $jns_jbtn_id = $request->get('payload')->jns_jbtn_id;
-                    $jabatan_id = $request->get('payload')->jabatan_id;
-                    $username = $request->get('payload')->username;
+                    $master_opd_id = $request->attributes->get('payload')->opd->id;
+                    $nip = $request->attributes->get('payload')->nip;
+                    $jns_jbtn_id = $request->attributes->get('payload')->jns_jbtn_id;
+                    $jabatan_id = $request->attributes->get('payload')->jabatan_id;
+                    $username = $request->attributes->get('payload')->username;
 
                     $anggaran = PerjanjianKinerjaProgram::where('sasaran_opd_id', '=', $item->id)
                                     ->where('master_opd_id', '=',  $master_opd_id)
@@ -78,12 +78,12 @@ class PerjanjianController extends Controller
 
                     $indikator_sasaran = $indikator_sasaran->map(function($is) use ($request)
                     {   
-                        $master_opd_id = $request->get('payload')->opd->id;
+                        $master_opd_id = $request->attributes->get('payload')->opd->id;
 
-                        $username = $request->get('payload')->username;
-                        $nip = $request->get('payload')->nip;
-                        $jabatan_id = $request->get('payload')->jabatan_id;
-                        $eselon = $request->get('payload')->eselon_id;
+                        $username = $request->attributes->get('payload')->username;
+                        $nip = $request->attributes->get('payload')->nip;
+                        $jabatan_id = $request->attributes->get('payload')->jabatan_id;
+                        $eselon = $request->attributes->get('payload')->eselon_id;
 
                         $perjanjian_kinerja = PerjanjianKinerja::where('indikator_opd_id', $is->id) 
                         ->where('master_opd_id', $master_opd_id) 
@@ -122,11 +122,11 @@ class PerjanjianController extends Controller
     {
         try {
 
-            $master_opd_id = $request->get('payload')->opd->id;
-            $username = $request->get('payload')->username;
-            $nip = $request->get('payload')->nip;
-            $jabatan_id = $request->get('payload')->jabatan_id;
-            $eselon = $request->get('payload')->eselon_id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
+            $username = $request->attributes->get('payload')->username;
+            $nip = $request->attributes->get('payload')->nip;
+            $jabatan_id = $request->attributes->get('payload')->jabatan_id;
+            $eselon = $request->attributes->get('payload')->eselon_id;
             
              // cek validasi jika id berformar uuid atau tidak
              if(!Str::isUuid($request->sasaran_opd_id)){
@@ -205,7 +205,7 @@ class PerjanjianController extends Controller
 
                 // create uuid and assign author
                 $form['id'] = Str::uuid();
-                $form['created_by'] = $request->get('payload')->username;
+                $form['created_by'] = $request->attributes->get('payload')->username;
                 
                 // insert into table db
                 $data = PerjanjianKinerja::create($form);
@@ -246,9 +246,9 @@ class PerjanjianController extends Controller
     {
         try {
 
-            $master_opd_id = $request->get('payload')->opd->id;
-            $username = $request->get('payload')->username;
-            $nip = $request->get('payload')->nip;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
+            $username = $request->attributes->get('payload')->username;
+            $nip = $request->attributes->get('payload')->nip;
 
 
             // cek validasi jika id berformar uuid atau tidak
@@ -311,7 +311,7 @@ class PerjanjianController extends Controller
 
                 // create uuid and assign author
                 $form['id'] = Str::uuid();
-                $form['created_by'] = $request->get('payload')->username;
+                $form['created_by'] = $request->attributes->get('payload')->username;
                 
                 // insert into table db
                 $data = PerjanjianKinerjaProgram::create($form);
@@ -351,8 +351,8 @@ class PerjanjianController extends Controller
 
     public function listProgram(Request $request)
     {
-        $master_opd_id = $request->get('payload')->opd->id;
-        $username = $request->get('payload')->username;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
+        $username = $request->attributes->get('payload')->username;
 
 
          // cek existing opd
@@ -434,10 +434,10 @@ class PerjanjianController extends Controller
 
     public function generate_pdf(Request $request)
     {
-        $master_opd_id = $request->get('payload')->opd->id;
-        $nip = $request->get('payload')->nip;
-        $jns_jbtn_id = $request->get('payload')->jns_jbtn_id;
-        $jabatan_id = $request->get('payload')->jabatan_id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
+        $nip = $request->attributes->get('payload')->nip;
+        $jns_jbtn_id = $request->attributes->get('payload')->jns_jbtn_id;
+        $jabatan_id = $request->attributes->get('payload')->jabatan_id;
 
         // cek existing opd
         $opd = MasterOpd::find($master_opd_id);
@@ -462,11 +462,11 @@ class PerjanjianController extends Controller
                 $sasaran = $sasaran->map(function($item) use ($request)
                 {      
                     
-                    $master_opd_id = $request->get('payload')->opd->id;
-                    $nip = $request->get('payload')->nip;
-                    $jns_jbtn_id = $request->get('payload')->jns_jbtn_id;
-                    $jabatan_id = $request->get('payload')->jabatan_id;
-                    $username = $request->get('payload')->username;
+                    $master_opd_id = $request->attributes->get('payload')->opd->id;
+                    $nip = $request->attributes->get('payload')->nip;
+                    $jns_jbtn_id = $request->attributes->get('payload')->jns_jbtn_id;
+                    $jabatan_id = $request->attributes->get('payload')->jabatan_id;
+                    $username = $request->attributes->get('payload')->username;
 
                     $anggaran = PerjanjianKinerjaProgram::where('sasaran_opd_id', '=', $item->id)
                                     ->where('master_opd_id', '=',  $master_opd_id)
@@ -488,12 +488,12 @@ class PerjanjianController extends Controller
 
                     $indikator_sasaran = $indikator_sasaran->map(function($is) use ($request)
                     {   
-                        $master_opd_id = $request->get('payload')->opd->id;
+                        $master_opd_id = $request->attributes->get('payload')->opd->id;
 
-                        $username = $request->get('payload')->username;
-                        $nip = $request->get('payload')->nip;
-                        $jabatan_id = $request->get('payload')->jabatan_id;
-                        $eselon = $request->get('payload')->eselon_id;
+                        $username = $request->attributes->get('payload')->username;
+                        $nip = $request->attributes->get('payload')->nip;
+                        $jabatan_id = $request->attributes->get('payload')->jabatan_id;
+                        $eselon = $request->attributes->get('payload')->eselon_id;
 
                         $perjanjian_kinerja = PerjanjianKinerja::where('indikator_opd_id', $is->id) 
                         ->where('master_opd_id', $master_opd_id) 

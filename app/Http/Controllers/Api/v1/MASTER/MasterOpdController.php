@@ -21,16 +21,15 @@ class MasterOpdController extends Controller
             $form = $request->validate([
                 "kode_opd"   => "required|unique:master_opd",
                 "nama_opd"   => "required|string",
-                "simpeg_opd_id"   => "required|integer",
-                "ikd_opd_id"   => "required|integer",
+                "simpeg_opd_id"   => "nullable|integer",
+                "ikd_opd_id"   => "nullable|integer",
                 "order"      => "required|integer",
-                "is_active"  => "required|boolean",
-                "alias_opd"  => "required|string"
+                "is_active"  => "required|boolean"
             ]);
             
             // create uuid and assign author
             $form['id'] = Str::uuid();
-            $form['created_by'] = $request->get('payload')->username;
+            $form['created_by'] = $request->attributes->get('payload')->username;
             
             // insert into table db
             $data = MasterOpd::create($form);
@@ -121,7 +120,7 @@ class MasterOpdController extends Controller
                 "alias_opd"  => "required|string"
             ]);
 
-            $payload = $request->get('payload');
+            $payload = $request->attributes->get('payload');
             $form['updated_by'] = $payload->username;
 
             $opd->update($form);
@@ -200,8 +199,9 @@ class MasterOpdController extends Controller
             });
         }
         
-        if($is_active!="")
-            $query->where('is_active', $is_active);
+        if($is_active != ""){
+            $query->where('is_active', filter_var($is_active, FILTER_VALIDATE_BOOLEAN));
+        }
 
         $query->orderBy('created_at', 'desc');
         $objData = $query->paginate($perPage);

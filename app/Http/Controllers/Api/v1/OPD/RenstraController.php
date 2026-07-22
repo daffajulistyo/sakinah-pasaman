@@ -20,7 +20,7 @@ class RenstraController extends Controller
 {
     public function update($id, Request $request)
     {
-        $master_opd_id = $request->get('payload')->opd->id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
         try {
             // cek validasi jika id berformar uuid atau tidak
             if(!Str::isUuid($id)){
@@ -85,7 +85,7 @@ class RenstraController extends Controller
             $form['target_5'] = $request->target_5;
             $form['target_6'] = $request->target_6;
 
-            $form['updated_by'] = $request->get('payload')->username;
+            $form['updated_by'] = $request->attributes->get('payload')->username;
 
             $indikator->update($form);
 
@@ -105,7 +105,7 @@ class RenstraController extends Controller
 
     public function list(Request $request)
     {   
-        $master_opd_id = $request->get('payload')->opd->id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
         $sasaran_kdh = BaseController::getSasaranByOPDPengampu($master_opd_id)->pluck('id');  
         
        
@@ -150,7 +150,7 @@ class RenstraController extends Controller
 
         $tujuan = $tujuan->map(function($item) use ($request)
         {    
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
             $sasaran = SasaranOpd::where('master_opd_id', '=', $master_opd_id)
                                 ->where('tujuan_opd_id', '=', $item->id)
                                 ->where('parent_id', '=', 0)
@@ -202,7 +202,7 @@ class RenstraController extends Controller
 
             $sasaran = $sasaran->map(function($item) use ($request)
             {    
-                $master_opd_id = $request->get('payload')->opd->id;
+                $master_opd_id = $request->attributes->get('payload')->opd->id;
                             
                 $indikator_sasaran = IndikatorOpd::where('sasaran_opd_id', $item->id) 
                                     ->where('master_opd_id', $master_opd_id)  
@@ -271,7 +271,7 @@ class RenstraController extends Controller
 
       public function generate_pdf(Request $request)
     {   
-        $master_opd_id = $request->get('payload')->opd->id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
         $sasaran_kdh = BaseController::getSasaranByOPDPengampu($master_opd_id)->pluck('id');        
         
          // cek existing opd
@@ -296,7 +296,7 @@ class RenstraController extends Controller
 
         $tujuan = $tujuan->map(function($item) use ($request)
         {    
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
             $sasaran = SasaranOpd::where('master_opd_id', '=', $master_opd_id)
                                 ->where('tujuan_opd_id', '=', $item->id)
                                 ->where('parent_id', '=', 0)
@@ -348,7 +348,7 @@ class RenstraController extends Controller
 
             $sasaran = $sasaran->map(function($item) use ($request)
             {    
-                $master_opd_id = $request->get('payload')->opd->id;
+                $master_opd_id = $request->attributes->get('payload')->opd->id;
                             
                 $indikator_sasaran = IndikatorOpd::where('sasaran_opd_id', $item->id) 
                                     ->where('master_opd_id', $master_opd_id)  

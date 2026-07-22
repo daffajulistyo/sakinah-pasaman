@@ -25,7 +25,7 @@ class TujuanOpdController extends Controller
     {
         try {
 
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
             // cek validasi jika id berformar uuid atau tidak
             if(!Str::isUuid($request->pohon_kinerja_sasaran_id)){
@@ -93,7 +93,7 @@ class TujuanOpdController extends Controller
 
             // create uuid and assign author
             $form['id'] = Str::uuid();
-            $form['created_by'] = $request->get('payload')->username;
+            $form['created_by'] = $request->attributes->get('payload')->username;
             
             // insert into table db
             $data = TujuanOPD::create($form);
@@ -119,7 +119,7 @@ class TujuanOpdController extends Controller
     {
         try {
 
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
             // cek validasi jika id berformar uuid atau tidak
             if(!Str::isUuid($id)){
@@ -193,7 +193,7 @@ class TujuanOpdController extends Controller
            $form['pohon_kinerja_sasaran_id'] = $request->pohon_kinerja_sasaran_id;
            $form['master_opd_id'] = $master_opd_id;
            $form['pohon_kinerja_visi_id'] = $visi_id;
-           $form['updated_by'] = $request->get('payload')->username;
+           $form['updated_by'] = $request->attributes->get('payload')->username;
 
             $tujuan->update($form);
 
@@ -252,7 +252,7 @@ class TujuanOpdController extends Controller
     {
         try {
 
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
             if(!Str::isUuid($id)){
                 return response()->json([
@@ -345,7 +345,7 @@ class TujuanOpdController extends Controller
         //
         $searchColumn = collect(['sasaran', 'tujuan']);
         
-        $master_opd_id = $request->get('payload')->opd->id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
 
         $currentPage = $request->get('page', 1);
         $perPage = $request->get('per_page', 10);
@@ -433,7 +433,7 @@ class TujuanOpdController extends Controller
 
     public function getSasaranKDH(Request $request)
     {
-        $master_opd_id = $request->get('payload')->opd->id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
         
          // cek existing opd
          $opd = MasterOpd::find($master_opd_id);

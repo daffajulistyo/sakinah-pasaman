@@ -336,7 +336,7 @@ class LaporanController extends Controller
             $form['realisasi_5'] = $request->realisasi_5;
             $form['realisasi_6'] = $request->realisasi_6;
 
-            $form['updated_by'] = $request->get('payload')->username;
+            $form['updated_by'] = $request->attributes->get('payload')->username;
 
             $indikator->update($form);
 

@@ -21,10 +21,10 @@ class SasaranSkpController extends Controller
    
     public function list(Request $request)
     {
-        $master_opd_id = $request->get('payload')->opd->id;
-        $username = $request->get('payload')->username;
-        $nip = $request->get('payload')->nip;
-        $jabatan_id = $request->get('payload')->jabatan_id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
+        $username = $request->attributes->get('payload')->username;
+        $nip = $request->attributes->get('payload')->nip;
+        $jabatan_id = $request->attributes->get('payload')->jabatan_id;
         $skp_id = $request->skp_id;
 
          // cek existing opd
@@ -106,9 +106,9 @@ class SasaranSkpController extends Controller
     {
         try {
 
-            $master_opd_id = $request->get('payload')->opd->id;
-            $username = $request->get('payload')->username;
-            $nip = $request->get('payload')->nip;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
+            $username = $request->attributes->get('payload')->username;
+            $nip = $request->attributes->get('payload')->nip;
             
 
             if(!Str::isUuid($request->skp_id)){
@@ -139,7 +139,7 @@ class SasaranSkpController extends Controller
             $form['skp_id'] = $request->skp_id;
 
             $form['id'] = Str::uuid();
-            $form['created_by'] = $request->get('payload')->username;           
+            $form['created_by'] = $request->attributes->get('payload')->username;           
         
             // insert into table db
             $data = SasaranSkp::create($form);
@@ -166,8 +166,8 @@ class SasaranSkpController extends Controller
     {
         try {
 
-            $username = $request->get('payload')->username;
-            $nip = $request->get('payload')->nip;
+            $username = $request->attributes->get('payload')->username;
+            $nip = $request->attributes->get('payload')->nip;
 
             
             // cek validasi jika id berformar uuid atau tidak
@@ -209,7 +209,7 @@ class SasaranSkpController extends Controller
                 "sasaran" => "required|string"
             ]);
             
-            $form['updated_by'] = $request->get('payload')->username;
+            $form['updated_by'] = $request->attributes->get('payload')->username;
 
             $update = SasaranSkp::where('id', '=', $id)
             ->where('created_by', '=',$username)              
@@ -234,8 +234,8 @@ class SasaranSkpController extends Controller
     {
         try {
 
-            $username = $request->get('payload')->username;
-            $nip = $request->get('payload')->nip;
+            $username = $request->attributes->get('payload')->username;
+            $nip = $request->attributes->get('payload')->nip;
 
             if(!Str::isUuid($id)){
                 return response()->json([

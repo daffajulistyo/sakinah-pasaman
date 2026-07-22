@@ -30,7 +30,7 @@ class PohonKinerjaVisiController extends Controller
             
             // create uuid and assign author
             $form['id'] = Str::uuid();
-            $form['created_by'] = $request->get('payload')->username;
+            $form['created_by'] = $request->attributes->get('payload')->username;
             if($form['is_active'] == true){
                 // non aktifkan semua visi yang ada
                 DB::table('pohon_kinerja_visi')->update(['is_active' => false]);
@@ -121,7 +121,7 @@ class PohonKinerjaVisiController extends Controller
                 "visi" => "required|string",
                 "is_active" => "required|boolean"
             ]);
-            $payload = $request->get('payload');
+            $payload = $request->attributes->get('payload');
             $form['updated_by'] = $payload->username;
             if($form['is_active'] == true){
                 // non aktifkan semua visi yang ada

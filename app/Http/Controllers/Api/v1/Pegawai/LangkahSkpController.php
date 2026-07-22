@@ -23,9 +23,9 @@ class LangkahSkpController extends Controller
     {
         try {
 
-            $master_opd_id = $request->get('payload')->opd->id;
-            $username = $request->get('payload')->username;
-            $nip = $request->get('payload')->nip;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
+            $username = $request->attributes->get('payload')->username;
+            $nip = $request->attributes->get('payload')->nip;
             $skp_id = $request->skp_id;
             $indikator_skp_id = $request->indikator_skp_id;
             
@@ -83,7 +83,7 @@ class LangkahSkpController extends Controller
             $form['keterangan'] = $request->keterangan;
 
             $form['id'] = Str::uuid();
-            $form['created_by'] = $request->get('payload')->username;           
+            $form['created_by'] = $request->attributes->get('payload')->username;           
         
             // insert into table db
             $data = LangkahSkp::create($form);
@@ -110,8 +110,8 @@ class LangkahSkpController extends Controller
     {
         try {
 
-            $username = $request->get('payload')->username;
-            $nip = $request->get('payload')->nip;
+            $username = $request->attributes->get('payload')->username;
+            $nip = $request->attributes->get('payload')->nip;
             
              // cek validasi jika id berformar uuid atau tidak
             if(!Str::isUuid($id)){
@@ -187,7 +187,7 @@ class LangkahSkpController extends Controller
             ]);
             
             $form['keterangan'] = $request->keterangan;
-            $form['updated_by'] = $request->get('payload')->username;
+            $form['updated_by'] = $request->attributes->get('payload')->username;
 
             $update = LangkahSkp::where('id', '=', $id)
             ->where('created_by', '=',$username)              
@@ -213,8 +213,8 @@ class LangkahSkpController extends Controller
     {
         try {
 
-            $username = $request->get('payload')->username;
-            $nip = $request->get('payload')->nip;
+            $username = $request->attributes->get('payload')->username;
+            $nip = $request->attributes->get('payload')->nip;
 
             if(!Str::isUuid($id)){
                 return response()->json([
@@ -258,10 +258,10 @@ class LangkahSkpController extends Controller
 
     public function list(Request $request)
     {
-        $master_opd_id = $request->get('payload')->opd->id;
-        $username = $request->get('payload')->username;
-        $nip = $request->get('payload')->nip;
-        $jabatan_id = $request->get('payload')->jabatan_id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
+        $username = $request->attributes->get('payload')->username;
+        $nip = $request->attributes->get('payload')->nip;
+        $jabatan_id = $request->attributes->get('payload')->jabatan_id;
         $skp_id = $request->skp_id;
         $indikator_skp_id = $request->indikator_skp_id;
 
@@ -316,10 +316,10 @@ class LangkahSkpController extends Controller
 
     public function list_realisasi(Request $request)
     {
-        $master_opd_id = $request->get('payload')->opd->id;
-        $username = $request->get('payload')->username;
-        $nip = $request->get('payload')->nip;
-        $jabatan_id = $request->get('payload')->jabatan_id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
+        $username = $request->attributes->get('payload')->username;
+        $nip = $request->attributes->get('payload')->nip;
+        $jabatan_id = $request->attributes->get('payload')->jabatan_id;
         $skp_id = $request->skp_id;
         $sasaran_skp_id = $request->sasaran_skp_id;
         $indikator_skp_id = $request->indikator_skp_id;
@@ -386,8 +386,8 @@ class LangkahSkpController extends Controller
     {
         try {
 
-            $username = $request->get('payload')->username;
-            $nip = $request->get('payload')->nip;
+            $username = $request->attributes->get('payload')->username;
+            $nip = $request->attributes->get('payload')->nip;
             
 
              // cek validasi jika id berformar uuid atau tidak
@@ -478,7 +478,7 @@ class LangkahSkpController extends Controller
                 "realisasi_tw4"    => "required"
             ]);
             
-            $form['updated_by'] = $request->get('payload')->username;
+            $form['updated_by'] = $request->attributes->get('payload')->username;
 
             $form['capaian_tw1'] = $capaian_tw1;
             $form['capaian_tw2'] = $capaian_tw2;

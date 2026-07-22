@@ -3123,7 +3123,8 @@ class Api {
 
     async getRefEselon() {
         try {
-            const { status, data } = await axios.get(`${BASE_HOST_URL}/v1/master/ref/eselon`)
+            const authorization = this.getAuthorization()
+            const { status, data } = await axios.get(`${BASE_HOST_URL}/v1/master/ref/eselon`, authorization)
             if (status === 200) return { data, error: null }
             else return { error: true }
         } catch (error) {
@@ -3133,7 +3134,8 @@ class Api {
 
     async getRefGolongan() {
         try {
-            const { status, data } = await axios.get(`${BASE_HOST_URL}/v1/master/ref/golongan`)
+            const authorization = this.getAuthorization()
+            const { status, data } = await axios.get(`${BASE_HOST_URL}/v1/master/ref/golongan`, authorization)
             if (status === 200) return { data, error: null }
             else return { error: true }
         } catch (error) {
@@ -3143,7 +3145,8 @@ class Api {
 
     async getRefJenisJabatan() {
         try {
-            const { status, data } = await axios.get(`${BASE_HOST_URL}/v1/master/ref/jenis-jabatan`)
+            const authorization = this.getAuthorization()
+            const { status, data } = await axios.get(`${BASE_HOST_URL}/v1/master/ref/jenis-jabatan`, authorization)
             if (status === 200) return { data, error: null }
             else return { error: true }
         } catch (error) {
@@ -3153,9 +3156,10 @@ class Api {
 
     async getRefJabatan(opsi = {}) {
         try {
+            const authorization = this.getAuthorization()
             const params = {};
             if (opsi.jenis_id) params.jenis_id = opsi.jenis_id;
-            const { status, data } = await axios.get(`${BASE_HOST_URL}/v1/master/ref/jabatan`, { params })
+            const { status, data } = await axios.get(`${BASE_HOST_URL}/v1/master/ref/jabatan`, { ...authorization, params })
             if (status === 200) return { data, error: null }
             else return { error: true }
         } catch (error) {
@@ -3165,9 +3169,21 @@ class Api {
 
     async getRefSubOpd(opsi = {}) {
         try {
+            const authorization = this.getAuthorization()
             const params = {};
             if (opsi.opd_id) params.opd_id = opsi.opd_id;
-            const { status, data } = await axios.get(`${BASE_HOST_URL}/v1/master/ref/sub-opd`, { params })
+            const { status, data } = await axios.get(`${BASE_HOST_URL}/v1/master/ref/sub-opd`, { ...authorization, params })
+            if (status === 200) return { data, error: null }
+            else return { error: true }
+        } catch (error) {
+            return { status: error.status, error: error.response?.data?.message ?? error.message }
+        }
+    }
+
+    async getRefRoles() {
+        try {
+            const authorization = this.getAuthorization()
+            const { status, data } = await axios.get(`${BASE_HOST_URL}/v1/master/ref/roles`, authorization)
             if (status === 200) return { data, error: null }
             else return { error: true }
         } catch (error) {

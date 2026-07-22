@@ -78,7 +78,7 @@ class PerjanjianKinerjaController extends Controller
 
                     // create uuid and assign author
                     $form['id'] = Str::uuid();
-                    $form['created_by'] = $request->get('payload')->username;
+                    $form['created_by'] = $request->attributes->get('payload')->username;
                     
                     // insert into table db
                     $data = PerjanjianKinerja::create($form);
@@ -207,7 +207,7 @@ class PerjanjianKinerjaController extends Controller
             ]);
             $form['pohon_kinerja_sasaran_id'] = $request->pohon_kinerja_sasaran_id;
             $form['pohon_kinerja_indikator_id'] = $request->pohon_kinerja_indikator_id;
-            $form['updated_by'] = $request->get('payload')->username;
+            $form['updated_by'] = $request->attributes->get('payload')->username;
 
             $PerjanjianKinerja->update($form);
 
@@ -289,7 +289,7 @@ class PerjanjianKinerjaController extends Controller
                 "target_tw4" => "required"
             ]);
             
-            $form['updated_by'] = $request->get('payload')->username;
+            $form['updated_by'] = $request->attributes->get('payload')->username;
 
             $pk->update($form);
 

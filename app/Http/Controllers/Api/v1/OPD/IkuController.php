@@ -23,7 +23,7 @@ class IkuController extends Controller
     {
         try {
 
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
             // cek validasi jika id berformar uuid atau tidak
             if(!Str::isUuid($id)){
@@ -64,7 +64,7 @@ class IkuController extends Controller
             $form['defenisi'] = $request->defenisi;
             $form['kegunaan'] = $request->kegunaan;
             $form['rilis'] = $request->rilis;
-            $form['updated_by'] = $request->get('payload')->username;
+            $form['updated_by'] = $request->attributes->get('payload')->username;
 
             $indikator->update($form);
 
@@ -86,7 +86,7 @@ class IkuController extends Controller
     {
         try {
 
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
              // cek existing opd
             $opd = MasterOpd::find($master_opd_id);
@@ -157,7 +157,7 @@ class IkuController extends Controller
                 ], 500);
             }
 
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
             $current_indikator = BaseController::getIndikatorOPD($master_opd_id);
 
@@ -201,7 +201,7 @@ class IkuController extends Controller
     {
         try {
 
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
              // cek existing opd
             $opd = MasterOpd::find($master_opd_id);

@@ -204,6 +204,7 @@ Route::prefix('v1')
             Route::get('/jenis-jabatan', [App\Http\Controllers\Api\v1\MASTER\RefController::class, 'jenisJabatan']);
             Route::get('/jabatan', [App\Http\Controllers\Api\v1\MASTER\RefController::class, 'jabatan']);
             Route::get('/sub-opd', [App\Http\Controllers\Api\v1\MASTER\RefController::class, 'subOpd']);
+            Route::get('/roles', [App\Http\Controllers\Api\v1\MASTER\RefController::class, 'roles']);
         });
 
         // untuk sub modul pohon kinerja

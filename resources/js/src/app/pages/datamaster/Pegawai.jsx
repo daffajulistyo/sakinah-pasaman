@@ -14,6 +14,7 @@ import * as Yup from "yup"
 import MyModal from '@/app/components/Form/MyModal'
 import MyInput from '@/app/components/Form/MyInput'
 import MyToggle from '@/app/components/Form/MyToggle'
+import MyMultiSelect from '@/app/components/Form/MyMultiSelect'
 
 const Pegawai = () => {
     const pegawaiState = useSelector((state) => state.datamasterPegawaiState)
@@ -26,6 +27,8 @@ const Pegawai = () => {
     const [refGolongan, setRefGolongan] = React.useState([])
     const [refJenisJabatan, setRefJenisJabatan] = React.useState([])
     const [refJabatan, setRefJabatan] = React.useState([])
+    const [refRoles, setRefRoles] = React.useState([])
+    const [selectedRoles, setSelectedRoles] = React.useState([])
 
     const getDataTable = async (page = 1, per_page = 10, search = "") => {
         const response = await dispatch(getListPegawai({ page, per_page, search }))
@@ -41,14 +44,15 @@ const Pegawai = () => {
         const loadData = async () => {
             const Api = (await import('@/api')).default
             const api = new Api()
-            const [rOpd, rEselon, rGol, rJnsJab] = await Promise.all([
+            const [rOpd, rEselon, rGol, rJnsJab, rRoles] = await Promise.all([
                 api.getList_dmOpd({ page: 1, per_page: 999, search: '' }),
-                api.getRefEselon(), api.getRefGolongan(), api.getRefJenisJabatan(),
+                api.getRefEselon(), api.getRefGolongan(), api.getRefJenisJabatan(), api.getRefRoles(),
             ])
             if (rOpd.data && rOpd.error === null) setOpdList(rOpd.data.data || [])
             if (rEselon.data) setRefEselon(rEselon.data.data || [])
             if (rGol.data) setRefGolongan(rGol.data.data || [])
             if (rJnsJab.data) setRefJenisJabatan(rJnsJab.data.data || [])
+            if (rRoles.data) setRefRoles(rRoles.data.data || [])
         }
         loadData()
     }, [])
@@ -66,7 +70,7 @@ const Pegawai = () => {
             nip: '', nama: '', password: '', gelar_depan: '', gelar_belakang: '',
             tempat_lahir: '', tanggal_lahir: '', jenis_kelamin: '', alamat: '', no_hp: '',
             email: '', master_opd_id: '', sub_opd_nm: '', ref_eselon_id: '', ref_golongan_id: '',
-            ref_jenis_jabatan_id: '', ref_jabatan_id: '', jenjang: '', isActive: true
+            ref_jenis_jabatan_id: '', ref_jabatan_id: '', jenjang: '', role_ids: [], isActive: true
         },
         validationSchema: Yup.object({
             nip: Yup.string().required(),
@@ -80,6 +84,7 @@ const Pegawai = () => {
         formik.resetForm()
         setEditId("")
         setRefJabatan([])
+        setSelectedRoles([])
         setFormTitle("FORM TAMBAH DATA PEGAWAI")
         setOpenModal(true)
     }
@@ -112,6 +117,7 @@ const Pegawai = () => {
                 ref_jenis_jabatan_id: formik.values.ref_jenis_jabatan_id || undefined,
                 ref_jabatan_id: formik.values.ref_jabatan_id || undefined,
                 jenjang: formik.values.jenjang || undefined,
+                role_ids: (formik.values.role_ids && formik.values.role_ids.length) ? formik.values.role_ids : undefined,
                 is_active: formik.values.isActive,
             }
             if (formik.values.password) payload.password = formik.values.password
@@ -156,6 +162,25 @@ const Pegawai = () => {
         formik.setFieldValue('ref_jabatan_id', d.ref_jabatan_id || '')
         formik.setFieldValue('jenjang', d.jenjang || '')
         formik.setFieldValue('isActive', d.is_active ?? true)
+        const rids = d.role_ids || (d.role_id ? [d.role_id] : [])
+        formik.setFieldValue('role_ids', rids)
+        setSelectedRoles(rids.map(rid => {
+            const r = refRoles.find(rr => rr.id === rid)
+            return r ? { label: r.name, value: r.id } : null
+        }).filter(Boolean))
+        if (d.role_ids && d.role_ids.length > 0) {
+            // refresh roles list just in case
+            const Api2 = (await import('@/api')).default
+            const api2 = new Api2()
+            const rr = await api2.getRefRoles()
+            if (rr.data) {
+                setRefRoles(rr.data.data || [])
+                setSelectedRoles(d.role_ids.map(rid => {
+                    const role = (rr.data.data || []).find(rr => rr.id === rid)
+                    return role ? { label: role.name, value: role.id } : null
+                }).filter(Boolean))
+            }
+        }
 
         if (d.ref_jenis_jabatan_id) loadJabatan(d.ref_jenis_jabatan_id)
 
@@ -344,6 +369,15 @@ const Pegawai = () => {
                                 value={formik.values.no_hp} onChange={formik.handleChange} />
                             <MyInput id="email" name="email" label="Email" type="email"
                                 value={formik.values.email} onChange={formik.handleChange} />
+                            <div className="flex flex-col gap-1">
+                                <MyMultiSelect id="role_ids" label="Role"
+                                    options={refRoles.map(r => ({ label: r.name, value: r.id }))}
+                                    value={selectedRoles}
+                                    onChange={(val) => {
+                                        setSelectedRoles(val)
+                                        formik.setFieldValue('role_ids', val.map(v => v.value))
+                                    }} />
+                            </div>
                             <div className="flex w-fill justify-center">
                                 <MyToggle id="isActive" name="isActive" label="Aktif" value={formik.values.isActive}
                                     error={formik.errors.isActive} onChange={formik.handleChange} />

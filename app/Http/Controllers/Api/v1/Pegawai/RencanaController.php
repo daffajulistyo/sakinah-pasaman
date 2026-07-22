@@ -28,10 +28,10 @@ class RencanaController extends Controller
     {
         try {
 
-            $master_opd_id = $request->get('payload')->opd->id;
-            $username = $request->get('payload')->username;
-            $nip = $request->get('payload')->nip;
-            $jabatan_id = $request->get('payload')->jabatan_id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
+            $username = $request->attributes->get('payload')->username;
+            $nip = $request->attributes->get('payload')->nip;
+            $jabatan_id = $request->attributes->get('payload')->jabatan_id;
 
             // cek validasi jika id berformar uuid atau tidak
             if(!Str::isUuid($request->sasaran_opd_id)){
@@ -112,7 +112,7 @@ class RencanaController extends Controller
     
                 // create uuid and assign author
                 $form['id'] = Str::uuid();
-                $form['created_by'] = $request->get('payload')->username;
+                $form['created_by'] = $request->attributes->get('payload')->username;
                 
                 // insert into table db
                 $data = Rencana::create($form);
@@ -153,12 +153,12 @@ class RencanaController extends Controller
 
     public function list(Request $request)
     {
-        $master_opd_id = $request->get('payload')->opd->id;
-        $username = $request->get('payload')->username;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
+        $username = $request->attributes->get('payload')->username;
 
-        $nip = $request->get('payload')->nip;
-        $jns_jbtn_id = $request->get('payload')->jns_jbtn_id;
-        $jabatan_id = $request->get('payload')->jabatan_id;
+        $nip = $request->attributes->get('payload')->nip;
+        $jns_jbtn_id = $request->attributes->get('payload')->jns_jbtn_id;
+        $jabatan_id = $request->attributes->get('payload')->jabatan_id;
         
          // cek existing opd
          $opd = MasterOpd::find($master_opd_id);
@@ -187,8 +187,8 @@ class RencanaController extends Controller
 
         $sasaran = $sasaran->map(function($item) use ($request)
         {    
-            $master_opd_id = $request->get('payload')->opd->id;
-            $username = $request->get('payload')->username;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
+            $username = $request->attributes->get('payload')->username;
 
             $indikator_sasaran = IndikatorOpd::join('pk_opd', 'pk_opd.indikator_opd_id', '=', 'indikator_opd.id') 
                                 ->join('pengampu_indikator_opd', 'indikator_opd.id', '=', 'pengampu_indikator_opd.indikator_opd_id')
@@ -216,7 +216,7 @@ class RencanaController extends Controller
 
             $indikator_sasaran = $indikator_sasaran->map(function($is) use ($request)
             {   
-                $master_opd_id = $request->get('payload')->opd->id;
+                $master_opd_id = $request->attributes->get('payload')->opd->id;
 
                 $rencana_aksi = Rencana::where('indikator_opd_id', $is->id) 
                 ->where('master_opd_id', $master_opd_id) 
@@ -274,12 +274,12 @@ class RencanaController extends Controller
 
      public function generate_pdf(Request $request)
     {
-        $master_opd_id = $request->get('payload')->opd->id;
-        $username = $request->get('payload')->username;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
+        $username = $request->attributes->get('payload')->username;
 
-        $nip = $request->get('payload')->nip;
-        $jns_jbtn_id = $request->get('payload')->jns_jbtn_id;
-        $jabatan_id = $request->get('payload')->jabatan_id;
+        $nip = $request->attributes->get('payload')->nip;
+        $jns_jbtn_id = $request->attributes->get('payload')->jns_jbtn_id;
+        $jabatan_id = $request->attributes->get('payload')->jabatan_id;
         
          // cek existing opd
          $opd = MasterOpd::find($master_opd_id);
@@ -308,8 +308,8 @@ class RencanaController extends Controller
 
         $sasaran = $sasaran->map(function($item) use ($request)
         {    
-            $master_opd_id = $request->get('payload')->opd->id;
-            $username = $request->get('payload')->username;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
+            $username = $request->attributes->get('payload')->username;
 
             $indikator_sasaran = IndikatorOpd::join('pk_opd', 'pk_opd.indikator_opd_id', '=', 'indikator_opd.id') 
                                 ->join('pengampu_indikator_opd', 'indikator_opd.id', '=', 'pengampu_indikator_opd.indikator_opd_id')
@@ -337,7 +337,7 @@ class RencanaController extends Controller
 
             $indikator_sasaran = $indikator_sasaran->map(function($is) use ($request)
             {   
-                $master_opd_id = $request->get('payload')->opd->id;
+                $master_opd_id = $request->attributes->get('payload')->opd->id;
 
                 $rencana_aksi = Rencana::where('indikator_opd_id', $is->id) 
                 ->where('master_opd_id', $master_opd_id) 

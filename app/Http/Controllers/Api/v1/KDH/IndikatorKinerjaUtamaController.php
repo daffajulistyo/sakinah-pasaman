@@ -60,7 +60,7 @@ class IndikatorKinerjaUtamaController extends Controller
             $form['defenisi'] = $request->defenisi;
             $form['kegunaan'] = $request->kegunaan;
             $form['rilis'] = $request->rilis;
-            $form['updated_by'] = $request->get('payload')->username;
+            $form['updated_by'] = $request->attributes->get('payload')->username;
 
             $indikator->update($form);
 

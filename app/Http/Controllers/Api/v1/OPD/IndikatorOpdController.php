@@ -27,7 +27,7 @@ class IndikatorOpdController extends Controller
     {
         try {
 
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
             /*------------ cek validasi Tujuan-------------------------------------*/
                 // cek validasi jika id berformat uuid atau tidak
@@ -148,7 +148,7 @@ class IndikatorOpdController extends Controller
             $form['is_indikator_kinerja_utama'] = !empty($request->is_indikator_kinerja_utama) ? $request->is_indikator_kinerja_utama : false;
              $form['diampu_tim'] = !empty($request->diampu_tim) ? $request->diampu_tim : false;
             $form['parent_id'] = 0;
-            $form['created_by'] = $request->get('payload')->username;
+            $form['created_by'] = $request->attributes->get('payload')->username;
             $form['diampu'] = !empty($request->is_indikator_kinerja_utama) ? $request->is_indikator_kinerja_utama : false;
             
             // insert into table db
@@ -176,7 +176,7 @@ class IndikatorOpdController extends Controller
     public function update($id, Request $request)
     {
         try {
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
             // cek validasi jika id berformar uuid atau tidak
             if(!Str::isUuid($id)){
@@ -311,7 +311,7 @@ class IndikatorOpdController extends Controller
            $form['sasaran_opd_id'] = $request->sasaran_opd_id;
            $form['master_opd_id'] = $master_opd_id;
            $form['pohon_kinerja_visi_id'] = $visi_id;
-           $form['updated_by'] = $request->get('payload')->username;
+           $form['updated_by'] = $request->attributes->get('payload')->username;
 
              $form['is_indikator_kinerja_utama'] = !empty($request->is_indikator_kinerja_utama) ? $request->is_indikator_kinerja_utama : false;
              $form['diampu_tim'] = !empty($request->diampu_tim) ? $request->diampu_tim : false;
@@ -337,7 +337,7 @@ class IndikatorOpdController extends Controller
     {
         try {
 
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
             // cek validasi jika id berformar uuid atau tidak
             if(!Str::isUuid($id)){
@@ -389,7 +389,7 @@ class IndikatorOpdController extends Controller
     {
         try {
 
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
             $cek_sasaran = IndikatorOpd::where('master_opd_id', '=', $master_opd_id)
                         ->where('id', '=', $id)
@@ -535,7 +535,7 @@ class IndikatorOpdController extends Controller
         $searchColumn = collect(['sasaran']);
         $tujuan_opd_id = $request->get('tujuan_opd_id');
         $sasaran_opd_id = $request->get('sasaran_opd_id');
-        $master_opd_id = $request->get('payload')->opd->id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
         $currentPage = $request->get('page', 1);
         $perPage = $request->get('per_page', 10);
         $search = $request->get('search', '');
@@ -637,7 +637,7 @@ class IndikatorOpdController extends Controller
     public function upload($id, Request $request)
     {
 
-        $master_opd_id = $request->get('payload')->opd->id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
         try {
             /*------------ cek validasi Indikator-------------------------------------*/
                 // cek validasi jika id berformar uuid atau tidak
@@ -684,7 +684,7 @@ class IndikatorOpdController extends Controller
                 ]);
             }
 
-            $form['updated_by'] = $request->get('payload')->username;
+            $form['updated_by'] = $request->attributes->get('payload')->username;
 
             $indikator->where('id', $id)->update($form);
 

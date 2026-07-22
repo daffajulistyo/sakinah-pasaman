@@ -27,10 +27,10 @@ class RealisasiController extends Controller
     {
         try {
 
-            $master_opd_id = $request->get('payload')->opd->id;
-            $username = $request->get('payload')->username;
-            $nip = $request->get('payload')->nip;
-            $jabatan_id = $request->get('payload')->jabatan_id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
+            $username = $request->attributes->get('payload')->username;
+            $nip = $request->attributes->get('payload')->nip;
+            $jabatan_id = $request->attributes->get('payload')->jabatan_id;
 
 
             $detail = Rencana::find($id);
@@ -161,10 +161,10 @@ class RealisasiController extends Controller
 
     public function list(Request $request)
     {
-        $master_opd_id = $request->get('payload')->opd->id;
-        $username = $request->get('payload')->username;
-        $nip = $request->get('payload')->nip;
-        $jabatan_id = $request->get('payload')->jabatan_id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
+        $username = $request->attributes->get('payload')->username;
+        $nip = $request->attributes->get('payload')->nip;
+        $jabatan_id = $request->attributes->get('payload')->jabatan_id;
 
 
          // cek existing opd
@@ -192,7 +192,7 @@ class RealisasiController extends Controller
 
         $sasaran = $sasaran->map(function($item) use ($request)
         {    
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
             $indikator_sasaran = IndikatorOpd::join('pk_opd', 'pk_opd.indikator_opd_id', '=', 'indikator_opd.id') 
                                 ->where('indikator_opd.sasaran_opd_id', $item->id) 
@@ -216,8 +216,8 @@ class RealisasiController extends Controller
 
             $indikator_sasaran = $indikator_sasaran->map(function($is) use ($request)
             {   
-                $master_opd_id = $request->get('payload')->opd->id;
-                $username = $request->get('payload')->username;
+                $master_opd_id = $request->attributes->get('payload')->opd->id;
+                $username = $request->attributes->get('payload')->username;
 
 
                 $rencana_aksi = Rencana::where('indikator_opd_id', $is->id) 
@@ -291,10 +291,10 @@ class RealisasiController extends Controller
 
      public function generate_pdf(Request $request)
     {
-        $master_opd_id = $request->get('payload')->opd->id;
-        $username = $request->get('payload')->username;
-        $nip = $request->get('payload')->nip;
-        $jabatan_id = $request->get('payload')->jabatan_id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
+        $username = $request->attributes->get('payload')->username;
+        $nip = $request->attributes->get('payload')->nip;
+        $jabatan_id = $request->attributes->get('payload')->jabatan_id;
 
 
          // cek existing opd
@@ -322,7 +322,7 @@ class RealisasiController extends Controller
 
         $sasaran = $sasaran->map(function($item) use ($request)
         {    
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
             $indikator_sasaran = IndikatorOpd::join('pk_opd', 'pk_opd.indikator_opd_id', '=', 'indikator_opd.id') 
                                 ->where('indikator_opd.sasaran_opd_id', $item->id) 
@@ -346,8 +346,8 @@ class RealisasiController extends Controller
 
             $indikator_sasaran = $indikator_sasaran->map(function($is) use ($request)
             {   
-                $master_opd_id = $request->get('payload')->opd->id;
-                $username = $request->get('payload')->username;
+                $master_opd_id = $request->attributes->get('payload')->opd->id;
+                $username = $request->attributes->get('payload')->username;
 
 
                 $rencana_aksi = Rencana::where('indikator_opd_id', $is->id) 

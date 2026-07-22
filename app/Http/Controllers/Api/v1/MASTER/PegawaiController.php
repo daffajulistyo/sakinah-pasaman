@@ -48,7 +48,8 @@ class PegawaiController extends Controller
     public function create(Request $request)
     {
         try {
-            $payload = $request->get('payload');
+            $jwtPayload = $request->attributes->get('payload');
+            $createdBy = $jwtPayload->username ?? null;
             DB::beginTransaction();
 
             $request->validate([
@@ -70,7 +71,7 @@ class PegawaiController extends Controller
                     'id' => Str::uuid(),
                     'user_id' => $user->id,
                     'master_opd_id' => $request->master_opd_id,
-                    'created_by' => $payload->username ?? null,
+                    'created_by' => $createdBy,
                 ]);
             }
 
@@ -95,21 +96,26 @@ class PegawaiController extends Controller
                 'ref_jenis_jabatan_id' => $request->ref_jenis_jabatan_id,
                 'ref_jabatan_id' => $request->ref_jabatan_id,
                 'jenjang' => $request->jenjang,
-                'is_active' => true,
-                'created_by' => $payload->username ?? null,
+                'is_active' => $request->is_active ?? true,
+                'created_by' => $createdBy,
             ]);
 
-            // Assign role Pegawai
-            $pegawaiRoleId = '39d57ab8-c480-4c61-a5d8-a662c5b66e27';
-            DB::table('roleplay')->insert([
-                'id' => Str::uuid(),
-                'user_id' => $user->id,
-                'role_id' => $pegawaiRoleId,
-                'type' => 'core',
-                'created_by' => $payload->username ?? null,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+            // Assign roles
+            $roleIds = $request->role_ids ?? ($request->role_id ? [$request->role_id] : ['39d57ab8-c480-4c61-a5d8-a662c5b66e27']);
+            if (!is_array($roleIds)) $roleIds = [$roleIds];
+            foreach ($roleIds as $rid) {
+                if ($rid) {
+                    DB::table('roleplay')->insert([
+                        'id' => Str::uuid(),
+                        'user_id' => $user->id,
+                        'role_id' => $rid,
+                        'type' => 'core',
+                        'created_by' => $createdBy,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                }
+            }
 
             DB::commit();
 
@@ -131,7 +137,17 @@ class PegawaiController extends Controller
                 'refEselon', 'refGolongan', 'refJenisJabatan', 'refJabatan', 'masterOpd', 'user'
             ])->findOrFail($id);
 
-            return response()->json(['success' => true, 'data' => $pegawai]);
+            $roleplay = DB::table('roleplay')
+                ->join('roles', 'roleplay.role_id', '=', 'roles.id')
+                ->where('roleplay.user_id', $pegawai->user_id)
+                ->select('roles.id as role_id', 'roles.role_name as role_name')
+                ->get();
+
+            $result = $pegawai->toArray();
+            $result['role_ids'] = $roleplay->pluck('role_id')->toArray();
+            $result['roles'] = $roleplay->toArray();
+
+            return response()->json(['success' => true, 'data' => $result]);
         } catch (\Exception $e) {
             return response()->json(['status' => 422, 'message' => $e->getMessage()], 422);
         }
@@ -140,7 +156,8 @@ class PegawaiController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $payload = $request->get('payload');
+            $jwtPayload = $request->attributes->get('payload');
+            $updatedBy = $jwtPayload->username ?? null;
             DB::beginTransaction();
 
             $pegawai = PegawaiModel::findOrFail($id);
@@ -164,14 +181,33 @@ class PegawaiController extends Controller
             if ($request->master_opd_id && $pegawai->user_id) {
                 $userSakip = UserSakip::where('user_id', $pegawai->user_id)->first();
                 if ($userSakip) {
-                    $userSakip->update(['master_opd_id' => $request->master_opd_id, 'updated_by' => $payload->username ?? null]);
+                    $userSakip->update(['master_opd_id' => $request->master_opd_id, 'updated_by' => $updatedBy]);
                 } else {
                     UserSakip::create([
                         'id' => Str::uuid(),
                         'user_id' => $pegawai->user_id,
                         'master_opd_id' => $request->master_opd_id,
-                        'created_by' => $payload->username ?? null,
+                        'created_by' => $updatedBy,
                     ]);
+                }
+            }
+
+            $roleIds = $request->role_ids ?? ($request->role_id ? [$request->role_id] : null);
+            if ($roleIds) {
+                if (!is_array($roleIds)) $roleIds = [$roleIds];
+                DB::table('roleplay')->where('user_id', $pegawai->user_id)->delete();
+                foreach ($roleIds as $rid) {
+                    if ($rid) {
+                        DB::table('roleplay')->insert([
+                            'id' => Str::uuid(),
+                            'user_id' => $pegawai->user_id,
+                            'role_id' => $rid,
+                            'type' => 'core',
+                            'created_by' => $updatedBy,
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ]);
+                    }
                 }
             }
 
@@ -194,7 +230,8 @@ class PegawaiController extends Controller
                 'ref_jenis_jabatan_id' => $request->ref_jenis_jabatan_id,
                 'ref_jabatan_id' => $request->ref_jabatan_id,
                 'jenjang' => $request->jenjang,
-                'updated_by' => $payload->username ?? null,
+                'is_active' => $request->is_active ?? $pegawai->is_active,
+                'updated_by' => $updatedBy,
             ]);
 
             DB::commit();

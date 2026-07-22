@@ -18,7 +18,7 @@ class CascadingOPDController extends Controller
 {
     public function showall(Request $request)
     {
-        $master_opd_id = $request->get('payload')->opd->id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
 
          // cek existing opd
          $opd = MasterOpd::find($master_opd_id);
@@ -35,7 +35,7 @@ class CascadingOPDController extends Controller
         /*$rawActions = SasaranOPD::with(
                         ['program_pendukung' =>
                         function($query) use ($request) {
-                            $master_opd_id = $request->get('payload')->opd->id;
+                            $master_opd_id = $request->attributes->get('payload')->opd->id;
                             $query->where('is_active', true);                 
                             $query->where('master_opd_id', $master_opd_id);         
                         }
@@ -127,7 +127,7 @@ class CascadingOPDController extends Controller
 
      private function getSubSasaran($parent_id, $request)
     {   
-        $master_opd_id = $request->get('payload')->opd->id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
 
         $sasaran = SasaranOpd::where('parent_id', '=', $parent_id)
                             ->where('master_opd_id', '=', $master_opd_id)
@@ -216,7 +216,7 @@ class CascadingOPDController extends Controller
             
             foreach (json_decode($test) as $req)
             {   
-                 $master_opd_id = $request->get('payload')->opd->id;
+                 $master_opd_id = $request->attributes->get('payload')->opd->id;
                  $sasaran_opd_id = $req->sasaran_opd_id;
 
                  $cascading =  CascadingOpd::where('sasaran_opd_id', '=', $req->sasaran_opd_id)
@@ -243,7 +243,7 @@ class CascadingOPDController extends Controller
                 $form['order'] = 1;
                 $form['is_active'] = true;
 
-                $form['created_by'] = $request->get('payload')->username;  
+                $form['created_by'] = $request->attributes->get('payload')->username;  
                 
                 $insert[] = $form;
             }

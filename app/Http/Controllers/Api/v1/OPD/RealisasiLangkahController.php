@@ -21,7 +21,7 @@ class RealisasiLangkahController extends Controller
     {
         try {
 
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
             $detail = RencanaLangkah::find($id);
             if (!$detail) {
@@ -97,7 +97,7 @@ class RealisasiLangkahController extends Controller
         $sasaran_id = $request->get('sasaran_opd_id');
         $indikator_id = $request->get('indikator_opd_id');
         $tahun = $request->get('tahun');
-        $master_opd_id = $request->get('payload')->opd->id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
        
         try {
 

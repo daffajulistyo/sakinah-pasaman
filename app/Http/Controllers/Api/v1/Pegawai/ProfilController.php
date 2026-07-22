@@ -19,9 +19,9 @@ class ProfilController extends Controller
    
     public function index(Request $request)
     {
-        $master_opd_id = $request->get('payload')->opd->id;
-        $username = $request->get('payload')->username;
-        $nip = $request->get('payload')->nip;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
+        $username = $request->attributes->get('payload')->username;
+        $nip = $request->attributes->get('payload')->nip;
 
         $profile = UserSimpeg::where('nip', '=', $nip)->first();
         $atasan = Atasan::where('nip_pegawai', $nip)->where('is_active', true)->first();  
@@ -38,9 +38,9 @@ class ProfilController extends Controller
     {
         try {
 
-            $master_opd_id = $request->get('payload')->opd->id;
-            $username = $request->get('payload')->username;
-            $nip = $request->get('payload')->nip;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
+            $username = $request->attributes->get('payload')->username;
+            $nip = $request->attributes->get('payload')->nip;
 
                //validasi payload
             $form = $request->validate([
@@ -62,7 +62,7 @@ class ProfilController extends Controller
                 
                 $form['nip_pegawai'] = $nip;
                 $form['id'] = Str::uuid();
-                $form['created_by'] = $request->get('payload')->username;
+                $form['created_by'] = $request->attributes->get('payload')->username;
                 
                 // insert into table db
                 $data = Atasan::create($form);
@@ -74,7 +74,7 @@ class ProfilController extends Controller
                 $form['jabatan_atasan'] = $request->jabatan_atasan;
                 $form['unit_kerja_atasan'] = $request->unit_kerja_atasan;
                 
-                $form['updated_by'] = $request->get('payload')->username;
+                $form['updated_by'] = $request->attributes->get('payload')->username;
 
                 $update = Atasan::where('nip_pegawai', '=', $nip)             
                 ->update($form);

@@ -27,7 +27,7 @@ class SasaranOpdController extends Controller
     {
         try {
 
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
             // cek validasi jika id berformar uuid atau tidak
             if(!Str::isUuid($request->tujuan_opd_id)){
@@ -116,7 +116,7 @@ class SasaranOpdController extends Controller
 
             // create uuid and assign author
             $form['id'] = Str::uuid();
-            $form['created_by'] = $request->get('payload')->username;
+            $form['created_by'] = $request->attributes->get('payload')->username;
             
             // insert into table db
             $data = SasaranOpd::create($form);
@@ -141,7 +141,7 @@ class SasaranOpdController extends Controller
     public function update($id, Request $request)
     {
         try {
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
             // cek validasi jika id berformar uuid atau tidak
             if(!Str::isUuid($id)){
                 return response()->json([
@@ -245,7 +245,7 @@ class SasaranOpdController extends Controller
            $form['master_opd_id'] = $master_opd_id;
            $form['parent_id'] = $request->parent_id;
            $form['pohon_kinerja_visi_id'] = $visi_id;
-           $form['updated_by'] = $request->get('payload')->username;
+           $form['updated_by'] = $request->attributes->get('payload')->username;
 
             $sasaran->update($form);
 
@@ -268,7 +268,7 @@ class SasaranOpdController extends Controller
     {
         try {
 
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
             // cek validasi jika id berformar uuid atau tidak
             if(!Str::isUuid($id)){
@@ -321,7 +321,7 @@ class SasaranOpdController extends Controller
     {
         try {
 
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
             if(!Str::isUuid($id)){
                 return response()->json([
@@ -520,7 +520,7 @@ class SasaranOpdController extends Controller
         //
         $searchColumn = collect(['sasaran']);
         $tujuan_opd_id = $request->get('tujuan_opd_id');
-        $master_opd_id = $request->get('payload')->opd->id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
         
         $currentPage = $request->get('page', 1);
         $perPage = $request->get('per_page', 1000);
@@ -617,7 +617,7 @@ class SasaranOpdController extends Controller
 
     private function getSubSasaran($parent_id, $request)
     {   
-        $master_opd_id = $request->get('payload')->opd->id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
 
         $sasaran = SasaranOpd::where('parent_id', '=', $parent_id)
                             ->where('master_opd_id', '=', $master_opd_id)

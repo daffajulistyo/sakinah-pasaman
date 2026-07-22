@@ -25,11 +25,11 @@ class IndikatorSkpController extends Controller
 
     public function getSasaranPegawai(Request $request)
     {
-        $master_opd_id = $request->get('payload')->opd->id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
         
-        $nip = $request->get('payload')->nip;
-        $jns_jbtn_id = $request->get('payload')->jns_jbtn_id;
-        $jabatan_id = $request->get('payload')->jabatan_id;
+        $nip = $request->attributes->get('payload')->nip;
+        $jns_jbtn_id = $request->attributes->get('payload')->jns_jbtn_id;
+        $jabatan_id = $request->attributes->get('payload')->jabatan_id;
 
         // cek existing opd
         $opd = MasterOpd::find($master_opd_id);
@@ -56,11 +56,11 @@ class IndikatorSkpController extends Controller
                 $sasaran = $sasaran->map(function($item) use ($request)
                 {      
                     
-                    $master_opd_id = $request->get('payload')->opd->id;
-                    $nip = $request->get('payload')->nip;
-                    $jns_jbtn_id = $request->get('payload')->jns_jbtn_id;
-                    $jabatan_id = $request->get('payload')->jabatan_id;
-                    $username = $request->get('payload')->username;
+                    $master_opd_id = $request->attributes->get('payload')->opd->id;
+                    $nip = $request->attributes->get('payload')->nip;
+                    $jns_jbtn_id = $request->attributes->get('payload')->jns_jbtn_id;
+                    $jabatan_id = $request->attributes->get('payload')->jabatan_id;
+                    $username = $request->attributes->get('payload')->username;
 
                     
                 
@@ -107,9 +107,9 @@ class IndikatorSkpController extends Controller
     {
         try {
 
-            $master_opd_id = $request->get('payload')->opd->id;
-            $username = $request->get('payload')->username;
-            $nip = $request->get('payload')->nip;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
+            $username = $request->attributes->get('payload')->username;
+            $nip = $request->attributes->get('payload')->nip;
             $skp_id = $request->skp_id;
             $sasaran_opd_id = $request->sasaran_opd_id;
             $indikator_opd_id = $request->indikator_opd_id;
@@ -218,7 +218,7 @@ class IndikatorSkpController extends Controller
                 $form['target_tw4'] = $request->target_tw4;
 
                 $form['id'] = Str::uuid();
-                $form['created_by'] = $request->get('payload')->username;           
+                $form['created_by'] = $request->attributes->get('payload')->username;           
             
                 // insert into table db
                 $data = IndikatorSkp::create($form);
@@ -263,8 +263,8 @@ class IndikatorSkpController extends Controller
     {
         try {
 
-            $username = $request->get('payload')->username;
-            $nip = $request->get('payload')->nip;
+            $username = $request->attributes->get('payload')->username;
+            $nip = $request->attributes->get('payload')->nip;
 
              // cek validasi jika id berformar uuid atau tidak
             if(!Str::isUuid($id)){
@@ -372,7 +372,7 @@ class IndikatorSkpController extends Controller
 
             $form = $request->validate($rules);
             
-            $form['updated_by'] = $request->get('payload')->username;
+            $form['updated_by'] = $request->attributes->get('payload')->username;
             $form['satuan'] = $request->satuan;
             $form['target'] = !empty($request->target) ? $request->target : $indikator->target;
             $form['target_tw1'] = !empty($request->target_tw1) ? $request->target_tw1 : $indikator->target_tw1;
@@ -404,8 +404,8 @@ class IndikatorSkpController extends Controller
     {
         try {
 
-            $username = $request->get('payload')->username;
-            $nip = $request->get('payload')->nip;
+            $username = $request->attributes->get('payload')->username;
+            $nip = $request->attributes->get('payload')->nip;
 
             if(!Str::isUuid($id)){
                 return response()->json([
@@ -450,9 +450,9 @@ class IndikatorSkpController extends Controller
     {
         try {
 
-            $master_opd_id = $request->get('payload')->opd->id;
-            $nip = $request->get('payload')->nip;
-            $username = $request->get('payload')->username;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
+            $nip = $request->attributes->get('payload')->nip;
+            $username = $request->attributes->get('payload')->username;
 
 
             // cek validasi jika id berformar uuid atau tidak
@@ -516,9 +516,9 @@ class IndikatorSkpController extends Controller
     {
         try {
 
-            $master_opd_id = $request->get('payload')->opd->id;
-            $nip = $request->get('payload')->nip;
-            $username = $request->get('payload')->username;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
+            $nip = $request->attributes->get('payload')->nip;
+            $username = $request->attributes->get('payload')->username;
 
 
             // cek validasi jika id berformar uuid atau tidak
@@ -555,7 +555,7 @@ class IndikatorSkpController extends Controller
             $sasaran = $sasaran->map(function($item) use($request, $id) 
             {
                 $skp_id = $request->skp_id;
-                $username = $request->get('payload')->username;
+                $username = $request->attributes->get('payload')->username;
 
                  $sasaran_pegawai = SasaranOpd::join('skp_indikator', 'skp_indikator.sasaran_opd_id', '=', 'sasaran_opd.id')
                                 ->where('skp_indikator.skp_id', '=', $id)
@@ -567,7 +567,7 @@ class IndikatorSkpController extends Controller
 
                     $sasaran_pegawai = $sasaran_pegawai->map(function($item) use($request, $id) 
                     {
-                        $username = $request->get('payload')->username;
+                        $username = $request->attributes->get('payload')->username;
                          $indikator_pegawai = IndikatorOpd::join('skp_indikator', 'skp_indikator.indikator_opd_id', '=', 'indikator_opd.id')
                                 ->where('skp_indikator.skp_id', '=', $id)
                                 ->where('skp_indikator.sasaran_opd_id', '=', $item->id_indikator_opd)
@@ -666,8 +666,8 @@ class IndikatorSkpController extends Controller
     {
         try {
 
-            $username = $request->get('payload')->username;
-            $nip = $request->get('payload')->nip;
+            $username = $request->attributes->get('payload')->username;
+            $nip = $request->attributes->get('payload')->nip;
 
              // cek validasi jika id berformar uuid atau tidak
             if(!Str::isUuid($id)){
@@ -791,7 +791,7 @@ class IndikatorSkpController extends Controller
             $realisasi_tw4 = (int) $request->realisasi_tw4;
             $capaian_tw4 = ($target_tw4==0) ? 0 : $realisasi_tw4/$target_tw4 * 100; 
             
-            $form['updated_by'] = $request->get('payload')->username;
+            $form['updated_by'] = $request->attributes->get('payload')->username;
             $form['hambatan'] = $request->hambatan;
             $form['tindak_lanjut'] = $request->tindak_lanjut;
             $form['capaian'] = $capaian;

@@ -54,7 +54,7 @@ class CascadingController extends Controller
                         $form['order'] = 1;
                         $form['is_active'] = true;
     
-                        $form['created_by'] = $request->get('payload')->username;
+                        $form['created_by'] = $request->attributes->get('payload')->username;
                                             
                     $insert[] = $form;   
             }

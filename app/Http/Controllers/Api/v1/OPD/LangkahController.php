@@ -21,7 +21,7 @@ class LangkahController extends Controller
     {
         try {
 
-            $master_opd_id = $request->get('payload')->opd->id;
+            $master_opd_id = $request->attributes->get('payload')->opd->id;
 
             // cek validasi jika id berformar uuid atau tidak
             if(!Str::isUuid($request->sasaran_opd_id)){
@@ -105,7 +105,7 @@ class LangkahController extends Controller
 
             // create uuid and assign author
             $form['id'] = Str::uuid();
-            $form['created_by'] = $request->get('payload')->username;
+            $form['created_by'] = $request->attributes->get('payload')->username;
             $form['satuan'] = $request->satuan;
             $form['keterangan'] = $request->keterangan;
             
@@ -212,7 +212,7 @@ class LangkahController extends Controller
             
             $form['satuan'] = $request->satuan;
             $form['keterangan'] = $request->keterangan;
-            $form['updated_by'] = $request->get('payload')->username;
+            $form['updated_by'] = $request->attributes->get('payload')->username;
 
             $langkah->update($form);
 
@@ -270,7 +270,7 @@ class LangkahController extends Controller
         $sasaran_id = $request->get('sasaran_opd_id');
         $indikator_id = $request->get('indikator_opd_id');
         $tahun = $request->get('tahun');
-        $master_opd_id = $request->get('payload')->opd->id;
+        $master_opd_id = $request->attributes->get('payload')->opd->id;
        
         try {
 
