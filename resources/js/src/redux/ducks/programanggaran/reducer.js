@@ -20,7 +20,7 @@ export default function programAnggaranReducer (state = initialState, actions){
                 loading: false,
                 error: false,
                 message: actions.payload.message,
-                data: actions.payload.data.data_program
+                data: actions.payload?.data?.data_program ?? []
             }
         case types.GET_PROGRAM_ANGGARAN_FAILED:
             return{

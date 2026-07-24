@@ -210,7 +210,7 @@ const LangkahRealisasiRenaksiPegawai = () => {
             
             // submit payload with dispatch action redux
             let response = await dispatch(createRealisasiRenaksiPegawaiLangkah(editId, payload));
-            if(response.status !== "failed"){
+            if(response.error === null){
                 console.log(response);
                 
                 Swal.fire({

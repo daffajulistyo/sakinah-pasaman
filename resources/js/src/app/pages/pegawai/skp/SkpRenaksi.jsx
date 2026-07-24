@@ -205,7 +205,7 @@ const SkpRenaksi = () => {
             let response = null
             if(editId !== "") response = await dispatch(updateRencanaAksi(editId, payload))
             else response = await dispatch(createRencanaAksi(payload));
-            if(response.status !== "failed"){
+            if(response.error === null){
                 Swal.fire({
                     icon: 'success',
                     title: response.data.message,

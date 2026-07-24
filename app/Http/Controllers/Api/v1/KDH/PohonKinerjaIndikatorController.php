@@ -676,19 +676,16 @@ class PohonKinerjaIndikatorController extends Controller
                 }
             /*------------ cek validasi Indikator-------------------------------------*/
             
-            $objectName = $indikator->formula_perhitungan; // or image.jpg, video.mp4
-            
+            $objectName = $indikator->formula_perhitungan;
 
-            if (!Storage::disk('s3')->exists($objectName)) {
+            if (empty($objectName) || !Storage::disk('s3')->exists($objectName)) {
                 return response()->json([
-                    'success' => true,
-                    'message' => 'File Loaded unsuccessfully.',
-                    'errors' => 'File Not Found',
-                ]);
+                    'success' => false,
+                    'message' => 'File Not Found',
+                ], 404);
             }
-            
 
-            $path = !empty($indikator) ? $indikator->formula_perhitungan : '';
+            $path = $indikator->formula_perhitungan;
             $disk = Storage::disk('s3');
 
             if (!$disk->exists($path)) {

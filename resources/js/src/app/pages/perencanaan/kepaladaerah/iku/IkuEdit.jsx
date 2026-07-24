@@ -89,7 +89,7 @@ const IkuEdit = () => {
             }
             let response = null
             response = await dispatch(updateIkuKdh(id, payload))
-            if(response.status !== "failed"){
+            if(response.error === null){
                 Swal.fire({
                     icon: 'success',
                     title: response.data.message,

@@ -44,8 +44,6 @@ const Opd = () => {
     const formik = useFormik({
         initialValues: {
             kode_opd: undefined,
-            simpeg_opd_id: undefined,
-            ikd_opd_id: undefined,
             nama_opd: undefined,
             alias_opd: undefined,
             order: 0,
@@ -53,8 +51,6 @@ const Opd = () => {
         },
         validationSchema: Yup.object({ 
             kode_opd:           Yup.string().required().strict(true),
-            simpeg_opd_id:           Yup.string().required().strict(true),
-            ikd_opd_id:           Yup.string().required().strict(true),
             nama_opd:           Yup.string().required().strict(true),
             alias_opd:           Yup.string().required().strict(true),
             order:           Yup.number().required().strict(true),
@@ -72,8 +68,6 @@ const Opd = () => {
     const validationForm = async () => {
         //validation
         formik.setFieldTouched('kode_opd', true, true)
-        formik.setFieldTouched('simpeg_opd_id', true, true)
-        formik.setFieldTouched('ikd_opd_id', true, true)
         formik.setFieldTouched('nama_opd', true, true)
         formik.setFieldTouched('alias_opd', true, true)
         formik.setFieldTouched('order', true, true)
@@ -91,8 +85,6 @@ const Opd = () => {
             const form = formik.values
             const payload = {
                 kode_opd: form.kode_opd,
-                simpeg_opd_id: form.simpeg_opd_id,
-                ikd_opd_id: form.ikd_opd_id,
                 nama_opd: form.nama_opd,
                 alias_opd: form.alias_opd,
                 order: form.order,
@@ -103,7 +95,7 @@ const Opd = () => {
             let response = null
             if(editId !== "") response = await dispatch(updateDatamasterOpd(editId, payload))
             else response = await dispatch(createDatamasterOpd(payload));
-            if(response.status !== "failed"){
+            if(response.error === null){
                 Swal.fire({
                     icon: 'success',
                     title: response.data.message,
@@ -139,8 +131,6 @@ const Opd = () => {
         
         formik.resetForm()
         formik.setFieldValue('kode_opd', data.kode_opd);
-        formik.setFieldValue('simpeg_opd_id', data.simpeg_opd_id.toString());
-        formik.setFieldValue('ikd_opd_id', data.ikd_opd_id.toString());
         formik.setFieldValue('nama_opd', data.nama_opd);
         formik.setFieldValue('alias_opd', data.alias_opd);
         formik.setFieldValue('order', data.order);
@@ -214,8 +204,6 @@ const Opd = () => {
                                 <tr>
                                     <th scope="col" className="px-4 py-3 w-[3%]">No.</th>
                                     <th scope="col" className="px-4 py-3">Kode OPD</th>
-                                    <th scope="col" className="px-4 py-3">Simpeg ID</th>
-                                    <th scope="col" className="px-4 py-3">IKD ID</th>
                                     <th scope="col" className="px-4 py-3">Simonev ID</th>
                                     <th scope="col" className="px-4 py-3">Nama OPD</th>
                                     <th scope="col" className="px-4 py-3">Singkatan</th>
@@ -243,12 +231,6 @@ const Opd = () => {
                                                 className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.order}</th>
                                             <td className="px-4 py-3">
                                                 {item.kode_opd}
-                                            </td>
-                                            <td className="px-4 py-3">
-                                                {item.simpeg_opd_id}
-                                            </td>
-                                            <td className="px-4 py-3">
-                                                {item.ikd_opd_id}
                                             </td>
                                             <td className="px-4 py-3">
                                                 {item.simonev_opd_id}
@@ -311,14 +293,6 @@ const Opd = () => {
                             <MyInput id="kode_opd" name="kode_opd" label="Kode OPD" type="text" placeholder='Inputkan kode opd...'
                                 value={formik.values.kode_opd} onChange={formik.handleChange} onBlur={formik.handleBlur}
                                 error={(formik.errors.kode_opd && formik.touched.kode_opd) ? formik.errors.kode_opd : ""} 
-                            />
-                            <MyInput id="simpeg_opd_id" name="simpeg_opd_id" label="SIMPEG ID" type="text" placeholder='Inputkan kode opd untuk simpeg...'
-                                value={formik.values.simpeg_opd_id} onChange={formik.handleChange} onBlur={formik.handleBlur}
-                                error={(formik.errors.simpeg_opd_id && formik.touched.simpeg_opd_id) ? formik.errors.simpeg_opd_id : ""} 
-                            />
-                            <MyInput id="ikd_opd_id" name="ikd_opd_id" label="IKD ID" type="text" placeholder='Inputkan kode opd untuk IKD...'
-                                value={formik.values.ikd_opd_id} onChange={formik.handleChange} onBlur={formik.handleBlur}
-                                error={(formik.errors.ikd_opd_id && formik.touched.ikd_opd_id) ? formik.errors.ikd_opd_id : ""} 
                             />
                             <MyInput id="nama_opd" name="nama_opd" label="Nama" type="text" placeholder='Inputkan nama opd...'
                                 value={formik.values.nama_opd} onChange={formik.handleChange} onBlur={formik.handleBlur}

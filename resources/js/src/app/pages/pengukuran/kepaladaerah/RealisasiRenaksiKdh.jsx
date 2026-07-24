@@ -132,7 +132,7 @@ const RealisasiRenaksiKdh = () => {
 
         
         let response = await dispatch(createRealisasiRenaksiKdh(formContent.rencana_aksi_id,payload))
-        if(response.status !== "failed"){
+        if(response.error === null){
             Swal.fire({
                 icon: 'success',
                 title: response.data.message,

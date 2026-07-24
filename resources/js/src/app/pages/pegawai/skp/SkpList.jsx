@@ -77,7 +77,7 @@ const SkpList = () => {
             }
             // submit payload with dispatch action redux
             let response = await dispatch(createPeriodeSkp(payload));
-            if(response.status !== "failed"){
+            if(response.error === null){
                 Swal.fire({
                     icon: 'success',
                     title: response.data.message,

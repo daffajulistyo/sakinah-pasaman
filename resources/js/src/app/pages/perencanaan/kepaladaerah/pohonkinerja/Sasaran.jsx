@@ -107,7 +107,7 @@ const Sasaran = () => {
             let response = null
             if(editId !== "") response = await dispatch(updateSasaranKdh(editId, payload))
             else response = await dispatch(createSasaranKdh(payload));
-            if(response.status !== "failed"){
+            if(response.error === null){
                 Swal.fire({
                     icon: 'success',
                     title: response.data.message,

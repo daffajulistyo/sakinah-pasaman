@@ -220,9 +220,15 @@ const Indikator = () => {
             
             // submit payload with dispatch action redux
             let response = null
-            if(editId !== "") response = await dispatch(updateIndikatorKdh(editId, payload))
+            if(editId !== "") {
+                if(uploadFile !== null) {
+                    response = await dispatch(updateIndikatorKdh(editId, formData))
+                } else {
+                    response = await dispatch(updateIndikatorKdh(editId, payload))
+                }
+            }
             else response = await dispatch(createIndikatorKdh(formData));
-            if(response.status !== "failed"){
+            if(response.error === null){
                 Swal.fire({
                     icon: 'success',
                     title: response.data.message,
@@ -393,7 +399,7 @@ const Indikator = () => {
         }
         formData.append('formula_perhitungan', uploadFile)
         const response = await dispatch(uploadFormulaPerhitunganKdh(editId, formData))
-        if(response.status !== "failed"){
+        if(response.error === null){
             setUploadFile(null)
             showPdfInIframe(editId)
             Swal.fire({
@@ -406,7 +412,7 @@ const Indikator = () => {
         else{
             Swal.fire({
                 icon: 'error',
-                title: response.data.message,
+                title: typeof response.error === 'string' ? response.error : "Gagal upload formula",
                 showConfirmButton: false,
                 timer: 1500
             })
@@ -515,6 +521,7 @@ const Indikator = () => {
                                                                     Edit
                                                                 </a>
                                                             </li>
+                                                            {item.formula_perhitungan ? (
                                                             <li>
                                                                 <a href="#" onClick={() => openFormulaModalAction(item.id)}
                                                                     className="flex gap-1 py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
@@ -522,6 +529,7 @@ const Indikator = () => {
                                                                     Lihat Formula
                                                                 </a>
                                                             </li>
+                                                            ) : null}
                                                         </ul>
                                                         <div className="py-1">
                                                             <a href="#" onClick={() => deleteAction(item.id)}
@@ -685,11 +693,11 @@ const Indikator = () => {
                                 onBlur={formik.handleBlur}
                                 error={(formik.touched.rilis && formik.errors.rilis) ? formik.errors.rilis : ""}
                             />
-                            <div className={`block mt-3 ${editId !== "" ? "hidden" : ""}`}>
+                            <div className="block mt-3">
                                 <MyUpload 
                                     id="file"
                                     name="file"
-                                    label="Formula Perhitungan"
+                                    label={`Formula Perhitungan${editId !== "" ? " (Upload ulang untuk mengganti)" : ""}`}
                                     notes='PDF (Max. 2MB)'
                                     onChange={(e) => setUploadFile(e.target.files[0])}
                                 />

@@ -207,7 +207,7 @@ const PkOpdForm = () => {
             target: targetPk
         }
         let response = await dispatch(createPkOpd(payload))
-        if(response.status !== "failed"){
+        if(response.error === null){
             Swal.fire({
                 icon: 'success',
                 title: response.data.message,

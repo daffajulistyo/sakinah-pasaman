@@ -201,7 +201,7 @@ const LangkahRaPegawai = () => {
             let response = null
             if(editId !== "") response = await dispatch(updateRenaksiPegawaiLangkah(editId, payload))
             else response = await dispatch(createRenaksiPegawaiLangkah(payload));
-            if(response.status !== "failed"){
+            if(response.error === null){
                 Swal.fire({
                     icon: 'success',
                     title: response.data.message,

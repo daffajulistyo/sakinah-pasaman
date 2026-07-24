@@ -9,11 +9,21 @@ const TinyMceEditor = ({
     onChange
 }) => {
     const editorRef = React.useRef(null);
+    const isFirstRender = React.useRef(true);
     const apiKey = import.meta.env.VITE_TINYMCE_APIKEY
     const internalOnchange = (e) => {
         onChange(e.target.getContent())
-        
     }
+
+    React.useEffect(() => {
+        if (editorRef.current && !isFirstRender.current) {
+            const currentContent = editorRef.current.getContent()
+            if (currentContent !== initialValue) {
+                editorRef.current.setContent(initialValue)
+            }
+        }
+    }, [initialValue])
+
     return (
         <div className="sm:mb-4 mb-2">
             <label htmlFor={id} 
@@ -23,7 +33,10 @@ const TinyMceEditor = ({
             <div className="mt-2">
                 <Editor
                     apiKey={apiKey}
-                    onInit={(evt, editor) => editorRef.current = editor}
+                    onInit={(evt, editor) => {
+                        editorRef.current = editor
+                        isFirstRender.current = false
+                    }}
                     initialValue={initialValue}
                     init={{
                     height: 300,

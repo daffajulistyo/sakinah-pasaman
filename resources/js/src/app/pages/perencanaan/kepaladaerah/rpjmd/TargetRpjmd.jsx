@@ -3,7 +3,8 @@ import React from 'react'
 import GoodNotes from "@assets/GoodNotes.png"
 import { StaticTable } from '@/app/components/Table'
 import PrimaryBtn from '@/app/components/Button/PrimaryBtn'
-import { ArrowTurnDownRightIcon } from '@heroicons/react/24/outline'
+import PrimaryLinkBtn from '@/app/components/Button/PrimaryLinkBtn'
+import { ArrowTurnDownRightIcon, ArrowLeftCircleIcon } from '@heroicons/react/24/outline'
 import MyModal from '@/app/components/Form/MyModal'
 import MyInput from '@/app/components/Form/MyInput'
 import { getListRpjmdKdh, createTargetRpjmdKdh } from '@/redux/ducks/rpjmdkdh/action'
@@ -13,6 +14,7 @@ import { getOptionsDatamasterSatuan } from '@/redux/ducks/datamastersatuan/actio
 import { useFormik } from 'formik'
 import * as Yup from "yup"
 import Swal from 'sweetalert2'
+import axios from 'axios'
 
 const TargetRpjmd = () => {
     const dispatch = useDispatch()
@@ -192,7 +194,7 @@ const TargetRpjmd = () => {
 
             let response = null
             response = await dispatch(createTargetRpjmdKdh(activeIndikator, payload))
-            if(response.status !== "failed"){
+            if(response.error === null){
                 Swal.fire({
                     icon: 'success',
                     title: response.data.message,
@@ -226,6 +228,65 @@ const TargetRpjmd = () => {
     }
     let numbering1 = 0;
     let numbering2 = 0;
+    const download = async () => {
+        try {
+            const BASE_HOST_URL =import.meta.env.VITE_BASE_HOST_URL
+            const apiUrl = `${BASE_HOST_URL}/v1/kdh/rpjmd/cetak`
+            const token = localStorage.getItem('token')
+            const resp = await axios.get(apiUrl, {
+                    responseType: 'blob',
+                    headers: {
+                    // jika butuh auth
+                    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                    },
+                    // jika menggunakan cookie-based auth dan CORS: withCredentials: true
+                    // withCredentials: true,
+                    onDownloadProgress: (progressEvent) => {
+                    // progressEvent.loaded / progressEvent.total (total mungkin undefined)
+                    if (progressEvent.lengthComputable) {
+                        const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                        console.log('download progress', percent);
+                    } else {
+                        console.log('downloaded', progressEvent.loaded);
+                    }
+                },
+            });
+        
+            // jika backend mengembalikan JSON error, content-type bukan PDF.
+            const contentType = resp.headers['content-type'] || '';
+            if (!contentType.includes('application/pdf')) {
+                // coba parse isi blob sebagai text lalu JSON
+                const text = await new Response(resp.data).text();
+                let json;
+                try { json = JSON.parse(text); } catch(e) { json = { message: text } }
+                throw new Error(json.message || 'Server returned non-pdf response');
+            }
+        
+            // ambil filename dari header Content-Disposition (jika tersedia)
+            const disposition = resp.headers['content-disposition'];
+            let filename = 'RPJMD.pdf'; //    fallback filename
+            if (disposition) {
+                const match = disposition.match(/filename\*?=(?:UTF-8'')?["']?([^;"']+)["']?/i);
+                if (match && match[1]) {
+                    filename = decodeURIComponent(match[1]);
+                }
+            }
+        
+            // buat blob & trigger download
+            const blob = new Blob([resp.data], { type: 'application/pdf' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            window.URL.revokeObjectURL(url);
+            } catch (err) {
+            console.error('Download failed', err);
+            alert('Gagal mengunduh file: ' + (err.message || err));
+            }
+    };
     return (
         <Layout>
             <div className="bg-white h-auto dark:bg-gray-800 rounded-lg drop-shadow-xl py-1 px-3 w-full">
@@ -238,9 +299,20 @@ const TargetRpjmd = () => {
                     </div>
                 </div>
             </div>
+            <div className="w-full flex sm:justify-end px-6">                    
+                <div className="w-full flex justify-end items-end md:w-1/4 sm:w-1/3 py-5">
+                    <PrimaryBtn onClick={() => download()}>Export</PrimaryBtn>
+                </div>
+            </div>
             <div className="bg-white h-auto dark:bg-gray-800 rounded-lg drop-shadow-xl py-1 sm:px-3 px-1 w-full flex flex-col lg:min-h-[35rem]">
                 
                 <div className="block w-full p-4">
+                    <div className="flex">
+                        <PrimaryLinkBtn to={`/perencanaan/kdh/rpjmd`}>
+                            <ArrowLeftCircleIcon className='w-5 h-5' />
+                            Kembali
+                        </PrimaryLinkBtn>
+                    </div>
                     <StaticTable header={tableHeader()}>
                         {
                             !rpjmdKdhState.loading ? dataRpjmd().map((item, x) => (
@@ -268,6 +340,7 @@ const TargetRpjmd = () => {
                         }
                     </StaticTable>
                 </div>
+
             </div>
             <MyModal ModalTitle={"FORM TARGET RPJMD"} openModal={openModal} setOpenModal={setOpenModal} size='md' >
                 <form onSubmit={formik.handleSubmit}>

@@ -206,7 +206,7 @@ const PkPegawaiForm = () => {
             target: targetPk
         }
         let response = await dispatch(createPkPegawai(payload))
-        if(response.status !== "failed"){
+        if(response.error === null){
             Swal.fire({
                 icon: 'success',
                 title: response.data.message,

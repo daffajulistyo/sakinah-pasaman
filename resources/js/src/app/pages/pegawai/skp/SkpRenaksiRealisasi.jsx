@@ -200,7 +200,7 @@ const SkpRenaksiRealisasi = () => {
             
             // submit payload with dispatch action redux
             let response = await dispatch(updateRencanaAksiSkpRealisasi(editId, payload))
-            if(response.status !== "failed"){
+            if(response.error === null){
                 Swal.fire({
                     icon: 'success',
                     title: response.data.message,

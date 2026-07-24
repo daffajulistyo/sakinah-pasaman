@@ -3,7 +3,7 @@ import React from 'react'
 import GoodNotes from "@assets/GoodNotes.png"
 import MySelect2 from '@/app/components/Form/MySelect2'
 import PrimaryLinkBtn from '@/app/components/Button/PrimaryLinkBtn'
-import { ArrowLeftCircleIcon } from '@heroicons/react/24/outline'
+import { ArrowLeftCircleIcon, ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 import MyInput from '@/app/components/Form/MyInput'
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
@@ -15,12 +15,16 @@ import Swal from 'sweetalert2'
 const RkpdProgramAnggaran = () => {
     const { type, period } = useParams()
     const dispatch = useDispatch()
-    const [searchParams, setSearchParams] = useSearchParams()
+    const [searchParams] = useSearchParams()
     const pohon_kinerja_sasaran_id = searchParams.get('id')
     const programAnggaranState = useSelector((state) => state.programAnggaranState)
     const rkpdKdhState = useSelector((state) => state.rkpdKdhState)
     const navigate = useNavigate()
     React.useEffect(() => {
+        if (type !== 'murni' && type !== 'perubahan') {
+            navigate('/perencanaan/kdh/rkpd')
+            return
+        }
         let payload = {
             pohon_kinerja_sasaran_id: pohon_kinerja_sasaran_id,
             tahun: period,
@@ -31,7 +35,7 @@ const RkpdProgramAnggaran = () => {
     const [programExisted,setProgramExisted] = React.useState(null)
     React.useEffect(() => {
         if(rkpdKdhState.sasaran !== null){
-            if(rkpdKdhState.sasaran.program_rkpd){
+            if(rkpdKdhState.sasaran.program_rkpd && typeof rkpdKdhState.sasaran.program_rkpd === 'object' && Object.keys(rkpdKdhState.sasaran.program_rkpd).length > 0){
                 if(rkpdKdhState.sasaran.program_rkpd.list_kegiatan){
                     var existedProgram = rkpdKdhState.sasaran.program_rkpd.list_kegiatan
                     setProgramExisted(existedProgram)
@@ -77,12 +81,16 @@ const RkpdProgramAnggaran = () => {
 
     const mixedLoading = () => (programAnggaranState.loading || rkpdKdhState.loading)
 
+    const isError = () => (rkpdKdhState.error) && !rkpdKdhState.loading
+
     const simpanData = (programAnggaranData) => {
         // hitung total anggaran
         let list_kegiatan = {}
 
-        for(var key in programExisted){
-            list_kegiatan[key] = programExisted[key]
+        if(programExisted !== null){
+            for(var key in programExisted){
+                list_kegiatan[key] = programExisted[key]
+            }
         }
 
         list_kegiatan['opd_id_'+selectedOpd.value] = programAnggaranData
@@ -128,7 +136,7 @@ const RkpdProgramAnggaran = () => {
                 else{
                     Swal.fire({
                         icon: 'error',
-                        title: "something went wrong",
+                        title: typeof response.error === 'string' ? response.error : "something went wrong",
                         showConfirmButton: false,
                         timer: 1500
                     })
@@ -164,6 +172,14 @@ const RkpdProgramAnggaran = () => {
                         </PrimaryLinkBtn>
                     </div>
                 </div>
+                {isError() ? (
+                    <div className="block w-full p-4">
+                        <div className="flex items-center gap-2 text-red-500 bg-red-50 dark:bg-red-900/20 p-4 rounded-lg">
+                            <ExclamationTriangleIcon className="w-6 h-6" />
+                            <span>Gagal memuat data sasaran. Silakan coba kembali.</span>
+                        </div>
+                    </div>
+                ) : <>
                 <div className="block w-full p-4">
                     
                     <MyInput
@@ -188,7 +204,7 @@ const RkpdProgramAnggaran = () => {
                         action={simpanData}
                     />
                 </div>
-                
+                </>}
             </div>
         </Layout>
     )

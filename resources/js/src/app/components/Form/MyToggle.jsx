@@ -16,7 +16,7 @@ const MyToggle = ({
                 <input 
                     type="checkbox" 
                     checked={value} 
-                    onChange={onChange} 
+                    onChange={(e) => onChange({ target: { name, value: e.target.checked } })} 
                     id={id} 
                     name={name} 
                     className="sr-only peer" 

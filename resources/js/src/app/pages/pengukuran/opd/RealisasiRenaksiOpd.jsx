@@ -135,7 +135,7 @@ const RealisasiRenaksiOpd = () => {
 
         
         let response = await dispatch(createRealisasiRenaksiOpd(formContent.rencana_aksi_id,payload))
-        if(response.status !== "failed"){
+        if(response.error === null){
             Swal.fire({
                 icon: 'success',
                 title: response.data.message,

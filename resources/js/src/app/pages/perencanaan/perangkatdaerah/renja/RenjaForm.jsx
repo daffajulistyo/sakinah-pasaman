@@ -205,7 +205,7 @@ const RenjaForm = () => {
             target: targetRenja
         }
         let response = await dispatch(createRenjaOpd(payload))
-        if(response.status !== "failed"){
+        if(response.error === null){
             Swal.fire({
                 icon: 'success',
                 title: response.data.message,

@@ -72,7 +72,7 @@ const RaOpdPage = () => {
 
         
         let response = await dispatch(createRenaksiOpd(payload))
-        if(response.status !== "failed"){
+        if(response.error === null){
             Swal.fire({
                 icon: 'success',
                 title: response.data.message,

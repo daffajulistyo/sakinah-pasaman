@@ -85,7 +85,7 @@ const Satuan = () => {
             let response = null
             if(editId !== "") response = await dispatch(updateDatamasterSatuan(editId, payload))
             else response = await dispatch(createDatamasterSatuan(payload));
-            if(response.status !== "failed"){
+            if(response.error === null){
                 Swal.fire({
                     icon: 'success',
                     title: response.data.message,

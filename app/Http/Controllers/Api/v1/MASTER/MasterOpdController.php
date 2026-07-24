@@ -113,8 +113,8 @@ class MasterOpdController extends Controller
             $form = $request->validate([                
                 'kode_opd'     =>'required|unique:master_opd,kode_opd,'.$id,
                 "nama_opd"   => "required|string",
-                "simpeg_opd_id"   => "required|integer",
-                "ikd_opd_id"   => "required|integer",
+                "simpeg_opd_id"   => "nullable|integer",
+                "ikd_opd_id"   => "nullable|integer",
                 "order"      => "required|integer",
                 "is_active" => "required|boolean",
                 "alias_opd"  => "required|string"

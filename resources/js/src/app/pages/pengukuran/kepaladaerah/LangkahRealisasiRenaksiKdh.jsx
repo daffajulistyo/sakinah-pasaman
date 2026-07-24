@@ -207,7 +207,7 @@ const LangkahRealisasiRenaksiKdh = () => {
             
             // submit payload with dispatch action redux
             let response = await dispatch(createRealisasiRenaksiKdhLangkah(editId, payload));
-            if(response.status !== "failed"){
+            if(response.error === null){
                 console.log(response);
                 
                 Swal.fire({

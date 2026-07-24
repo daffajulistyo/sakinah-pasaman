@@ -284,7 +284,7 @@ const SkpDetailRealisasi = () => {
             tindak_lanjut: initFormData.tindak_lanjut,
         }
         let response = await dispatch(updateSkpRealisasi(initFormData.id,payload))
-        if(response.status !== "failed"){
+        if(response.error === null){
             Swal.fire({
                 icon: 'success',
                 title: response.data.message,

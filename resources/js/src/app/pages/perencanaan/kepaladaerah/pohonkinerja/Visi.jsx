@@ -90,7 +90,7 @@ const Visi = () => {
             let response = null
             if(editId !== "") response = await dispatch(updateVisiKdh(editId, payload))
             else response = await dispatch(createVisiKdh(payload));
-            if(response.status !== "failed"){
+            if(response.error === null){
                 Swal.fire({
                     icon: 'success',
                     title: response.data.message,

@@ -121,7 +121,7 @@ const Profile = () => {
                         unit_kerja_atasan: selectedPegawai.sub_opd_nm || "-"
                     }
                     let response = await dispatch(createAtasanPegawai(payload))
-                    if(response.status !== "failed"){
+                    if(response.error === null){
                         setOpenModal(false)
                         dispatch(getListAtasanPegawai())
                         Swal.fire({

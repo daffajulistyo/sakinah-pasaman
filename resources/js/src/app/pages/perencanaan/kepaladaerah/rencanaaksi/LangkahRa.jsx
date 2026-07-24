@@ -197,7 +197,7 @@ const LangkahRa = () => {
             let response = null
             if(editId !== "") response = await dispatch(updateRenaksiKdhLangkah(editId, payload))
             else response = await dispatch(createRenaksiKdhLangkah(payload));
-            if(response.status !== "failed"){
+            if(response.error === null){
                 Swal.fire({
                     icon: 'success',
                     title: response.data.message,

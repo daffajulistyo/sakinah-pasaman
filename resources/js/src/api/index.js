@@ -658,7 +658,7 @@ class Api {
         } catch (error) {
             return {
                 status: error.status,
-                error: error.response.data.message ?? error.message
+                error: error?.response?.data?.message ?? error.message
             }
         }
     }

@@ -134,7 +134,7 @@ const TujuanOpd = () => {
             let response = null
             if(editId !== "") response = await dispatch(updateTujuanOpd(editId, payload))
             else response = await dispatch(createTujuanOpd(payload));
-            if(response.status !== "failed"){
+            if(response.error === null){
                 Swal.fire({
                     icon: 'success',
                     title: response.data.message,

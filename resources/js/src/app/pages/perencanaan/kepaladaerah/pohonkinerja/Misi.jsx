@@ -105,7 +105,7 @@ const Misi = () => {
             let response = null
             if(editId !== "") response = await dispatch(updateMisiKdh(editId, payload))
             else response = await dispatch(createMisiKdh(payload));
-            if(response.status !== "failed"){
+            if(response.error === null){
                 Swal.fire({
                     icon: 'success',
                     title: response.data.message,

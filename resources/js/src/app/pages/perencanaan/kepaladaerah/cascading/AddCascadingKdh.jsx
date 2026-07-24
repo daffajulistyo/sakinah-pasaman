@@ -126,7 +126,7 @@ const AddCascadingKdh = () => {
             
             const response = await dispatch(createCascadingKdh(payload))
             
-            if(response.status !== "failed"){
+            if(response.error === null){
                 Swal.fire({
                     icon: 'success',
                     title: response.data.message,

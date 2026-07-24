@@ -149,7 +149,7 @@ const IndikatorOpd = () => {
             let response = null
             if(editId !== "") response = await dispatch(updateIndikatorOpd(editId, payload))
             else response = await dispatch(createIndikatorOpd(payload));
-            if(response.status !== "failed"){
+            if(response.error === null){
                 Swal.fire({
                     icon: 'success',
                     title: response.data.message,
