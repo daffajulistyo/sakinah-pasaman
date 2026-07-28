@@ -16,13 +16,8 @@ class MasterJabatanController extends Controller
         $data = RefJabatan::with('jenisJabatan')
             ->when($search, fn($q) => $q->where('kode', 'like', "%{$search}%")->orWhere('nama', 'like', "%{$search}%"))
             ->orderBy('created_at', 'desc')->paginate(10)->appends(['search' => $search]);
-        return view('backend.jabatan.index', compact('data', 'search'));
-    }
-
-    public function create()
-    {
-        $jenis = RefJenisJabatan::where('is_active', true)->orderBy('nama')->get();
-        return view('backend.jabatan.create', compact('jenis'));
+        $jenis = RefJenisJabatan::where('is_active', true)->orderBy('nama')->get(['id', 'nama']);
+        return view('backend.jabatan.index', compact('data', 'search', 'jenis'));
     }
 
     public function store(Request $request)
@@ -34,13 +29,6 @@ class MasterJabatanController extends Controller
         ]);
         RefJabatan::create(['id' => Str::uuid(), 'kode' => $request->kode, 'nama' => $request->nama, 'ref_jenis_jabatan_id' => $request->ref_jenis_jabatan_id, 'is_active' => $request->boolean('is_active', true)]);
         return redirect()->route('jabatan.index')->with('success', 'Jabatan berhasil ditambahkan.');
-    }
-
-    public function edit($id)
-    {
-        $item = RefJabatan::findOrFail($id);
-        $jenis = RefJenisJabatan::where('is_active', true)->orderBy('nama')->get();
-        return view('backend.jabatan.edit', compact('item', 'jenis'));
     }
 
     public function update(Request $request, $id)

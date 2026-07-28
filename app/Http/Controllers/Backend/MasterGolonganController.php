@@ -17,11 +17,6 @@ class MasterGolonganController extends Controller
         return view('backend.golongan.index', compact('data', 'search'));
     }
 
-    public function create()
-    {
-        return view('backend.golongan.create');
-    }
-
     public function store(Request $request)
     {
         $request->validate([
@@ -31,12 +26,6 @@ class MasterGolonganController extends Controller
         ]);
         RefGolongan::create(['id' => Str::uuid(), 'kode' => $request->kode, 'golongan' => $request->golongan, 'pangkat' => $request->pangkat, 'is_active' => $request->boolean('is_active', true)]);
         return redirect()->route('golongan.index')->with('success', 'Golongan berhasil ditambahkan.');
-    }
-
-    public function edit($id)
-    {
-        $item = RefGolongan::findOrFail($id);
-        return view('backend.golongan.edit', compact('item'));
     }
 
     public function update(Request $request, $id)

@@ -17,11 +17,6 @@ class MasterJenisJabatanController extends Controller
         return view('backend.jenis-jabatan.index', compact('data', 'search'));
     }
 
-    public function create()
-    {
-        return view('backend.jenis-jabatan.create');
-    }
-
     public function store(Request $request)
     {
         $request->validate([
@@ -30,12 +25,6 @@ class MasterJenisJabatanController extends Controller
         ]);
         RefJenisJabatan::create(['id' => Str::uuid(), 'kode' => $request->kode, 'nama' => $request->nama, 'is_active' => $request->boolean('is_active', true)]);
         return redirect()->route('jenis-jabatan.index')->with('success', 'Jenis Jabatan berhasil ditambahkan.');
-    }
-
-    public function edit($id)
-    {
-        $item = RefJenisJabatan::findOrFail($id);
-        return view('backend.jenis-jabatan.edit', compact('item'));
     }
 
     public function update(Request $request, $id)

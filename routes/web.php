@@ -42,17 +42,18 @@ Route::middleware(['auth', 'roleplay', 'isActiveUser'])->prefix('backend')->grou
     Route::get('/logout', [App\Http\Controllers\Backend\AuthController::class, 'destroy'])->name('logout');
     Route::get('/home', [App\Http\Controllers\Backend\DashboardController::class, 'index'])->name('home');
 
-    Route::resource('/eselon', App\Http\Controllers\Backend\MasterEselonController::class);
-    Route::resource('/golongan', App\Http\Controllers\Backend\MasterGolonganController::class);
-    Route::resource('/jenis-jabatan', App\Http\Controllers\Backend\MasterJenisJabatanController::class);
-    Route::resource('/jabatan', App\Http\Controllers\Backend\MasterJabatanController::class);
-    Route::resource('/sub-opd', App\Http\Controllers\Backend\MasterSubOpdController::class);
-    Route::resource('/opd', App\Http\Controllers\Backend\MasterOpdController::class);
-    Route::resource('/satuan', App\Http\Controllers\Backend\MasterSatuanController::class);
-    Route::resource('/program', App\Http\Controllers\Backend\MasterProgramController::class);
-    Route::resource('/anggaran', App\Http\Controllers\Backend\MasterAnggaranController::class);
-    Route::resource('/pegawai', App\Http\Controllers\Backend\BackendPegawaiController::class);
-    Route::resource('/user', App\Http\Controllers\Backend\BackendUserController::class);
+    Route::resource('/eselon', App\Http\Controllers\Backend\MasterEselonController::class)->except(['create', 'edit']);
+    Route::resource('/golongan', App\Http\Controllers\Backend\MasterGolonganController::class)->except(['create', 'edit']);
+    Route::resource('/jenis-jabatan', App\Http\Controllers\Backend\MasterJenisJabatanController::class)->except(['create', 'edit']);
+    Route::resource('/jabatan', App\Http\Controllers\Backend\MasterJabatanController::class)->except(['create', 'edit']);
+    Route::resource('/sub-opd', App\Http\Controllers\Backend\MasterSubOpdController::class)->except(['create', 'edit']);
+    Route::resource('/opd', App\Http\Controllers\Backend\MasterOpdController::class)->except(['create', 'edit']);
+    Route::resource('/satuan', App\Http\Controllers\Backend\MasterSatuanController::class)->except(['create', 'edit']);
+    Route::resource('/kegiatan', App\Http\Controllers\Backend\MasterKegiatanController::class)->except(['create', 'edit']);
+    Route::resource('/sub-kegiatan', App\Http\Controllers\Backend\MasterSubKegiatanController::class)->except(['create', 'edit']);
+    Route::resource('/program', App\Http\Controllers\Backend\MasterProgramController::class)->except(['create', 'edit']);
+    Route::resource('/pegawai', App\Http\Controllers\Backend\BackendPegawaiController::class)->except(['create', 'edit']);
+    Route::resource('/user', App\Http\Controllers\Backend\BackendUserController::class)->except(['create', 'edit']);
 
     Route::post('/user/assign-role', [App\Http\Controllers\Backend\BackendUserController::class, 'assignRole'])->name('user.assign-role');
     Route::delete('/user/{userId}/role/{roleplayId}', [App\Http\Controllers\Backend\BackendUserController::class, 'removeRole'])->name('user.remove-role');

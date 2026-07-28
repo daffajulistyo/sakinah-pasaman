@@ -17,11 +17,6 @@ class MasterOpdController extends Controller
         return view('backend.opd.index', compact('data', 'search'));
     }
 
-    public function create()
-    {
-        return view('backend.opd.create');
-    }
-
     public function store(Request $request)
     {
         $request->validate([
@@ -35,12 +30,6 @@ class MasterOpdController extends Controller
             'created_by' => auth()->user()->username,
         ]);
         return redirect()->route('opd.index')->with('success', 'OPD berhasil ditambahkan.');
-    }
-
-    public function edit($id)
-    {
-        $item = MasterOpd::findOrFail($id);
-        return view('backend.opd.edit', compact('item'));
     }
 
     public function update(Request $request, $id)

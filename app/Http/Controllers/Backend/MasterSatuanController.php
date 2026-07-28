@@ -17,11 +17,6 @@ class MasterSatuanController extends Controller
         return view('backend.satuan.index', compact('data', 'search'));
     }
 
-    public function create()
-    {
-        return view('backend.satuan.create');
-    }
-
     public function store(Request $request)
     {
         $request->validate([
@@ -32,12 +27,6 @@ class MasterSatuanController extends Controller
             'is_active' => $request->boolean('is_active', false), 'created_by' => auth()->user()->username,
         ]);
         return redirect()->route('satuan.index')->with('success', 'Satuan berhasil ditambahkan.');
-    }
-
-    public function edit($id)
-    {
-        $item = MasterSatuan::findOrFail($id);
-        return view('backend.satuan.edit', compact('item'));
     }
 
     public function update(Request $request, $id)

@@ -18,11 +18,6 @@ class MasterEselonController extends Controller
         return view('backend.eselon.index', compact('data', 'search'));
     }
 
-    public function create()
-    {
-        return view('backend.eselon.create');
-    }
-
     public function store(Request $request)
     {
         $request->validate([
@@ -32,12 +27,6 @@ class MasterEselonController extends Controller
         ]);
         RefEselon::create(['id' => Str::uuid(), 'kode' => $request->kode, 'nama' => $request->nama, 'level' => $request->level, 'is_active' => $request->boolean('is_active', true)]);
         return redirect()->route('eselon.index')->with('success', 'Eselon berhasil ditambahkan.');
-    }
-
-    public function edit($id)
-    {
-        $item = RefEselon::findOrFail($id);
-        return view('backend.eselon.edit', compact('item'));
     }
 
     public function update(Request $request, $id)

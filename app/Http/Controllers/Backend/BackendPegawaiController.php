@@ -20,17 +20,12 @@ class BackendPegawaiController extends Controller
         $data = Pegawai::with(['opd', 'refEselon', 'refGolongan', 'refJenisJabatan', 'refJabatan'])
             ->when($search, fn($q) => $q->where('nip', 'like', "%{$search}%")->orWhere('nama', 'like', "%{$search}%"))
             ->orderBy('created_at', 'desc')->paginate(10)->appends(['search' => $search]);
-        return view('backend.pegawai.index', compact('data', 'search'));
-    }
-
-    public function create()
-    {
         $opds = MasterOpd::select('id', 'nama_opd')->orderBy('nama_opd')->get();
         $eselons = RefEselon::where('is_active', true)->orderBy('level')->get();
         $golongans = RefGolongan::where('is_active', true)->orderBy('kode')->get();
         $jenisJabatans = RefJenisJabatan::where('is_active', true)->orderBy('nama')->get();
         $jabatans = RefJabatan::where('is_active', true)->orderBy('nama')->get();
-        return view('backend.pegawai.create', compact('opds', 'eselons', 'golongans', 'jenisJabatans', 'jabatans'));
+        return view('backend.pegawai.index', compact('data', 'search', 'opds', 'eselons', 'golongans', 'jenisJabatans', 'jabatans'));
     }
 
     public function store(Request $request)
@@ -51,17 +46,6 @@ class BackendPegawaiController extends Controller
             'is_active' => $request->boolean('is_active', true), 'created_by' => auth()->user()->username,
         ]);
         return redirect()->route('pegawai.index')->with('success', 'Pegawai berhasil ditambahkan.');
-    }
-
-    public function edit($id)
-    {
-        $item = Pegawai::findOrFail($id);
-        $opds = MasterOpd::select('id', 'nama_opd')->orderBy('nama_opd')->get();
-        $eselons = RefEselon::where('is_active', true)->orderBy('level')->get();
-        $golongans = RefGolongan::where('is_active', true)->orderBy('kode')->get();
-        $jenisJabatans = RefJenisJabatan::where('is_active', true)->orderBy('nama')->get();
-        $jabatans = RefJabatan::where('is_active', true)->orderBy('nama')->get();
-        return view('backend.pegawai.edit', compact('item', 'opds', 'eselons', 'golongans', 'jenisJabatans', 'jabatans'));
     }
 
     public function update(Request $request, $id)

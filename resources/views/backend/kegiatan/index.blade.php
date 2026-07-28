@@ -1,8 +1,8 @@
 @extends('backend.layouts.main')
-@section('title', 'Master OPD')
+@section('title', 'Master Kegiatan')
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h5 class="fw-bold mb-0">Master OPD</h5>
+    <h5 class="fw-bold mb-0">Master Kegiatan</h5>
     <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#formModal"><i class="bi bi-plus-lg me-1"></i> Tambah</button>
 </div>
 
@@ -12,7 +12,7 @@
             <form method="GET" class="row g-2">
                 <div class="col-auto flex-grow-1"><input type="text" name="search" class="form-control form-control-sm" placeholder="Cari..." value="{{ $search }}"></div>
                 <div class="col-auto"><button class="btn btn-sm btn-outline-secondary"><i class="bi bi-search"></i></button></div>
-                @if($search)<div class="col-auto"><a href="{{ route('opd.index') }}" class="btn btn-sm btn-outline-danger">&times; Reset</a></div>@endif
+                @if($search)<div class="col-auto"><a href="{{ route('kegiatan.index') }}" class="btn btn-sm btn-outline-danger">&times; Reset</a></div>@endif
             </form>
         </div>
         <div class="table-responsive">
@@ -20,10 +20,10 @@
                 <thead class="table-light">
                     <tr>
                         <th>No</th>
-                        <th>Kode OPD</th>
-                        <th>Nama OPD</th>
-                        <th>Alamat</th>
-                        <th>Telp</th>
+                        <th>Kode</th>
+                        <th>Nama Kegiatan</th>
+                        <th>Program</th>
+                        <th>Anggaran</th>
                         <th>Status</th>
                         <th class="text-center">Action</th>
                     </tr>
@@ -32,10 +32,10 @@
                     @forelse($data as $index => $row)
                     <tr>
                         <td>{{ $data->firstItem() + $index }}</td>
-                        <td>{{ $row->kode_opd }}</td>
-                        <td>{{ $row->nama_opd }}</td>
-                        <td>{{ $row->alamat ?? '-' }}</td>
-                        <td>{{ $row->telp ?? '-' }}</td>
+                        <td>{{ $row->kode_kegiatan }}</td>
+                        <td>{{ $row->nama_kegiatan }}</td>
+                        <td>{{ $row->program->kode_program ?? '-' }} - {{ $row->program->nama_program ?? '-' }}</td>
+                        <td>Rp {{ number_format($row->anggaran, 0, ',', '.') }}</td>
                         <td>
                             <span class="badge {{ $row->is_active == 1 ? 'bg-success' : 'bg-secondary' }}">{{ $row->is_active == 1 ? 'Aktif' : 'Non' }}</span>
                         </td>
@@ -44,14 +44,12 @@
                                 data-bs-toggle="modal" data-bs-target="#formModal"
                                 data-mode="edit"
                                 data-id="{{ $row->id }}"
-                                data-kode="{{ $row->kode_opd }}"
-                                data-nama="{{ $row->nama_opd }}"
-                                data-alamat="{{ $row->alamat }}"
-                                data-telp="{{ $row->telp }}"
-                                data-email="{{ $row->email }}"
-                                data-website="{{ $row->website }}"
+                                data-kode="{{ $row->kode_kegiatan }}"
+                                data-nama="{{ $row->nama_kegiatan }}"
+                                data-program="{{ $row->master_program_id }}"
+                                data-anggaran="{{ $row->anggaran }}"
                                 data-aktif="{{ $row->is_active }}"><i class="bi bi-pencil"></i></button>
-                            <button class="btn btn-sm btn-outline-danger btn-sm-table" title="Hapus" data-bs-toggle="modal" data-bs-target="#deleteModal" data-action="{{ route('opd.destroy', $row->id) }}"><i class="bi bi-trash"></i></button>
+                            <button class="btn btn-sm btn-outline-danger btn-sm-table" title="Hapus" data-bs-toggle="modal" data-bs-target="#deleteModal" data-action="{{ route('kegiatan.destroy', $row->id) }}"><i class="bi bi-trash"></i></button>
                         </td>
                     </tr>
                     @empty
@@ -73,30 +71,31 @@
             <form id="formModalForm" method="POST">
                 @csrf
                 <div class="modal-header">
-                    <h6 class="modal-title" id="formModalTitle">Tambah OPD</h6>
+                    <h6 class="modal-title" id="formModalTitle">Tambah Kegiatan</h6>
                     <button class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <input type="hidden" name="_method" id="formMethod" value="POST">
                     <div class="mb-3">
-                        <label for="kode_opd" class="form-label">Kode OPD</label>
-                        <input type="text" name="kode_opd" id="kode_opd" class="form-control form-control-sm" required>
+                        <label for="kode_kegiatan" class="form-label">Kode Kegiatan</label>
+                        <input type="text" name="kode_kegiatan" id="kode_kegiatan" class="form-control form-control-sm" required>
                     </div>
                     <div class="mb-3">
-                        <label for="nama_opd" class="form-label">Nama OPD</label>
-                        <input type="text" name="nama_opd" id="nama_opd" class="form-control form-control-sm" required>
+                        <label for="nama_kegiatan" class="form-label">Nama Kegiatan</label>
+                        <input type="text" name="nama_kegiatan" id="nama_kegiatan" class="form-control form-control-sm" required>
                     </div>
                     <div class="mb-3">
-                        <label for="alamat" class="form-label">Alamat</label>
-                        <textarea name="alamat" id="alamat" class="form-control form-control-sm" rows="2"></textarea>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col"><label for="telp" class="form-label">Telp</label><input type="text" name="telp" id="telp" class="form-control form-control-sm"></div>
-                        <div class="col"><label for="email" class="form-label">Email</label><input type="email" name="email" id="email" class="form-control form-control-sm"></div>
+                        <label for="master_program_id" class="form-label">Program</label>
+                        <select name="master_program_id" id="master_program_id" class="form-select form-select-sm" required>
+                            <option value="">-- Pilih Program --</option>
+                            @foreach($programs as $p)
+                            <option value="{{ $p->id }}">{{ $p->kode_program }} - {{ $p->nama_program }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="mb-3">
-                        <label for="website" class="form-label">Website</label>
-                        <input type="text" name="website" id="website" class="form-control form-control-sm">
+                        <label for="anggaran" class="form-label">Anggaran (Rp)</label>
+                        <input type="number" name="anggaran" id="anggaran" class="form-control form-control-sm" value="0">
                     </div>
                     <div class="mb-3 form-check">
                         <input type="hidden" name="is_active" value="0">
@@ -140,19 +139,17 @@ document.addEventListener('DOMContentLoaded', function() {
         const btn = e.relatedTarget;
         const mode = btn.getAttribute('data-mode') || 'add';
         if (mode === 'edit') {
-            title.textContent = 'Edit OPD';
-            frm.action = '{{ url("backend/opd") }}/' + btn.getAttribute('data-id');
+            title.textContent = 'Edit Kegiatan';
+            frm.action = '{{ url("backend/kegiatan") }}/' + btn.getAttribute('data-id');
             method.value = 'PUT';
-            document.getElementById('kode_opd').value = btn.getAttribute('data-kode');
-            document.getElementById('nama_opd').value = btn.getAttribute('data-nama');
-            document.getElementById('alamat').value = btn.getAttribute('data-alamat') || '';
-            document.getElementById('telp').value = btn.getAttribute('data-telp') || '';
-            document.getElementById('email').value = btn.getAttribute('data-email') || '';
-            document.getElementById('website').value = btn.getAttribute('data-website') || '';
+            document.getElementById('kode_kegiatan').value = btn.getAttribute('data-kode');
+            document.getElementById('nama_kegiatan').value = btn.getAttribute('data-nama');
+            document.getElementById('master_program_id').value = btn.getAttribute('data-program');
+            document.getElementById('anggaran').value = btn.getAttribute('data-anggaran') || 0;
             document.getElementById('is_active').checked = btn.getAttribute('data-aktif') == '1';
         } else {
-            title.textContent = 'Tambah OPD';
-            frm.action = '{{ route("opd.store") }}';
+            title.textContent = 'Tambah Kegiatan';
+            frm.action = '{{ route("kegiatan.store") }}';
             method.value = 'POST';
             frm.reset();
             document.getElementById('is_active').checked = true;

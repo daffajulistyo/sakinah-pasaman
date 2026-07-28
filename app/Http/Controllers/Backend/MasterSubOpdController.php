@@ -16,13 +16,8 @@ class MasterSubOpdController extends Controller
         $data = RefSubOpd::with('opd')
             ->when($search, fn($q) => $q->where('kode', 'like', "%{$search}%")->orWhere('nama', 'like', "%{$search}%"))
             ->orderBy('created_at', 'desc')->paginate(10)->appends(['search' => $search]);
-        return view('backend.sub-opd.index', compact('data', 'search'));
-    }
-
-    public function create()
-    {
         $opds = MasterOpd::select('id', 'kode_opd', 'nama_opd')->orderBy('nama_opd')->get();
-        return view('backend.sub-opd.create', compact('opds'));
+        return view('backend.sub-opd.index', compact('data', 'search', 'opds'));
     }
 
     public function store(Request $request)
@@ -34,13 +29,6 @@ class MasterSubOpdController extends Controller
         ]);
         RefSubOpd::create(['id' => Str::uuid(), 'kode' => $request->kode, 'nama' => $request->nama, 'master_opd_id' => $request->master_opd_id, 'is_active' => $request->boolean('is_active', true)]);
         return redirect()->route('sub-opd.index')->with('success', 'Sub OPD berhasil ditambahkan.');
-    }
-
-    public function edit($id)
-    {
-        $item = RefSubOpd::findOrFail($id);
-        $opds = MasterOpd::select('id', 'kode_opd', 'nama_opd')->orderBy('nama_opd')->get();
-        return view('backend.sub-opd.edit', compact('item', 'opds'));
     }
 
     public function update(Request $request, $id)

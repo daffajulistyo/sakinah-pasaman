@@ -31,12 +31,6 @@ class BackendUserController extends Controller
         return view('backend.user.index', compact('data', 'search', 'availableRoles'));
     }
 
-    public function create()
-    {
-        $roles = Roles::whereIn('type', ['Admin_OPD', 'Admin_KDH', 'Pegawai'])->get();
-        return view('backend.user.create', compact('roles'));
-    }
-
     public function store(Request $request)
     {
         $request->validate([
@@ -80,12 +74,6 @@ class BackendUserController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
         return redirect()->route('user.index')->with('success', $user->name . ' berhasil dihapus.');
-    }
-
-    public function edit($id)
-    {
-        $item = User::findOrFail($id);
-        return view('backend.user.edit', compact('item'));
     }
 
     public function update(Request $request, $id)
