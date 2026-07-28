@@ -34,11 +34,12 @@ Route::middleware('auth')->group(function () {
 
 // ===================== BACKEND (Bootstrap 5, Superadmin only, Master Data CRUD) =====================
 Route::middleware('guest')->group(function () {
-    Route::get('/backend', [App\Http\Controllers\Backend\AuthController::class, 'index'])->name('backend.login');
-    Route::post('/backend', [App\Http\Controllers\Backend\AuthController::class, 'authenticate'])->middleware('throttle:10,5');
+    Route::get('/backend/login', [App\Http\Controllers\Backend\AuthController::class, 'index'])->name('backend.login');
+    Route::post('/backend/login', [App\Http\Controllers\Backend\AuthController::class, 'authenticate'])->middleware('throttle:10,5');
 });
 
 Route::middleware(['auth', 'roleplay', 'isActiveUser'])->prefix('backend')->group(function () {
+    Route::get('/', [App\Http\Controllers\Backend\DashboardController::class, 'index'])->name('backend.dashboard');
     Route::get('/logout', [App\Http\Controllers\Backend\AuthController::class, 'destroy'])->name('logout');
     Route::get('/home', [App\Http\Controllers\Backend\DashboardController::class, 'index'])->name('home');
 

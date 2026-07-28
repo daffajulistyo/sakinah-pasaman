@@ -42,7 +42,7 @@ class AuthController extends Controller
             $myroles = auth()->user()->roleplay->load('roles');
             session()->put('myroles', ['roles' => $myroles->pluck('roles')->toArray(), 'expires_at' => now()->addMinutes(5)]);
 
-            return redirect()->intended('/backend/home');
+        return redirect('/backend/login');
         }
 
         return redirect()->route('backend.login')->with('error', 'Username atau password salah.');
