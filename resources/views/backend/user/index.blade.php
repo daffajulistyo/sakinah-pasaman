@@ -1,22 +1,25 @@
 @extends('backend.layouts.main')
 @section('title', 'User Management')
-@section('content')
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h5 class="fw-bold mb-0">User Management</h5>
-    <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#formModal"><i class="bi bi-plus-lg me-1"></i> Tambah</button>
-</div>
+@section('page-title', 'User Management')
+@section('main-content')
 
-<div class="card shadow-sm border-0">
-    <div class="card-body p-0">
-        <div class="p-3 border-bottom">
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h3 class="card-title mb-0">User Management</h3>
+        <div class="card-tools">
+            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#formModal"><i class="bi bi-plus-lg me-1"></i> Tambah</button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="mb-3">
             <form method="GET" class="row g-2">
                 <div class="col-auto flex-grow-1"><input type="text" name="search" class="form-control form-control-sm" placeholder="Cari..." value="{{ $search }}"></div>
                 <div class="col-auto"><button class="btn btn-sm btn-outline-secondary"><i class="bi bi-search"></i></button></div>
-                @if($search)<div class="col-auto"><a href="{{ route('user.index') }}" class="btn btn-sm btn-outline-danger">&times; Reset</a></div>@endif
+                @if($search)<div class="col-auto"><a href="{{ route('backend.user.index') }}" class="btn btn-sm btn-outline-danger">&times; Reset</a></div>@endif
             </form>
         </div>
         <div class="table-responsive">
-            <table class="table table-hover table-sm mb-0 small">
+            <table class="table table-bordered table-hover mb-0 small">
                 <thead class="table-light">
                     <tr><th>No</th><th>Nama</th><th>Username</th><th>Roles</th><th>Status</th><th class="text-center">Action</th></tr>
                 </thead>
@@ -31,7 +34,7 @@
                                 @foreach($row->assigned_roles as $role)
                                     <span class="badge bg-info text-dark me-1 mb-1">
                                         {{ $role['role_name'] }}
-                                        <form action="{{ route('user.remove-role', ['userId' => $row->id, 'roleplayId' => $role['roleplay_id']]) }}" method="POST" class="d-inline" onsubmit="return confirm('Hapus role ini dari user?')">
+                                        <form action="{{ route('backend.user.remove-role', ['userId' => $row->id, 'roleplayId' => $role['roleplay_id']]) }}" method="POST" class="d-inline" onsubmit="return confirm('Hapus role ini dari user?')">
                                             @csrf @method('DELETE')
                                             <button type="submit" class="btn-close btn-close-white ms-1" style="font-size:0.5rem;" title="Hapus role"></button>
                                         </form>
@@ -50,7 +53,7 @@
                                 data-nama="{{ $row->name }}"
                                 data-username="{{ $row->username }}"
                                 data-aktif="{{ $row->is_active ? '1' : '0' }}"><i class="bi bi-pencil"></i></button>
-                            <button class="btn btn-sm btn-outline-danger btn-sm-table" title="Hapus" data-bs-toggle="modal" data-bs-target="#deleteModal" data-action="{{ route('user.destroy', $row->id) }}"><i class="bi bi-trash"></i></button>
+                            <button class="btn btn-sm btn-outline-danger btn-sm-table" title="Hapus" data-bs-toggle="modal" data-bs-target="#deleteModal" data-action="{{ route('backend.user.destroy', $row->id) }}"><i class="bi bi-trash"></i></button>
                             <button class="btn btn-sm btn-outline-success btn-sm-table" title="Tambah Role" data-bs-toggle="modal" data-bs-target="#addRoleModal-{{ $row->id }}"><i class="bi bi-shield-plus"></i></button>
                         </td>
                     </tr>
@@ -60,10 +63,12 @@
                 </tbody>
             </table>
         </div>
-        @if($data->hasPages())
-        <div class="px-3 py-2 border-top">{{ $data->links() }}</div>
-        @endif
     </div>
+    @if($data->hasPages())
+    <div class="card-footer clearfix">
+        <div class="float-end">{{ $data->links('pagination::bootstrap-5') }}</div>
+    </div>
+    @endif
 </div>
 
 {{-- Form Modal (Add/Edit) --}}
@@ -125,7 +130,7 @@
 <div class="modal fade" id="addRoleModal-{{ $row->id }}" tabindex="-1">
     <div class="modal-dialog modal-sm modal-dialog-centered">
         <div class="modal-content">
-            <form action="{{ route('user.assign-role') }}" method="POST">
+            <form action="{{ route('backend.user.assign-role') }}" method="POST">
                 @csrf
                 <input type="hidden" name="user_id" value="{{ $row->id }}">
                 <div class="modal-header"><h6 class="modal-title">Tambah Role - {{ $row->name }}</h6><button class="btn-close" data-bs-dismiss="modal"></button></div>
@@ -170,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function() {
             pwdField.style.display = 'block';
         } else {
             title.textContent = 'Tambah User';
-            frm.action = '{{ route("user.store") }}';
+            frm.action = '{{ route("backend.user.store") }}';
             method.value = 'POST';
             frm.reset();
             document.getElementById('is_active').checked = true;

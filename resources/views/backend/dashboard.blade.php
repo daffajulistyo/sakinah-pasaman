@@ -1,6 +1,7 @@
 @extends('backend.layouts.main')
 @section('title', 'Dashboard')
-@section('content')
+@section('page-title', 'Dashboard')
+@section('main-content')
 <div class="d-flex align-items-center gap-3 mb-4">
     <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center" style="width:48px;height:48px;">
         <i class="bi bi-speedometer2 text-primary fs-5"></i>

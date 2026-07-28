@@ -54,10 +54,10 @@ Route::middleware(['auth', 'roleplay', 'isActiveUser'])->prefix('backend')->grou
     Route::resource('/sub-kegiatan', App\Http\Controllers\Backend\MasterSubKegiatanController::class)->except(['create', 'edit']);
     Route::resource('/program', App\Http\Controllers\Backend\MasterProgramController::class)->except(['create', 'edit']);
     Route::resource('/pegawai', App\Http\Controllers\Backend\BackendPegawaiController::class)->except(['create', 'edit']);
-    Route::resource('/user', App\Http\Controllers\Backend\BackendUserController::class)->except(['create', 'edit']);
+    Route::resource('/user', App\Http\Controllers\Backend\BackendUserController::class)->except(['create', 'edit'])->names('backend.user');
 
-    Route::post('/user/assign-role', [App\Http\Controllers\Backend\BackendUserController::class, 'assignRole'])->name('user.assign-role');
-    Route::delete('/user/{userId}/role/{roleplayId}', [App\Http\Controllers\Backend\BackendUserController::class, 'removeRole'])->name('user.remove-role');
+    Route::post('/user/assign-role', [App\Http\Controllers\Backend\BackendUserController::class, 'assignRole'])->name('backend.user.assign-role');
+    Route::delete('/user/{userId}/role/{roleplayId}', [App\Http\Controllers\Backend\BackendUserController::class, 'removeRole'])->name('backend.user.remove-role');
 });
 
 // ===================== AUTH-ADMIN PROTECTED (existing) =====================

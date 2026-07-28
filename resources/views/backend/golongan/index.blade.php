@@ -1,14 +1,17 @@
 @extends('backend.layouts.main')
 @section('title', 'Master Golongan')
-@section('content')
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h5 class="fw-bold mb-0">Master Golongan</h5>
-    <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#formModal"><i class="bi bi-plus-lg me-1"></i> Tambah</button>
-</div>
+@section('page-title', 'Master Golongan')
+@section('main-content')
 
-<div class="card shadow-sm border-0">
-    <div class="card-body p-0">
-        <div class="p-3 border-bottom">
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h3 class="card-title mb-0">Master Golongan</h3>
+        <div class="card-tools">
+            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#formModal"><i class="bi bi-plus-lg me-1"></i> Tambah</button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="mb-3">
             <form method="GET" class="row g-2">
                 <div class="col-auto flex-grow-1"><input type="text" name="search" class="form-control form-control-sm" placeholder="Cari..." value="{{ $search }}"></div>
                 <div class="col-auto"><button class="btn btn-sm btn-outline-secondary"><i class="bi bi-search"></i></button></div>
@@ -16,7 +19,7 @@
             </form>
         </div>
         <div class="table-responsive">
-            <table class="table table-hover table-sm mb-0 small">
+            <table class="table table-bordered table-hover mb-0 small">
                 <thead class="table-light">
                     <tr>
                         <th>No</th>
@@ -55,10 +58,12 @@
                 </tbody>
             </table>
         </div>
-        @if($data->hasPages())
-        <div class="px-3 py-2 border-top">{{ $data->links() }}</div>
-        @endif
     </div>
+    @if($data->hasPages())
+    <div class="card-footer clearfix">
+        <div class="float-end">{{ $data->links('pagination::bootstrap-5') }}</div>
+    </div>
+    @endif
 </div>
 
 {{-- Form Modal --}}
