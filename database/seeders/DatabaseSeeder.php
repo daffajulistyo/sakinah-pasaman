@@ -27,7 +27,6 @@ class DatabaseSeeder extends Seeder
         $this->call(MenugroupsTableSeeder::class);
         $this->call(MenusTableSeeder::class);
         $this->call(RefSeeder::class);
-        $this->call(PohonKinerjaSeeder::class);
-        $this->call(MasterProgramSeeder::class);
+        $this->call(SatuanSeeder::class);
     }
 }

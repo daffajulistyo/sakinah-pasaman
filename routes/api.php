@@ -203,6 +203,9 @@ Route::prefix('v1')
             Route::get('/jabatan', [App\Http\Controllers\Api\v1\MASTER\RefController::class, 'jabatan']);
             Route::get('/sub-opd', [App\Http\Controllers\Api\v1\MASTER\RefController::class, 'subOpd']);
             Route::get('/roles', [App\Http\Controllers\Api\v1\MASTER\RefController::class, 'roles']);
+            Route::get('/program', [App\Http\Controllers\Api\v1\MASTER\RefController::class, 'program']);
+            Route::get('/kegiatan', [App\Http\Controllers\Api\v1\MASTER\RefController::class, 'kegiatan']);
+            Route::get('/sub-kegiatan', [App\Http\Controllers\Api\v1\MASTER\RefController::class, 'subKegiatan']);
         });
 
         // untuk sub modul pohon kinerja
@@ -221,6 +224,27 @@ Route::prefix('v1')
             Route::get('/opd/{id}', [App\Http\Controllers\Api\v1\MASTER\MasterOpdController::class, 'read']);
             Route::put('/opd/{id}', [App\Http\Controllers\Api\v1\MASTER\MasterOpdController::class, 'update']);
             Route::delete('/opd/{id}', [App\Http\Controllers\Api\v1\MASTER\MasterOpdController::class, 'delete']);
+
+            // untuk crud program
+            Route::get('/program/list', [App\Http\Controllers\Api\v1\MASTER\MasterProgramController::class, 'list']);
+            Route::post('/program', [App\Http\Controllers\Api\v1\MASTER\MasterProgramController::class, 'create']);
+            Route::get('/program/{id}', [App\Http\Controllers\Api\v1\MASTER\MasterProgramController::class, 'read']);
+            Route::put('/program/{id}', [App\Http\Controllers\Api\v1\MASTER\MasterProgramController::class, 'update']);
+            Route::delete('/program/{id}', [App\Http\Controllers\Api\v1\MASTER\MasterProgramController::class, 'delete']);
+
+            // untuk crud kegiatan
+            Route::get('/kegiatan/list', [App\Http\Controllers\Api\v1\MASTER\MasterKegiatanController::class, 'list']);
+            Route::post('/kegiatan', [App\Http\Controllers\Api\v1\MASTER\MasterKegiatanController::class, 'create']);
+            Route::get('/kegiatan/{id}', [App\Http\Controllers\Api\v1\MASTER\MasterKegiatanController::class, 'read']);
+            Route::put('/kegiatan/{id}', [App\Http\Controllers\Api\v1\MASTER\MasterKegiatanController::class, 'update']);
+            Route::delete('/kegiatan/{id}', [App\Http\Controllers\Api\v1\MASTER\MasterKegiatanController::class, 'delete']);
+
+            // untuk crud sub kegiatan
+            Route::get('/sub-kegiatan/list', [App\Http\Controllers\Api\v1\MASTER\MasterSubKegiatanController::class, 'list']);
+            Route::post('/sub-kegiatan', [App\Http\Controllers\Api\v1\MASTER\MasterSubKegiatanController::class, 'create']);
+            Route::get('/sub-kegiatan/{id}', [App\Http\Controllers\Api\v1\MASTER\MasterSubKegiatanController::class, 'read']);
+            Route::put('/sub-kegiatan/{id}', [App\Http\Controllers\Api\v1\MASTER\MasterSubKegiatanController::class, 'update']);
+            Route::delete('/sub-kegiatan/{id}', [App\Http\Controllers\Api\v1\MASTER\MasterSubKegiatanController::class, 'delete']);
 
         });
     });

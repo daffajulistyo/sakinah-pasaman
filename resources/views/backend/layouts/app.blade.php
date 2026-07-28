@@ -63,7 +63,9 @@
     </script>
     <!--end::Required Plugin(Bootstrap 5)--><!--begin::Required Plugin(AdminLTE)-->
     <script src="{{ asset('adminlte/dist/js/adminlte.js') }}"></script>
-    <!--end::Required Plugin(AdminLTE)--><!--begin::OverlayScrollbars Configure-->
+    <!--end::Required Plugin(AdminLTE)--><!--begin::Required Plugin(SweetAlert2)-->
+    <script src="{{ asset('js/sweetalert2.js') }}"></script>
+    <!--end::Required Plugin(SweetAlert2)--><!--begin::OverlayScrollbars Configure-->
     <script>
         const SELECTOR_SIDEBAR_WRAPPER = '.sidebar-wrapper';
         const Default = {
@@ -85,6 +87,18 @@
         });
     </script>
     <!--end::OverlayScrollbars Configure-->
+    <!--begin::Flash Message Handler-->
+    @if(session('success'))
+    <script>
+    Swal.fire({ icon: 'success', title: 'Berhasil', text: '{{ session('success') }}', timer: 3000, showConfirmButton: false, toast: true, position: 'top-end' });
+    </script>
+    @endif
+    @if(session('error'))
+    <script>
+    Swal.fire({ icon: 'error', title: 'Gagal', text: '{{ session('error') }}', timer: 3000, showConfirmButton: false, toast: true, position: 'top-end' });
+    </script>
+    @endif
+    <!--end::Flash Message Handler-->
     @stack('scripts')
     <!--end::Script-->
 </body>

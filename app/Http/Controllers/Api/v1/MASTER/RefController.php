@@ -45,4 +45,27 @@ class RefController extends Controller
     {
         return response()->json(['success' => true, 'data' => DB::table('roles')->orderBy('role_name')->get(['id', 'role_name as name'])]);
     }
+
+    public function program()
+    {
+        return response()->json(['success' => true, 'data' => DB::table('master_program')->where('is_active', true)->orderBy('kode_program')->get(['id', 'kode_program', 'nama_program'])]);
+    }
+
+    public function kegiatan(Request $request)
+    {
+        $query = DB::table('master_kegiatan')->where('is_active', true);
+        if ($request->program_id) {
+            $query->where('master_program_id', $request->program_id);
+        }
+        return response()->json(['success' => true, 'data' => $query->orderBy('kode_kegiatan')->get(['id', 'kode_kegiatan', 'nama_kegiatan', 'master_program_id'])]);
+    }
+
+    public function subKegiatan(Request $request)
+    {
+        $query = DB::table('master_sub_kegiatan')->where('is_active', true);
+        if ($request->kegiatan_id) {
+            $query->where('master_kegiatan_id', $request->kegiatan_id);
+        }
+        return response()->json(['success' => true, 'data' => $query->orderBy('kode_sub_kegiatan')->get(['id', 'kode_sub_kegiatan', 'nama_sub_kegiatan', 'master_kegiatan_id'])]);
+    }
 }

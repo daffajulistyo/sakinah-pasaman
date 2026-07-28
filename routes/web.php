@@ -63,50 +63,50 @@ Route::middleware(['auth', 'roleplay', 'isActiveUser'])->prefix('backend')->grou
 // ===================== AUTH-ADMIN PROTECTED (existing) =====================
 Route::middleware(['auth','roleplay','isActiveUser'])->group(function () {
 
-    Route::prefix('managements')->group(function(){
-        Route::get('/user/datatable', [App\Http\Controllers\Managements\UserController::class, 'datatable']);
-        Route::resource('/user', App\Http\Controllers\Managements\UserController::class)->except(['create', 'edit'])
-        ->where(['user' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}']);
+    // Route::prefix('managements')->group(function(){
+    //     Route::get('/user/datatable', [App\Http\Controllers\Managements\UserController::class, 'datatable']);
+    //     Route::resource('/user', App\Http\Controllers\Managements\UserController::class)->except(['create', 'edit'])
+    //     ->where(['user' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}']);
 
-        Route::get('/functions/showall', [App\Http\Controllers\Managements\FunctionsController::class, 'showall']);
-        Route::get('/functions/datatable', [App\Http\Controllers\Managements\FunctionsController::class, 'datatable']);
-        Route::resource('/functions', App\Http\Controllers\Managements\FunctionsController::class)->except(['create', 'edit'])
-        ->where(['function' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}']);
+    //     Route::get('/functions/showall', [App\Http\Controllers\Managements\FunctionsController::class, 'showall']);
+    //     Route::get('/functions/datatable', [App\Http\Controllers\Managements\FunctionsController::class, 'datatable']);
+    //     Route::resource('/functions', App\Http\Controllers\Managements\FunctionsController::class)->except(['create', 'edit'])
+    //     ->where(['function' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}']);
 
-        Route::get('/controllers/showall', [App\Http\Controllers\Managements\ControllersController::class, 'showall']);
-        Route::get('/controllers/datatable', [App\Http\Controllers\Managements\ControllersController::class, 'datatable']);
-        Route::resource('/controllers', App\Http\Controllers\Managements\ControllersController::class)->except(['create', 'edit'])
-        ->where(['controller' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}']);
+    //     Route::get('/controllers/showall', [App\Http\Controllers\Managements\ControllersController::class, 'showall']);
+    //     Route::get('/controllers/datatable', [App\Http\Controllers\Managements\ControllersController::class, 'datatable']);
+    //     Route::resource('/controllers', App\Http\Controllers\Managements\ControllersController::class)->except(['create', 'edit'])
+    //     ->where(['controller' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}']);
 
-        Route::get('/modules/datatable', [App\Http\Controllers\Managements\ModulesController::class, 'datatable']);
-        Route::resource('/modules', App\Http\Controllers\Managements\ModulesController::class)->except(['create', 'edit'])
-        ->where(['module' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}']);
+    //     Route::get('/modules/datatable', [App\Http\Controllers\Managements\ModulesController::class, 'datatable']);
+    //     Route::resource('/modules', App\Http\Controllers\Managements\ModulesController::class)->except(['create', 'edit'])
+    //     ->where(['module' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}']);
 
-        Route::get('/roles/showall', [App\Http\Controllers\Managements\RolesController::class, 'showall']);
-        Route::get('/roles/datatable', [App\Http\Controllers\Managements\RolesController::class, 'datatable']);
-        Route::resource('/roles', App\Http\Controllers\Managements\RolesController::class)->except(['create', 'edit'])
-        ->where(['role' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}']);
+    //     Route::get('/roles/showall', [App\Http\Controllers\Managements\RolesController::class, 'showall']);
+    //     Route::get('/roles/datatable', [App\Http\Controllers\Managements\RolesController::class, 'datatable']);
+    //     Route::resource('/roles', App\Http\Controllers\Managements\RolesController::class)->except(['create', 'edit'])
+    //     ->where(['role' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}']);
 
-        Route::get('/actions/{id}', [App\Http\Controllers\Managements\ActionsController::class, 'index']);
-        Route::post('/actions', [App\Http\Controllers\Managements\ActionsController::class, 'store']);
-        Route::get('/actions/showall/{id}', [App\Http\Controllers\Managements\ActionsController::class, 'showall']);
-        Route::delete('/actions/{id}', [App\Http\Controllers\Managements\ActionsController::class, 'destroy']);
+    //     Route::get('/actions/{id}', [App\Http\Controllers\Managements\ActionsController::class, 'index']);
+    //     Route::post('/actions', [App\Http\Controllers\Managements\ActionsController::class, 'store']);
+    //     Route::get('/actions/showall/{id}', [App\Http\Controllers\Managements\ActionsController::class, 'showall']);
+    //     Route::delete('/actions/{id}', [App\Http\Controllers\Managements\ActionsController::class, 'destroy']);
 
-        Route::get('/permissions/showall/{id}', [App\Http\Controllers\Managements\PermissionsController::class, 'showall']);
-        Route::resource('/permissions', App\Http\Controllers\Managements\PermissionsController::class)->except(['create', 'edit','show'])
-        ->where(['permission' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}']);
+    //     Route::get('/permissions/showall/{id}', [App\Http\Controllers\Managements\PermissionsController::class, 'showall']);
+    //     Route::resource('/permissions', App\Http\Controllers\Managements\PermissionsController::class)->except(['create', 'edit','show'])
+    //     ->where(['permission' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}']);
 
-        Route::get('/menugroups/datatable', [App\Http\Controllers\Managements\MenugroupsController::class, 'datatable']);
-        Route::get('/menugroups/showall', [App\Http\Controllers\Managements\MenugroupsController::class, 'showall']);
-        Route::resource('/menugroups', App\Http\Controllers\Managements\MenugroupsController::class)->except(['create', 'edit'])
-        ->where(['menugroup' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}']);
+    //     Route::get('/menugroups/datatable', [App\Http\Controllers\Managements\MenugroupsController::class, 'datatable']);
+    //     Route::get('/menugroups/showall', [App\Http\Controllers\Managements\MenugroupsController::class, 'showall']);
+    //     Route::resource('/menugroups', App\Http\Controllers\Managements\MenugroupsController::class)->except(['create', 'edit'])
+    //     ->where(['menugroup' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}']);
 
-        Route::get('/menus/datatable', [App\Http\Controllers\Managements\MenusController::class, 'datatable']);
-        Route::get('/menus/showall', [App\Http\Controllers\Managements\MenusController::class, 'showall']);
-        Route::resource('/menus', App\Http\Controllers\Managements\MenusController::class)->except(['create', 'edit'])
-        ->where(['menu' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}']);
+    //     Route::get('/menus/datatable', [App\Http\Controllers\Managements\MenusController::class, 'datatable']);
+    //     Route::get('/menus/showall', [App\Http\Controllers\Managements\MenusController::class, 'showall']);
+    //     Route::resource('/menus', App\Http\Controllers\Managements\MenusController::class)->except(['create', 'edit'])
+    //     ->where(['menu' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}']);
 
-    });
+    // });
 
     Route::prefix('data')->group(function(){
         Route::get('/usersakip/masteropd', [App\Http\Controllers\Data\UserSakipController::class, 'masteropd']);
@@ -134,6 +134,20 @@ Route::middleware(['auth','roleplay','isActiveUser'])->group(function () {
         Route::post('/masterprogram', [App\Http\Controllers\Data\MasterProgramController::class, 'store'])->name('masterprogram.store');
         Route::delete('/masterprogram/{id}', [App\Http\Controllers\Data\MasterProgramController::class, 'destroy'])->name('masterprogram.destroy');
         Route::get('/masterprogram/tambah', [App\Http\Controllers\Data\MasterProgramController::class, 'tambah'])->name('masterprogram.tambah');
+
+        Route::prefix('ref')->group(function () {
+            Route::get('/opd', [App\Http\Controllers\Data\RefController::class, 'opd']);
+            Route::get('/eselon', [App\Http\Controllers\Data\RefController::class, 'eselon']);
+            Route::get('/golongan', [App\Http\Controllers\Data\RefController::class, 'golongan']);
+            Route::get('/jenis-jabatan', [App\Http\Controllers\Data\RefController::class, 'jenisJabatan']);
+            Route::get('/jabatan', [App\Http\Controllers\Data\RefController::class, 'jabatan']);
+            Route::get('/sub-opd', [App\Http\Controllers\Data\RefController::class, 'subOpd']);
+            Route::get('/satuan', [App\Http\Controllers\Data\RefController::class, 'satuan']);
+            Route::get('/program', [App\Http\Controllers\Data\RefController::class, 'program']);
+            Route::get('/kegiatan', [App\Http\Controllers\Data\RefController::class, 'kegiatan']);
+            Route::get('/sub-kegiatan', [App\Http\Controllers\Data\RefController::class, 'subKegiatan']);
+            Route::get('/roles', [App\Http\Controllers\Data\RefController::class, 'roles']);
+        });
     });
 });
 

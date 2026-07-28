@@ -10,7 +10,7 @@ class RefSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('ref_eselon')->insert([
+        DB::table('master_eselon')->insert([
             ['id' => Str::uuid(), 'kode' => '11', 'nama' => 'I.A', 'level' => 1, 'is_active' => true, 'created_at' => now(), 'updated_at' => now()],
             ['id' => Str::uuid(), 'kode' => '12', 'nama' => 'I.B', 'level' => 1, 'is_active' => true, 'created_at' => now(), 'updated_at' => now()],
             ['id' => Str::uuid(), 'kode' => '21', 'nama' => 'II.A', 'level' => 2, 'is_active' => true, 'created_at' => now(), 'updated_at' => now()],
@@ -22,7 +22,7 @@ class RefSeeder extends Seeder
             ['id' => Str::uuid(), 'kode' => '99', 'nama' => 'Non Eselon', 'level' => 99, 'is_active' => true, 'created_at' => now(), 'updated_at' => now()],
         ]);
 
-        DB::table('ref_golongan')->insert([
+        DB::table('master_golongan')->insert([
             ['id' => Str::uuid(), 'kode' => '41', 'golongan' => 'IV/a', 'pangkat' => 'Pembina', 'is_active' => true, 'created_at' => now(), 'updated_at' => now()],
             ['id' => Str::uuid(), 'kode' => '42', 'golongan' => 'IV/b', 'pangkat' => 'Pembina TK I', 'is_active' => true, 'created_at' => now(), 'updated_at' => now()],
             ['id' => Str::uuid(), 'kode' => '43', 'golongan' => 'IV/c', 'pangkat' => 'Pembina Utama Muda', 'is_active' => true, 'created_at' => now(), 'updated_at' => now()],
@@ -39,13 +39,13 @@ class RefSeeder extends Seeder
         $jabatanFungsionalId = Str::uuid();
         $jabatanPelaksanaId = Str::uuid();
 
-        DB::table('ref_jenis_jabatan')->insert([
+        DB::table('master_jenis_jabatan')->insert([
             ['id' => $jabatanStrukturalId, 'kode' => '1', 'nama' => 'Struktural', 'is_active' => true, 'created_at' => now(), 'updated_at' => now()],
             ['id' => $jabatanFungsionalId, 'kode' => '2', 'nama' => 'Fungsional', 'is_active' => true, 'created_at' => now(), 'updated_at' => now()],
             ['id' => $jabatanPelaksanaId, 'kode' => '3', 'nama' => 'Pelaksana', 'is_active' => true, 'created_at' => now(), 'updated_at' => now()],
         ]);
 
-        DB::table('ref_jabatan')->insert([
+        DB::table('master_jabatan')->insert([
             ['id' => Str::uuid(), 'kode' => 'STR-001', 'nama' => 'Kepala Dinas', 'ref_jenis_jabatan_id' => $jabatanStrukturalId, 'is_active' => true, 'created_at' => now(), 'updated_at' => now()],
             ['id' => Str::uuid(), 'kode' => 'STR-002', 'nama' => 'Sekretaris', 'ref_jenis_jabatan_id' => $jabatanStrukturalId, 'is_active' => true, 'created_at' => now(), 'updated_at' => now()],
             ['id' => Str::uuid(), 'kode' => 'STR-003', 'nama' => 'Kepala Bidang', 'ref_jenis_jabatan_id' => $jabatanStrukturalId, 'is_active' => true, 'created_at' => now(), 'updated_at' => now()],
@@ -61,7 +61,7 @@ class RefSeeder extends Seeder
         $masterOpd = DB::table('master_opd')->first();
 
         if ($masterOpd) {
-            DB::table('ref_sub_opd')->insert([
+            DB::table('master_sub_opd')->insert([
                 ['id' => Str::uuid(), 'kode' => 'SUB-001', 'nama' => 'Sub Bagian Umum dan Kepegawaian', 'master_opd_id' => $masterOpd->id, 'is_active' => true, 'created_at' => now(), 'updated_at' => now()],
                 ['id' => Str::uuid(), 'kode' => 'SUB-002', 'nama' => 'Sub Bagian Perencanaan dan Keuangan', 'master_opd_id' => $masterOpd->id, 'is_active' => true, 'created_at' => now(), 'updated_at' => now()],
                 ['id' => Str::uuid(), 'kode' => 'SUB-003', 'nama' => 'Seksi Pengembangan Aplikasi', 'master_opd_id' => $masterOpd->id, 'is_active' => true, 'created_at' => now(), 'updated_at' => now()],

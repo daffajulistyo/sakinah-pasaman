@@ -27,7 +27,7 @@ class BackendUserController extends Controller
             return $item;
         });
 
-        $availableRoles = Roles::whereIn('type', ['Admin_OPD', 'Admin_KDH', 'Pegawai'])->get();
+        $availableRoles = Roles::whereIn('role_name', ['Admin_OPD', 'Admin_KDH', 'Pegawai'])->get();
         return view('backend.user.index', compact('data', 'search', 'availableRoles'));
     }
 
@@ -46,10 +46,10 @@ class BackendUserController extends Controller
                 Roleplay::create(['id' => Str::uuid(), 'user_id' => $userId, 'role_id' => $request->role_id, 'type' => 'common', 'created_by' => auth()->user()->username, 'updated_by' => auth()->user()->username]);
             }
             DB::commit();
-            return redirect()->route('user.index')->with('success', 'User berhasil ditambahkan.');
+            return redirect()->route('backend.user.index')->with('success', 'User berhasil ditambahkan.');
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->route('user.index')->with('error', 'Gagal: ' . $e->getMessage());
+            return redirect()->route('backend.user.index')->with('error', 'Gagal: ' . $e->getMessage());
         }
     }
 
@@ -57,23 +57,23 @@ class BackendUserController extends Controller
     {
         $request->validate(['user_id' => 'required|uuid|exists:users,id', 'role_id' => 'required|uuid|exists:roles,id']);
         $exists = Roleplay::where('user_id', $request->user_id)->where('role_id', $request->role_id)->exists();
-        if ($exists) return redirect()->route('user.index')->with('error', 'User sudah memiliki role tersebut.');
+        if ($exists) return redirect()->route('backend.user.index')->with('error', 'User sudah memiliki role tersebut.');
         Roleplay::create(['id' => Str::uuid(), 'user_id' => $request->user_id, 'role_id' => $request->role_id, 'type' => 'common', 'created_by' => auth()->user()->username, 'updated_by' => auth()->user()->username]);
-        return redirect()->route('user.index')->with('success', 'Role berhasil ditambahkan.');
+        return redirect()->route('backend.user.index')->with('success', 'Role berhasil ditambahkan.');
     }
 
     public function removeRole($userId, $roleplayId)
     {
         $roleplay = Roleplay::where('id', $roleplayId)->where('user_id', $userId)->firstOrFail();
         $roleplay->delete();
-        return redirect()->route('user.index')->with('success', 'Role berhasil dihapus.');
+        return redirect()->route('backend.user.index')->with('success', 'Role berhasil dihapus.');
     }
 
     public function destroy($id)
     {
         $user = User::findOrFail($id);
         $user->delete();
-        return redirect()->route('user.index')->with('success', $user->name . ' berhasil dihapus.');
+        return redirect()->route('backend.user.index')->with('success', $user->name . ' berhasil dihapus.');
     }
 
     public function update(Request $request, $id)
@@ -88,6 +88,6 @@ class BackendUserController extends Controller
             $data['password'] = Hash::make($request->password);
         }
         $user->update($data);
-        return redirect()->route('user.index')->with('success', 'User berhasil diupdate.');
+        return redirect()->route('backend.user.index')->with('success', 'User berhasil diupdate.');
     }
 }
