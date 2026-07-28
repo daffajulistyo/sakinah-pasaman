@@ -172,7 +172,7 @@ class PemdaController extends BaseController
                  ->whereIn('pohon_kinerja_indikator_id', $id_indikator)
                  //->groupBy('opd_pendukung_indikator.master_opd_id, master_opd.kode_opd')
                  ->distinct()
-                ->get(['opd_pendukung_indikator.master_opd_id', 'master_opd.kode_opd', 'master_opd.nama_opd' , 'master_opd.simpeg_opd_id', 'master_opd.ikd_opd_id', 'master_opd.simonev_opd_id', 'master_opd.kode_sub_opd',]);
+                ->get(['opd_pendukung_indikator.master_opd_id', 'master_opd.kode_opd', 'master_opd.nama_opd' , 'master_opd.simpeg_opd_id', 'master_opd.ikd_opd_id',]);
 
                 $program = Cascading::where('pohon_kinerja_sasaran_id', $item->id)->get();
                 return [

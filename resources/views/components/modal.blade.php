@@ -1,4 +1,4 @@
-<div x-cloak wire:key="{{ $value }}">
+﻿<div x-cloak wire:key="{{ $value }}">
     <span>
         {{ $trigger }}
     </span>

@@ -10,22 +10,22 @@ class RefController extends Controller
 {
     public function eselon()
     {
-        return response()->json(['success' => true, 'data' => DB::table('ref_eselon')->where('is_active', true)->orderBy('level')->orderBy('kode')->get()]);
+        return response()->json(['success' => true, 'data' => DB::table('master_eselon')->where('is_active', true)->orderBy('level')->orderBy('kode')->get()]);
     }
 
     public function golongan()
     {
-        return response()->json(['success' => true, 'data' => DB::table('ref_golongan')->where('is_active', true)->orderBy('kode')->get()]);
+        return response()->json(['success' => true, 'data' => DB::table('master_golongan')->where('is_active', true)->orderBy('kode')->get()]);
     }
 
     public function jenisJabatan()
     {
-        return response()->json(['success' => true, 'data' => DB::table('ref_jenis_jabatan')->where('is_active', true)->orderBy('kode')->get()]);
+        return response()->json(['success' => true, 'data' => DB::table('master_jenis_jabatan')->where('is_active', true)->orderBy('kode')->get()]);
     }
 
     public function jabatan(Request $request)
     {
-        $query = DB::table('ref_jabatan')->where('is_active', true);
+        $query = DB::table('master_jabatan')->where('is_active', true);
         if ($request->jenis_id) {
             $query->where('ref_jenis_jabatan_id', $request->jenis_id);
         }
@@ -34,7 +34,7 @@ class RefController extends Controller
 
     public function subOpd(Request $request)
     {
-        $query = DB::table('ref_sub_opd')->where('is_active', true);
+        $query = DB::table('master_sub_opd')->where('is_active', true);
         if ($request->opd_id) {
             $query->where('master_opd_id', $request->opd_id);
         }

@@ -74,10 +74,8 @@ Route::prefix('v1')
              Route::post('/indikator', [App\Http\Controllers\Api\v1\KDH\PohonKinerjaIndikatorController::class, 'create']);
              Route::get('/indikator/{id}', [App\Http\Controllers\Api\v1\KDH\PohonKinerjaIndikatorController::class, 'read']);
              Route::put('/indikator/{id}', [App\Http\Controllers\Api\v1\KDH\PohonKinerjaIndikatorController::class, 'update']);
-             Route::post('/indikator/{id}', [App\Http\Controllers\Api\v1\KDH\PohonKinerjaIndikatorController::class, 'update']);
              Route::post('/indikator/upload/{id}', [App\Http\Controllers\Api\v1\KDH\PohonKinerjaIndikatorController::class, 'upload']);
              Route::get('/indikator/upload/{id}', [App\Http\Controllers\Api\v1\KDH\PohonKinerjaIndikatorController::class, 'preview']);
-
              Route::post('/indikator/{id}', [App\Http\Controllers\Api\v1\KDH\PohonKinerjaIndikatorController::class, 'update']);
 
 
@@ -381,8 +379,25 @@ Route::prefix('v1')
     // modul service integrated
     Route::prefix('integrated')->group(function(){
 
-        Route::prefix('program')
+        // integrated with IKD BPKAD
+        Route::prefix('ikd-bpkad')->group(function(){
+            Route::get('/anggaran/skpd-program/{idskpd}/{year}', [App\Http\Controllers\Api\v1\Services\IkdIntegratedController::class, 'getProgramAnggaranSkpd']);
+        });
+
+        // integrated with SIMONEV Bappeda 
+        Route::prefix('simonev-bappeda')->group(function(){
+            Route::get('/anggaran/skpd-program/{idskpd}/{year}', [App\Http\Controllers\Api\v1\Services\SimonevIntegratedController::class, 'getProgramAnggaranSkpd']);
+        });
+
+        // integrated with SIMPEG
+        Route::prefix('simpeg')
         ->middleware('role:Admin_OPD,Pegawai')
+        ->group(function(){
+            Route::get('/pegawai/{idskpd}', [App\Http\Controllers\Api\v1\Services\SimpegController::class, 'getPegawaiOpd']);            
+        });
+
+        Route::prefix('program')
+        ->middleware('role:Admin_KDH,Admin_OPD,Pegawai')
         ->group(function(){
             Route::get('/anggaran/{tahun}/{periode}', [App\Http\Controllers\Api\v1\Services\AnggaranController::class, 'index']);            
         });

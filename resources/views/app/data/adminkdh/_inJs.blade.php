@@ -1,6 +1,6 @@
-<script>
+﻿<script>
     
-    <x-app.datatable.datatablejs :url="env('APP_URL'). '/data/adminkdh/datatable'" />
+    <x-app.datatable.datatablejs :url="'/data/adminkdh/datatable'" />
     function userCrud() {
         return {
             datatable: datatable(),
@@ -37,7 +37,7 @@
             
             async deleteData(user_id, id_roleplay) {
                 try {
-                    const response = await axios.delete('{{ env('APP_URL') }}/data/adminkdh/'+user_id+'/'+id_roleplay);
+                    const response = await axios.delete('/data/adminkdh/'+user_id+'/'+id_roleplay);
                     if(response.status == 200) {
                     
                         Swal.fire({

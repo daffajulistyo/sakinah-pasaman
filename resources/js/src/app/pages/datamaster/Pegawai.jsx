@@ -80,12 +80,16 @@ const Pegawai = () => {
         enableReinitialize: true
     })
 
-    const openModalAction = () => {
+    const openModalAction = async () => {
         formik.resetForm()
         setEditId("")
         setRefJabatan([])
         setSelectedRoles([])
         setFormTitle("FORM TAMBAH DATA PEGAWAI")
+        const Api = (await import('@/api')).default
+        const api = new Api()
+        const rRoles = await api.getRefRoles()
+        if (rRoles.data) setRefRoles(rRoles.data.data || [])
         setOpenModal(true)
     }
 

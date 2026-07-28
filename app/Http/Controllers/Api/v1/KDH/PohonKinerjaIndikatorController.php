@@ -137,17 +137,28 @@ class PohonKinerjaIndikatorController extends Controller
             $data = PohonKinerjaIndikator::create($form); 
             
            
-            $opd = collect($request->opd_pendukung)->map(function($item) use($request){
-                    return [
-                        "id" => Str::uuid(),
-                        "pohon_kinerja_sasaran_id" => $request->pohon_kinerja_sasaran_id,
-                        "master_opd_id" => $item,
-                        "created_by"=>$request->attributes->get('payload')->username,
-                        "is_active" => true,
-                    ];
-                });
-               
-            $data->opd_pendukung()->attach($opd);
+            $opd_pendukung = $request->opd_pendukung;
+            if (is_string($opd_pendukung)) {
+                $decoded = json_decode($opd_pendukung, true);
+                if (is_array($decoded)) {
+                    $opd_pendukung = $decoded;
+                } else {
+                    $opd_pendukung = array_filter(explode(',', $opd_pendukung));
+                }
+            }
+            if (!is_array($opd_pendukung)) {
+                $opd_pendukung = [];
+            }
+            foreach ($opd_pendukung as $opd_id) {
+                OpdPendukungIndikator::create([
+                    "id" => Str::uuid(),
+                    "pohon_kinerja_indikator_id" => $data->id,
+                    "pohon_kinerja_sasaran_id" => $request->pohon_kinerja_sasaran_id,
+                    "master_opd_id" => $opd_id,
+                    "created_by" => $request->attributes->get('payload')->username,
+                    "is_active" => true,
+                ]);
+            }
 
 
             // return response json
@@ -279,23 +290,33 @@ class PohonKinerjaIndikatorController extends Controller
                 /*------------ cek validasi Sasaran-------------------------------------*/
                 
                 if($request->is_tujuan==false){
+                    $opd_pendukung_raw = $request->opd_pendukung;
+                    if (is_string($opd_pendukung_raw)) {
+                        $decoded = json_decode($opd_pendukung_raw, true);
+                        if (is_array($decoded)) {
+                            $opd_pendukung_raw = $decoded;
+                        } else {
+                            $opd_pendukung_raw = array_filter(explode(',', $opd_pendukung_raw));
+                        }
+                    }
+                    if (!is_array($opd_pendukung_raw)) {
+                        $opd_pendukung_raw = [];
+                    }
                       
                     $current_opd = OpdPendukungIndikator::where('pohon_kinerja_indikator_id', $request->id)->get();
                     $current_opd = $current_opd->pluck('master_opd_id');
-                
 
-                    $opd_pendukung = collect($request->opd_pendukung);
+                    $opd_pendukung_collect = collect($opd_pendukung_raw);
 
-                    $new_opd = $opd_pendukung->diff($current_opd);
-                    $old_opd = $new_opd->diff($opd_pendukung);
+                    $new_opd = $opd_pendukung_collect->diff($current_opd);
+                    $old_opd = $new_opd->diff($opd_pendukung_collect);
                     
-                  
                     //delete old opd
                     OpdPendukungIndikator::whereIn('master_opd_id', $current_opd)
                                         ->where('pohon_kinerja_indikator_id', $request->id)
                                         ->delete();                    
 
-                    $opd = collect($request->opd_pendukung)->map(function($item) use ($request) {
+                    $opd = $opd_pendukung_collect->map(function($item) use ($request) {
                         return [
                             "id" => Str::uuid(),
                             "pohon_kinerja_indikator_id" => $request->id,

@@ -10,15 +10,16 @@ class AnggaranController extends Controller
 {
     private function getProgramData($tahun, $kode_skpd)
     {
-        $programs = DB::table('cascading')
-            ->join('master_opd', DB::raw('CAST(master_opd.kode_opd AS UNSIGNED)'), '=', 'cascading.id_skpd')
-            ->where('master_opd.kode_opd', $kode_skpd)
-            ->where('cascading.tahun', $tahun)
+        // ponytail: query master_program instead of cascading (circular dependency)
+        $programs = DB::table('master_program')
+            ->where('kode_skpd', $kode_skpd)
+            ->where('tahun', $tahun)
+            ->where('is_active', true)
             ->select(
-                'cascading.id_program',
-                'cascading.kode_program',
-                'cascading.nama_program',
-                'cascading.id_skpd'
+                'id as id_program',
+                'kode_program',
+                'nama_program',
+                'kode_skpd as id_skpd'
             )
             ->distinct()
             ->get();
@@ -32,8 +33,10 @@ class AnggaranController extends Controller
         $programs = $this->getProgramData($tahun, $kode_skpd);
 
         if (empty($programs)) {
-            $programs = DB::table('cascading')
-                ->select('id_program', 'kode_program', 'nama_program', 'id_skpd')
+            // ponytail: fallback to all active programs if none for this OPD
+            $programs = DB::table('master_program')
+                ->where('is_active', true)
+                ->select('id as id_program', 'kode_program', 'nama_program', 'kode_skpd as id_skpd')
                 ->distinct()
                 ->get()
                 ->toArray();
@@ -53,8 +56,10 @@ class AnggaranController extends Controller
         $programs = $this->getProgramData($tahun, $kode_skpd);
 
         if (empty($programs)) {
-            $programs = DB::table('cascading')
-                ->select('id_program', 'kode_program', 'nama_program', 'id_skpd')
+            // ponytail: fallback to all active programs if none for this OPD
+            $programs = DB::table('master_program')
+                ->where('is_active', true)
+                ->select('id as id_program', 'kode_program', 'nama_program', 'kode_skpd as id_skpd')
                 ->distinct()
                 ->get()
                 ->toArray();

@@ -258,7 +258,7 @@ class RkpdKegiatanController extends Controller
                 ->get();     
       
         $opd = OpdPendukungIndikator::join('master_opd', 'opd_pendukung_indikator.master_opd_id', '=', 'master_opd.id')
-                ->select('opd_pendukung_indikator.master_opd_id', 'opd_pendukung_indikator.master_opd_id', 'opd_pendukung_indikator.pohon_kinerja_sasaran_id', 'master_opd.kode_opd', 'master_opd.simpeg_opd_id', 'master_opd.ikd_opd_id', 'master_opd.nama_opd', 'master_opd.alias_opd', 'master_opd.opd_unit', 'master_opd.opd_unit_id', 'master_opd.simonev_opd_id')
+                ->select('opd_pendukung_indikator.master_opd_id', 'opd_pendukung_indikator.master_opd_id', 'opd_pendukung_indikator.pohon_kinerja_sasaran_id', 'master_opd.kode_opd', 'master_opd.simpeg_opd_id', 'master_opd.ikd_opd_id', 'master_opd.nama_opd', 'master_opd.alias_opd', 'master_opd.opd_unit', 'master_opd.opd_unit_id')
                 ->where('opd_pendukung_indikator.is_active', true)
                 ->where('opd_pendukung_indikator.pohon_kinerja_sasaran_id', $pohon_kinerja_sasaran_id)
                 ->distinct()

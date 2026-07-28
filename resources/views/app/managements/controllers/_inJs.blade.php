@@ -1,6 +1,6 @@
-<script>
+﻿<script>
     
-    <x-app.datatable.datatablejs :url="env('APP_URL'). '/managements/controllers/datatable'" />
+    <x-app.datatable.datatablejs :url="'/managements/controllers/datatable'" />
     function controllersCrud() {
         return {
             openModal : false,
@@ -50,8 +50,8 @@
             },
             async saveData() {
                     try {
-                        const response = this.formState == 'save' ? await axios.post('{{ env('APP_URL') }}/managements/controllers', this.form) 
-                                                                : await axios.put('{{ env('APP_URL') }}/managements/controllers/' + this.idData, this.form)
+                        const response = this.formState == 'save' ? await axios.post('/managements/controllers', this.form) 
+                                                                : await axios.put('/managements/controllers/' + this.idData, this.form)
                         if(response.status == 200) {
                             
                             Swal.fire({
@@ -97,7 +97,7 @@
                 this.formState = 'edit'
                 this.loadingState = true
                 try {
-                    const response = await axios.get('{{ env('APP_URL') }}/managements/controllers/'+id);
+                    const response = await axios.get('/managements/controllers/'+id);
                     if(response.status == 200) {
                         const dataApi = response.data.controller;
                         this.form = {
@@ -137,7 +137,7 @@
             },
             async deleteData() {
                 try {
-                    const response = await axios.delete('{{ env('APP_URL') }}/managements/controllers/'+this.idData);
+                    const response = await axios.delete('/managements/controllers/'+this.idData);
                     if(response.status == 200) {
                     
                         Swal.fire({

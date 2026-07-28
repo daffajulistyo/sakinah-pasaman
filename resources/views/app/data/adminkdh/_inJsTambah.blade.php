@@ -1,6 +1,6 @@
-<script>
+﻿<script>
     
-    <x-app.datatable.datatablejs :url="env('APP_URL'). '/data/pegawai/datatable'" />
+    <x-app.datatable.datatablejs :url="'/data/pegawai/datatable'" />
     function userCrud() {
         return {
             datatable: datatable(),
@@ -41,7 +41,7 @@
             
             async addData(id = 0) {
                 try {
-                    const response = await axios.post('{{ env('APP_URL') }}/data/adminkdh', { user_id: this.idData });
+                    const response = await axios.post('/data/adminkdh', { user_id: this.idData });
                     if(response.status == 200) {
                     
                         Swal.fire({
@@ -56,7 +56,7 @@
                             message: response.data.message
                         }
                         this.loadingState = false
-                        window.location.href = '{{ env('APP_URL') }}/data/adminkdh'
+                        window.location.href = '/data/adminkdh'
                     }
                 } catch (e) {
                     this.loadingState = false

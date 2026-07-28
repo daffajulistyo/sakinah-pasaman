@@ -1,6 +1,6 @@
-<script>
+﻿<script>
     
-    <x-app.datatable.datatablejs :url="env('APP_URL'). '/managements/user/datatable'" />
+    <x-app.datatable.datatablejs :url="'/managements/user/datatable'" />
     function userCrud() {
         return {
             datatable: datatable(),
@@ -59,8 +59,8 @@
             },
             async saveData() {
                     try {
-                        const response = this.formState == 'save' ? await axios.post('{{ env('APP_URL') }}/managements/user', this.form) 
-                                                                : await axios.put('{{ env('APP_URL') }}/managements/user/' + this.idData, this.form)
+                        const response = this.formState == 'save' ? await axios.post('/managements/user', this.form) 
+                                                                : await axios.put('/managements/user/' + this.idData, this.form)
                         if(response.status == 200) {
                             
                             Swal.fire({
@@ -114,7 +114,7 @@
                 this.formState = 'edit'
                 this.loadingState = true
                 try {
-                    const response = await axios.get('{{ env('APP_URL') }}/managements/user/'+id);
+                    const response = await axios.get('/managements/user/'+id);
                     if(response.status == 200) {
                         const user = response.data.user;
                         this.form = {
@@ -164,7 +164,7 @@
             async getRoles()
             {
                 try {
-                    const response = await axios.get('{{ env('APP_URL') }}/managements/roles/showall')
+                    const response = await axios.get('/managements/roles/showall')
                     if(response.status == 200) {
                         this.roleOptions = response.data.roles
                         this.rolesDomSelect = new TomSelect('#roleSelect', {
@@ -198,7 +198,7 @@
             },
             async deleteData() {
                 try {
-                    const response = await axios.delete('{{ env('APP_URL') }}/managements/user/'+this.idData);
+                    const response = await axios.delete('/managements/user/'+this.idData);
                     if(response.status == 200) {
                     
                         Swal.fire({

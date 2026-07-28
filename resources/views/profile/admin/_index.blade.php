@@ -1,4 +1,4 @@
-@extends('layouts.app.main')
+﻿@extends('layouts.app.main')
 
 @section('title', ' | Profile User')
 
@@ -32,3 +32,4 @@
 
 </div>
 @endsection
+

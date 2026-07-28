@@ -19,10 +19,10 @@ Route::get('/', function () {
 
 Route::get('/cetak', [App\Http\Controllers\Api\v1\OPD\IkuController::class, 'generate_pdf']);
 
+// ===================== AUTH-ADMIN (existing, Superadmin only) =====================
 Route::middleware('guest')->group(function () {
     Route::get('/auth-admin', [App\Http\Controllers\LoginController::class, 'index'])->name('login');
     Route::post('/', [App\Http\Controllers\LoginController::class, 'authenticate'])->middleware('throttle:10,5');
-
 });
 
 // protected routes for all roles
@@ -32,7 +32,33 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', [App\Http\Controllers\DashboardController::class, 'index'])->name('home')->middleware('isActiveUser');
 });
 
-//protected routes with roleplay
+// ===================== BACKEND (Bootstrap 5, Superadmin only, Master Data CRUD) =====================
+Route::middleware('guest')->group(function () {
+    Route::get('/backend', [App\Http\Controllers\Backend\AuthController::class, 'index'])->name('backend.login');
+    Route::post('/backend', [App\Http\Controllers\Backend\AuthController::class, 'authenticate'])->middleware('throttle:10,5');
+});
+
+Route::middleware(['auth', 'roleplay', 'isActiveUser'])->prefix('backend')->group(function () {
+    Route::get('/logout', [App\Http\Controllers\Backend\AuthController::class, 'destroy'])->name('logout');
+    Route::get('/home', [App\Http\Controllers\Backend\DashboardController::class, 'index'])->name('home');
+
+    Route::resource('/eselon', App\Http\Controllers\Backend\MasterEselonController::class);
+    Route::resource('/golongan', App\Http\Controllers\Backend\MasterGolonganController::class);
+    Route::resource('/jenis-jabatan', App\Http\Controllers\Backend\MasterJenisJabatanController::class);
+    Route::resource('/jabatan', App\Http\Controllers\Backend\MasterJabatanController::class);
+    Route::resource('/sub-opd', App\Http\Controllers\Backend\MasterSubOpdController::class);
+    Route::resource('/opd', App\Http\Controllers\Backend\MasterOpdController::class);
+    Route::resource('/satuan', App\Http\Controllers\Backend\MasterSatuanController::class);
+    Route::resource('/program', App\Http\Controllers\Backend\MasterProgramController::class);
+    Route::resource('/anggaran', App\Http\Controllers\Backend\MasterAnggaranController::class);
+    Route::resource('/pegawai', App\Http\Controllers\Backend\BackendPegawaiController::class);
+    Route::resource('/user', App\Http\Controllers\Backend\BackendUserController::class);
+
+    Route::post('/user/assign-role', [App\Http\Controllers\Backend\BackendUserController::class, 'assignRole'])->name('user.assign-role');
+    Route::delete('/user/{userId}/role/{roleplayId}', [App\Http\Controllers\Backend\BackendUserController::class, 'removeRole'])->name('user.remove-role');
+});
+
+// ===================== AUTH-ADMIN PROTECTED (existing) =====================
 Route::middleware(['auth','roleplay','isActiveUser'])->group(function () {
 
     Route::prefix('managements')->group(function(){
@@ -100,6 +126,12 @@ Route::middleware(['auth','roleplay','isActiveUser'])->group(function () {
         Route::post('/adminopd', [App\Http\Controllers\Data\AdminOpdController::class, 'store'])->name('adminopd.store');
         Route::delete('/adminopd/{user_id}/{id_roleplay}', [App\Http\Controllers\Data\AdminOpdController::class, 'destroy'])->name('adminopd.destroy');
         Route::get('/adminopd/tambah', [App\Http\Controllers\Data\AdminOpdController::class, 'update'])->name('adminopd.tambah');
+
+        Route::get('/masterprogram/datatable', [App\Http\Controllers\Data\MasterProgramController::class, 'datatable']);
+        Route::get('/masterprogram', [App\Http\Controllers\Data\MasterProgramController::class, 'index'])->name('masterprogram.index');
+        Route::post('/masterprogram', [App\Http\Controllers\Data\MasterProgramController::class, 'store'])->name('masterprogram.store');
+        Route::delete('/masterprogram/{id}', [App\Http\Controllers\Data\MasterProgramController::class, 'destroy'])->name('masterprogram.destroy');
+        Route::get('/masterprogram/tambah', [App\Http\Controllers\Data\MasterProgramController::class, 'tambah'])->name('masterprogram.tambah');
     });
 });
 
@@ -110,4 +142,4 @@ Route::get('/{any}', function () {
         return file_get_contents($index);
     }
     return 'SAKINAH frontend — run "npx vite" in resources/js for dev mode';
-})->where('any', '^(?!api|auth-admin|home|logout|cetak|managements|data|sanctum).*$');
+})->where('any', '^(?!\/?api|\/?auth-admin|\/?backend|\/?home|\/?logout|\/?cetak|\/?managements|\/?data|\/?sanctum).*$');

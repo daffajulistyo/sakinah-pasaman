@@ -18,7 +18,7 @@ const createIndikatorKdh = (payload) => async (dispatch, getState, Api) => {
 
     const response = await Api.create_indikatorKdh(payload)
     if(response.error === null){
-        dispatch({ type: types.CREATE_INDIKATORKDH_START, payload: response.data })
+        dispatch({ type: types.CREATE_INDIKATORKDH_SUCCESS, payload: response.data })
     }
     else dispatch({ type: types.CREATE_INDIKATORKDH_FAILED, payload: response.error })
 

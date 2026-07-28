@@ -118,6 +118,61 @@ class ControllersTableSeeder extends Seeder
                 'created_at' => '2022-01-25 15:37:48',
                 'updated_at' => '2022-02-12 08:21:38',
             ),
+            9 => 
+            array (
+                'id' => '10c11d6f-8e8f-48f9-a5f0-88ae00bb5144',
+                'controller_name' => 'UserSakip',
+                'controller_desc' => 'Controller untuk mengelola data user SAKIP',
+                'type' => 'core',
+                'created_by' => 'superadmin',
+                'updated_by' => NULL,
+                'created_at' => '2025-01-01 00:00:00',
+                'updated_at' => '2025-01-01 00:00:00',
+            ),
+            10 => 
+            array (
+                'id' => '2977b295-e0a3-4727-9825-9c920adb7f60',
+                'controller_name' => 'AdminKdh',
+                'controller_desc' => 'Controller untuk mengelola data admin KDH',
+                'type' => 'core',
+                'created_by' => 'superadmin',
+                'updated_by' => NULL,
+                'created_at' => '2025-01-01 00:00:00',
+                'updated_at' => '2025-01-01 00:00:00',
+            ),
+            11 => 
+            array (
+                'id' => '2b2a6713-be2e-4cd3-857a-e1a8ba514745',
+                'controller_name' => 'AdminOpd',
+                'controller_desc' => 'Controller untuk mengelola data admin OPD',
+                'type' => 'core',
+                'created_by' => 'superadmin',
+                'updated_by' => NULL,
+                'created_at' => '2025-01-01 00:00:00',
+                'updated_at' => '2025-01-01 00:00:00',
+            ),
+            12 => 
+            array (
+                'id' => 'e45101c0-3dd3-48c6-bd53-35813d30e3d7',
+                'controller_name' => 'MasterProgram',
+                'controller_desc' => 'Controller untuk mengelola data master program',
+                'type' => 'core',
+                'created_by' => 'superadmin',
+                'updated_by' => NULL,
+                'created_at' => '2025-01-01 00:00:00',
+                'updated_at' => '2025-01-01 00:00:00',
+            ),
+            13 => 
+            array (
+                'id' => '8a17bb20-0212-464a-a4bc-0bebe4580332',
+                'controller_name' => 'Pegawai',
+                'controller_desc' => 'Controller untuk mengelola data pegawai',
+                'type' => 'core',
+                'created_by' => 'superadmin',
+                'updated_by' => NULL,
+                'created_at' => '2025-01-01 00:00:00',
+                'updated_at' => '2025-01-01 00:00:00',
+            ),
         ));
         
         

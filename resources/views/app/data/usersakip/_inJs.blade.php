@@ -1,6 +1,6 @@
-<script>
+﻿<script>
     
-    <x-app.datatable.datatablejs :url="env('APP_URL'). '/data/usersakip/datatable'" />
+    <x-app.datatable.datatablejs :url="'/data/usersakip/datatable'" />
     function userCrud() {
         return {
             datatable: datatable(),
@@ -61,8 +61,8 @@
             },
             async saveData() {
                     try {
-                        const response = this.formState == 'save' ? await axios.post('{{ env('APP_URL') }}/data/usersakip', this.form) 
-                                                                : await axios.put('{{ env('APP_URL') }}/data/usersakip/' + this.idData, this.form)
+                        const response = this.formState == 'save' ? await axios.post('/data/usersakip', this.form) 
+                                                                : await axios.put('/data/usersakip/' + this.idData, this.form)
                         if(response.status == 200) {
                             
                             Swal.fire({
@@ -108,7 +108,7 @@
                 this.formState = 'edit'
                 this.loadingState = true
                 try {
-                    const response = await axios.get('{{ env('APP_URL') }}/data/usersakip/'+id);
+                    const response = await axios.get('/data/usersakip/'+id);
                     if(response.status == 200) {
                         const user = response.data.data;
                         this.form = {
@@ -159,7 +159,7 @@
             async getRoles()
             {
                 try {
-                    const response = await axios.get('{{ env('APP_URL') }}/data/usersakip/roles')
+                    const response = await axios.get('/data/usersakip/roles')
                     if(response.status == 200) {
                         this.roleOptions = response.data.roles
                         this.rolesDomSelect = new TomSelect('#roleSelect', {
@@ -195,7 +195,7 @@
             opdDomSelect: null,
             async getOpd(){
                 try {
-                    const response = await axios.get('{{ env('APP_URL') }}/data/usersakip/masteropd')
+                    const response = await axios.get('/data/usersakip/masteropd')
                     if(response.status == 200) {
                         this.opdOptions = response.data.data
                         this.opdDomSelect = new TomSelect('#opdSelect', {
@@ -239,7 +239,7 @@
             },
             async deleteData() {
                 try {
-                    const response = await axios.delete('{{ env('APP_URL') }}/data/usersakip/'+this.idData);
+                    const response = await axios.delete('/data/usersakip/'+this.idData);
                     if(response.status == 200) {
                     
                         Swal.fire({

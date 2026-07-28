@@ -45,7 +45,7 @@ class RoleplayTableSeeder extends Seeder
             array (
                 'id' => Str::uuid(),
                 'user_id' => '9104e031-2976-4d68-99f3-1d57214beb18',
-                'role_id' => '00f34f96-1111-4111-8111-000000000001',
+                'role_id' => '00f34f96-7cdf-4c9c-abf2-ea4fe1d24a08',
                 'type' => 'common',
                 'created_by' => 'system',
                 'updated_by' => NULL,
@@ -55,7 +55,7 @@ class RoleplayTableSeeder extends Seeder
             array (
                 'id' => Str::uuid(),
                 'user_id' => '9104e031-2976-4d68-99f3-1d57214beb18',
-                'role_id' => 'cdb1d545-1111-4111-8111-000000000002',
+                'role_id' => 'cdb1d545-9d9b-4d0c-aa10-879c6a9919f3',
                 'type' => 'common',
                 'created_by' => 'system',
                 'updated_by' => NULL,
@@ -65,7 +65,7 @@ class RoleplayTableSeeder extends Seeder
             array (
                 'id' => Str::uuid(),
                 'user_id' => '9104e031-2976-4d68-99f3-1d57214beb18',
-                'role_id' => '39d57ab8-1111-4111-8111-000000000003',
+                'role_id' => '39d57ab8-3b0f-4c7e-9a1d-8f5e6d4c3b2a',
                 'type' => 'common',
                 'created_by' => 'system',
                 'updated_by' => NULL,

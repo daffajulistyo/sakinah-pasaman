@@ -22,7 +22,7 @@ class UsersTableSeeder extends Seeder
                 'username' => 'admin',
                 'email_verified_at' => NULL,
                 'password' => Hash::make('admin123'),
-                'current_role' => 'bcd0b4ce-2cf8-4fc4-af88-4573c59a2377',
+                'current_role' => 'e4510500-70b4-44a9-968c-3e66fecc6fb9',
                 'is_active' => true,
                 'remember_token' => NULL,
                 'created_at' => now(),

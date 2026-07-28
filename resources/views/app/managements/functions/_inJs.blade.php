@@ -1,6 +1,6 @@
-<script>
+﻿<script>
     
-    <x-app.datatable.datatablejs :url="env('APP_URL'). '/managements/functions/datatable'" />
+    <x-app.datatable.datatablejs :url="'/managements/functions/datatable'" />
     function functionsCrud() {
 
         return {
@@ -51,8 +51,8 @@
             },
             async saveData() {
                     try {
-                        const response = this.formState == 'save' ? await axios.post('{{ env('APP_URL') }}/managements/functions', this.form) 
-                                                                : await axios.put('{{ env('APP_URL') }}/managements/functions/' + this.idData, this.form)
+                        const response = this.formState == 'save' ? await axios.post('/managements/functions', this.form) 
+                                                                : await axios.put('/managements/functions/' + this.idData, this.form)
                         if(response.status == 200) {
                             
                             Swal.fire({

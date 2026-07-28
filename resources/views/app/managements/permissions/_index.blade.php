@@ -1,4 +1,4 @@
-@extends('layouts.app.main')
+﻿@extends('layouts.app.main')
 
 @section('title', ' |  Permissions')
 

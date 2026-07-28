@@ -1,19 +1,9 @@
-@extends('layouts.app.main')
-
-@section('title', ' | Dashboard')
-
+﻿@extends('layouts.app.main')
+@section('title', 'Dashboard')
 @section('content')
-<h3 class="text-gray-700 text-3xl font-medium">Dashboard</h3>
-        
-<div class="mt-4">
-    <div class="flex flex-wrap -mx-6">
-        <div class="w-full mt-6 px-6 xl:mt-0">
-            <div class="flex flex-col items-left px-5 py-6 shadow-sm rounded-md bg-white">
-                <h3 class="text-lg font-bold">Selamat Datang!</h3>
-                <p class="font-bold">{{ $user->name }}, anda login sebagai {{ $current_role_name }}</p>
-            </div>
-        </div>
-    </div>
+<div class="rounded-sm border border-stroke bg-white shadow-sm dark:border-strokedark dark:bg-boxdark p-6">
+    <h2 class="text-lg font-bold text-black dark:text-white mb-2">Selamat Datang!</h2>
+    <p class="text-lg text-bodydark2">{{ $user->name }}, anda login sebagai <span class="rounded bg-primary px-2 py-0.5 text-sm text-white">{{ $current_role_name }}</span></p>
 </div>
-
 @endsection
+

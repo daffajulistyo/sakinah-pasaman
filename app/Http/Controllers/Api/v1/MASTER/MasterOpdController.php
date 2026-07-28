@@ -21,6 +21,7 @@ class MasterOpdController extends Controller
             $form = $request->validate([
                 "kode_opd"   => "required|unique:master_opd",
                 "nama_opd"   => "required|string",
+                "alias_opd"  => "nullable|string",
                 "simpeg_opd_id"   => "nullable|integer",
                 "ikd_opd_id"   => "nullable|integer",
                 "order"      => "required|integer",
@@ -182,7 +183,7 @@ class MasterOpdController extends Controller
     public function list(Request $request)
     {
         //
-        $searchColumn = collect(['nama_opd', 'kode_opd', 'simpeg_opd_id', 'simonev_opd_id']);
+        $searchColumn = collect(['nama_opd', 'kode_opd', 'simpeg_opd_id']);
 
         $currentPage = $request->get('page', 1);
         $perPage = $request->get('per_page', 10);
@@ -203,7 +204,7 @@ class MasterOpdController extends Controller
             $query->where('is_active', filter_var($is_active, FILTER_VALIDATE_BOOLEAN));
         }
 
-        $query->orderBy('created_at', 'desc');
+        $query->orderBy('order', 'asc');
         $objData = $query->paginate($perPage);
         $totalPage = $objData->lastPage();
         $totalRecord = $objData->total();
@@ -233,7 +234,6 @@ class MasterOpdController extends Controller
                 "is_active"     => $item->is_active,
                 "created_at"    => $created_at,
                 "ikd_opd_id" => $item->ikd_opd_id,
-                "simonev_opd_id" => $item->simonev_opd_id ?? null,
                 "alias_opd" => $item->alias_opd ?? null
             ];
         });

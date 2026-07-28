@@ -204,7 +204,6 @@ const Opd = () => {
                                 <tr>
                                     <th scope="col" className="px-4 py-3 w-[3%]">No.</th>
                                     <th scope="col" className="px-4 py-3">Kode OPD</th>
-                                    <th scope="col" className="px-4 py-3">Simonev ID</th>
                                     <th scope="col" className="px-4 py-3">Nama OPD</th>
                                     <th scope="col" className="px-4 py-3">Singkatan</th>
                                     <th scope="col" className="px-4 py-3 w-[10%]">Active</th>
@@ -231,9 +230,6 @@ const Opd = () => {
                                                 className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.order}</th>
                                             <td className="px-4 py-3">
                                                 {item.kode_opd}
-                                            </td>
-                                            <td className="px-4 py-3">
-                                                {item.simonev_opd_id}
                                             </td>
                                             <td className="px-4 py-3">
                                                 {item.nama_opd}

@@ -1,4 +1,4 @@
-<script>
+﻿<script>
     
     function permissionsCrud() {
         return {
@@ -28,7 +28,7 @@
             async getPermissions() {
                 try {
                     this.loadingState = true
-                    const response = await axios.get('{{ env('APP_URL') }}/managements/permissions/showall/'+this.form.role_id);
+                    const response = await axios.get('/managements/permissions/showall/'+this.form.role_id);
                     if(response.status == 200) {
                         this.form.permissions = response.data.permissions;
                         this.form.action_id = [];
@@ -70,7 +70,7 @@
             },
             async saveData() {
                 try {
-                    const response = await axios.post('{{ env('APP_URL') }}/managements/permissions', this.form) 
+                    const response = await axios.post('/managements/permissions', this.form) 
                     if(response.status == 200) {
                         
                         Swal.fire({
@@ -127,7 +127,7 @@
             async getRoles()
             {
                 try {
-                    const response = await axios.get('{{ env('APP_URL') }}/managements/roles/showall')
+                    const response = await axios.get('/managements/roles/showall')
                     if(response.status == 200) {
                         this.roleOptions = response.data.roles
                         this.rolesDomSelect = new TomSelect('#roleSelect', {
@@ -167,7 +167,7 @@
             async getActions() {
                 try {
                     this.loadingState = true
-                    const response = await axios.get('{{ env('APP_URL') }}/managements/actions/showall/all');
+                    const response = await axios.get('/managements/actions/showall/all');
                     if(response.status == 200) {
                         this.actions = response.data.actions;
                         if(this.actions && this.actions.length > 0) {

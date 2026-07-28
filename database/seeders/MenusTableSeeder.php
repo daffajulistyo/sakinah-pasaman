@@ -164,6 +164,78 @@ class MenusTableSeeder extends Seeder
                 'created_at' => '2022-02-10 16:35:13',
                 'updated_at' => '2022-02-10 16:35:13',
             ),
+            8 => 
+            array (
+                'id' => 'b8d1f34d-e198-4886-9a00-9d4285835988',
+                'menugroup_id' => '0acdc906-d7f9-43e4-ba50-b767477c5b16',
+                'menu_label' => 'User SAKIP',
+                'menu_icon' => '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+</svg>',
+                'menu_desc' => 'Link menuju halaman Data User SAKIP',
+                'menu_order' => 1,
+                'route' => '/data/usersakip',
+                'action_id' => '84248727-d1ad-4052-ad35-88675914939a',
+                'type' => 'core',
+                'created_by' => '296c478c-3e40-4d05-83f5-a1e97e92aaf5',
+                'updated_by' => NULL,
+                'created_at' => '2025-01-01 00:00:00',
+                'updated_at' => '2025-01-01 00:00:00',
+            ),
+            9 => 
+            array (
+                'id' => 'db42436c-51b2-4928-805b-7b0c9476dcbc',
+                'menugroup_id' => '0acdc906-d7f9-43e4-ba50-b767477c5b16',
+                'menu_label' => 'Admin KDH',
+                'menu_icon' => '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+</svg>',
+                'menu_desc' => 'Link menuju halaman Data Admin KDH',
+                'menu_order' => 2,
+                'route' => '/data/adminkdh',
+                'action_id' => 'a7532575-cabb-4b01-9077-1ba6bb09be02',
+                'type' => 'core',
+                'created_by' => '296c478c-3e40-4d05-83f5-a1e97e92aaf5',
+                'updated_by' => NULL,
+                'created_at' => '2025-01-01 00:00:00',
+                'updated_at' => '2025-01-01 00:00:00',
+            ),
+            10 => 
+            array (
+                'id' => '1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d',
+                'menugroup_id' => '0acdc906-d7f9-43e4-ba50-b767477c5b16',
+                'menu_label' => 'Admin OPD',
+                'menu_icon' => '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+</svg>',
+                'menu_desc' => 'Link menuju halaman Data Admin OPD',
+                'menu_order' => 3,
+                'route' => '/data/adminopd',
+                'action_id' => '11fc3f58-b021-4d6c-942d-6547ddf89ebd',
+                'type' => 'core',
+                'created_by' => '296c478c-3e40-4d05-83f5-a1e97e92aaf5',
+                'updated_by' => NULL,
+                'created_at' => '2025-01-01 00:00:00',
+                'updated_at' => '2025-01-01 00:00:00',
+            ),
+            11 => 
+            array (
+                'id' => '2b3c4d5e-6f7a-8b9c-0d1e-2f3a4b5c6d7e',
+                'menugroup_id' => '0acdc906-d7f9-43e4-ba50-b767477c5b16',
+                'menu_label' => 'Master Program',
+                'menu_icon' => '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+</svg>',
+                'menu_desc' => 'Link menuju halaman Data Master Program',
+                'menu_order' => 4,
+                'route' => '/data/masterprogram',
+                'action_id' => '6f11c850-3bbf-4751-a73d-5402569fe50e',
+                'type' => 'core',
+                'created_by' => '296c478c-3e40-4d05-83f5-a1e97e92aaf5',
+                'updated_by' => NULL,
+                'created_at' => '2025-01-01 00:00:00',
+                'updated_at' => '2025-01-01 00:00:00',
+            ),
         ));
         
         

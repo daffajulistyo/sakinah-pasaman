@@ -1,6 +1,6 @@
-
+﻿
 <script>
-    <x-app.datatable.datatablejs :url="env('APP_URL'). '/managements/menus/datatable'" />
+    <x-app.datatable.datatablejs :url="'/managements/menus/datatable'" />
     function menusCrud() {
         return {
             datatable: datatable(),
@@ -61,8 +61,8 @@
             },
             async saveData() {
                     try {
-                        const response = this.formState == 'save' ? await axios.post('{{ env('APP_URL') }}/managements/menus', this.form) 
-                                                                : await axios.put('{{ env('APP_URL') }}/managements/menus/' + this.idData, this.form)
+                        const response = this.formState == 'save' ? await axios.post('/managements/menus', this.form) 
+                                                                : await axios.put('/managements/menus/' + this.idData, this.form)
                         if(response.status == 200) {
                             
                             Swal.fire({
@@ -115,7 +115,7 @@
                 this.formState = 'edit'
                 this.loadingState = true
                 try {
-                    const response = await axios.get('{{ env('APP_URL') }}/managements/menus/'+id);
+                    const response = await axios.get('/managements/menus/'+id);
                     if(response.status == 200) {
                         const dataApi = response.data.menu;
                         this.form = {
@@ -161,7 +161,7 @@
             },
             async deleteData() {
                 try {
-                    const response = await axios.delete('{{ env('APP_URL') }}/managements/menus/'+this.idData);
+                    const response = await axios.delete('/managements/menus/'+this.idData);
                     if(response.status == 200) {
                     
                         Swal.fire({
@@ -216,7 +216,7 @@
             async getMenugroups()
             {
                 try {
-                    const response = await axios.get('{{ env('APP_URL') }}/managements/menugroups/showall')
+                    const response = await axios.get('/managements/menugroups/showall')
                     if(response.status == 200) {
                         const groups = response.data.menugroups
                         if(groups && groups.length > 0) {
@@ -260,7 +260,7 @@
             async getActions()
             {
                 try {
-                    const response = await axios.get('{{ env('APP_URL') }}/managements/actions/showall/nonajaxonly')
+                    const response = await axios.get('/managements/actions/showall/nonajaxonly')
                     if(response.status == 200) {
                         const actions = response.data.actions
                         if(actions && actions.length > 0) {

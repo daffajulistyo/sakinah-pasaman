@@ -1,86 +1,61 @@
-@extends('layouts.app.main')
+﻿@extends('layouts.app.main')
 
-@section('title', ' | ADMIN PERANGKAT DAERAH')
+@section('title', ' | Admin OPD')
 
 @section('content')
-<h3 class="text-gray-700 text-3xl font-medium">Data Admin Perangkat Daerah</h3>
-<div class="container bg-white p-10 my-10" x-data="userCrud()">
-    {{-- <button class="relative bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="livewire.emit('refreshUser')">Refresh Table</button> --}}
-    <div x-show="successAlert.open" class="relative py-3 pl-4 pr-10 leading-normal text-blue-700 bg-blue-100 rounded-lg mb-3" role="alert">
-        <p x-text="successAlert.message">A simple alert with text and a right icon</p>
-        <span class="absolute inset-y-0 right-0 flex items-center mr-4" @click="successAlert.open = false">
-          <svg class="w-4 h-4 fill-current" role="button" viewBox="0 0 20 20"><path d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
-        </span>
-    </div>
-    <a  href="/data/adminopd/tambah"
-    class="relative bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-2 focus:outline-none focus:ring-4 focus:ring-aqua-400 disabled:cursor-wait disabled:bg-blue-700"
-    :disabled="loadingState"
-    >
-        <template x-if="!loadingState">
-            <i class="fa fa-plus"></i>
-        </template>
-        <template x-if="loadingState">
-            <i class="fa fa-spinner animate-spin"></i>    
-        </template>
-        <span x-text="loadingState ? `Loading...` : `Tambah Data`"></span>
+<div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <h2 class="text-lg font-bold text-black dark:text-white">Admin Perangkat Daerah</h2>
+    <a href="/data/adminopd/tambah" class="inline-flex items-center gap-2 rounded bg-primary px-4 py-2 font-medium text-white hover:bg-opacity-90">
+        + Tambah
     </a>
+</div>
 
-    
-    <!-- ini datatable -->
-    <x-app.datatable.datatable>
-        <x-slot:thead>
-            <tr>
-                <th scope="col" class="px-4 py-3 w-[1%]">No</th>
-                <th scope="col" class="px-4 py-3">Nama</th>
-                <th scope="col" class="px-4 py-3">Username</th>
-                <th scope="col" class="px-4 py-3">OPD</th>
-                <th scope="col" class="px-4 py-3">Jabatan</th>
-                <th scope="col" class="px-4 py-3">Dibuat</th>
-                <th scope="col" class="px-4 py-3">
-                    <span class="sr-only">Actions</span>
-                </th>
-            </tr>
-        </x-slot:thead>
-        <x-slot:tbody>
-            <template x-for="(row, index) in datatable.data" :key="index">
-                <tr x-show="!datatable.loading" class="border-b dark:border-gray-700">
-                    <td class="px-4 py-3 text-right" x-text="datatable.numbering(index)"></td>
-                    <td class="px-4 py-3" x-text="row.name"></td>
-                    <td class="px-4 py-3" x-text="row.username"></td>
-                    <td class="px-4 py-3" x-text="row.opd"></td>
-                    <td class="px-4 py-3" x-text="row.jabatan"></td>
-                    <td class="px-4 py-3" x-text="row.created_at"></td>
-                    <td class="px-4 py-3 flex items-center justify-center">
-                        <template x-if="row.username != 'superadmin'">
-                            <div>
-                                <button 
-                                :disabled="loadingState"
-                                class="inline-flex items-center justify-center w-8 h-8 mr-2 text-indigo-100 transition-colors duration-150 bg-orange-700 rounded-full focus:shadow-outline hover:bg-orange-800 
-                                        disabled:cursor-wait disabled:bg-orange-800 " @click="confirmDelete(row.user_id, row.id_roleplay)">
-                                    
-                                    
-                                    <template x-if="!loadingState">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                        </svg>
-                                    </template>
-                                    <template x-if="loadingState">
-                                        <i class="fa fa-spinner animate-spin"></i>
-                                    </template>
-                                </button>
-                            </div>
-                        </template>
-                    </td>
+<div x-data="userCrud()" class="rounded-sm border border-stroke bg-white shadow-sm dark:border-strokedark dark:bg-boxdark">
+    <div x-show="successAlert.open" class="relative px-4 py-3 text-blue-700 bg-blue-100 dark:bg-blue-900 dark:text-blue-300" role="alert">
+        <span x-text="successAlert.message"></span>
+    </div>
+    <div class="p-4 flex items-center gap-2">
+        <input type="text" x-model="datatable.search" @input.debounce.500ms="datatable.refreshTable()"
+            class="w-64 rounded border border-stroke bg-transparent px-3 py-1.5 text-sm outline-none focus:border-primary dark:border-strokedark" placeholder="Search...">
+    </div>
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm text-left">
+            <thead class="border-b border-stroke bg-gray-2 dark:border-strokedark dark:bg-meta-4">
+                <tr>
+                    <th class="px-4 py-3 w-12">No</th><th class="px-4 py-3">Nama</th><th class="px-4 py-3">Username</th>
+                    <th class="px-4 py-3">OPD</th><th class="px-4 py-3">Jabatan</th><th class="px-4 py-3">Dibuat</th><th class="px-4 py-3 w-16">Action</th>
                 </tr>
+            </thead>
+            <tbody>
+                <template x-for="(row, index) in datatable.data" :key="index">
+                    <tr class="border-b border-stroke dark:border-strokedark">
+                        <td class="px-4 py-3" x-text="datatable.numbering(index)"></td>
+                        <td class="px-4 py-3" x-text="row.name"></td><td class="px-4 py-3" x-text="row.username"></td>
+                        <td class="px-4 py-3" x-text="row.opd"></td><td class="px-4 py-3" x-text="row.jabatan"></td>
+                        <td class="px-4 py-3 text-sm text-bodydark2" x-text="row.created_at"></td>
+                        <td class="px-4 py-3">
+                            <template x-if="row.username != 'superadmin'">
+                                <button class="text-red-500 hover:text-red-700" @click="confirmDelete(row.user_id, row.id_roleplay)"><svg class="fill-current" width="16" height="16" viewBox="0 0 16 16"><path d="M2 4h12M5.333 4V2.667a1.333 1.333 0 011.334-1.334h2.666a1.333 1.333 0 011.334 1.334V4m2 0v9.333a1.333 1.333 0 01-1.334 1.334H4.667a1.333 1.333 0 01-1.334-1.334V4h9.334z"/></svg></button>
+                            </template>
+                        </td>
+                    </tr>
+                </template>
+                <tr x-show="datatable.isEmpty() && !datatable.loading"><td class="px-4 py-6 text-center text-bodydark2" colspan="100%">No data.</td></tr>
+                <tr x-show="datatable.loading"><td class="px-4 py-6 text-center text-bodydark2" colspan="100%">Loading...</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="flex items-center justify-between p-4 border-t border-stroke dark:border-strokedark">
+        <span class="text-sm text-bodydark2">Showing <span x-text="datatable.showingLabel()"></span> of <span x-text="datatable.pagination.total_records"></span></span>
+        <div class="flex gap-1">
+            <button @click="datatable.previousPage" :disabled="datatable.pagination.page==1" class="rounded border border-stroke px-3 py-1 text-sm hover:bg-gray-2 dark:border-strokedark disabled:opacity-50">&laquo;</button>
+            <template x-for="page in datatable.pages">
+                <button @click="datatable.goToPage(page)" x-text="page" class="rounded border px-3 py-1 text-sm" :class="datatable.isCurrentPage(page)?'bg-primary text-white border-primary':'border-stroke hover:bg-gray-2 dark:border-strokedark'" :disabled="page==='...'"></button>
             </template>
-        </x-slot:tbody>
-    </x-app.datatable.datatable>
-    <!-- ini datatable -->
+            <button @click="datatable.nextPage" :disabled="datatable.pagination.page==datatable.pagination.total_page" class="rounded border border-stroke px-3 py-1 text-sm hover:bg-gray-2 dark:border-strokedark disabled:opacity-50">&raquo;</button>
+        </div>
+    </div>
 </div>
 @endsection
+@section('_inJs') @include('app.data.adminopd._inJs') @endsection
 
-<!-- Your Custom Javascript -->
-@section('_inJs')
-@include('app.data.adminopd._inJs')
-@endsection
-<!-- /Your Custom Javascript -->

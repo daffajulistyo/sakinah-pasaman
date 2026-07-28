@@ -50,7 +50,7 @@ class User extends Authenticatable
 
     public function role()
     {
-        return $this->belongsToMany(Roles::class, 'roleplay', 'user_id', 'id')->withTimestamps();
+        return $this->belongsToMany(Roles::class, 'roleplay', 'user_id', 'role_id')->withTimestamps();
     }
     
     public function roleplay()

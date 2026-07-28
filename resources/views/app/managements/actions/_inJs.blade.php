@@ -1,4 +1,4 @@
-<link href="{{ asset('css/tom-select.default.css') }}" rel="stylesheet">
+﻿<link href="{{ asset('css/tom-select.default.css') }}" rel="stylesheet">
 <script src="{{ asset('js/tom-select.complete.js') }}" defer></script>
 <script>
     
@@ -59,8 +59,8 @@
             },
             async saveData() {
                     try {
-                        const response = this.formState == 'save' ? await axios.post('{{ env('APP_URL') }}/managements/actions', this.form) 
-                                                                : await axios.put('{{ env('APP_URL') }}/managements/actions/' + this.idData, this.form)
+                        const response = this.formState == 'save' ? await axios.post('/managements/actions', this.form) 
+                                                                : await axios.put('/managements/actions/' + this.idData, this.form)
                         if(response.status == 200) {
                             
                             Swal.fire({
@@ -120,7 +120,7 @@
             async deleteData() {
                 let ids = this.selectedActions.join('&')
                 try {
-                    const response = await axios.delete('{{ env('APP_URL') }}/managements/actions/'+ids);
+                    const response = await axios.delete('/managements/actions/'+ids);
                     if(response.status == 200) {
                     
                         Swal.fire({
@@ -165,7 +165,7 @@
             async getControllers() {
                 this.form.controller_id = ''
                 try {
-                    const response = await axios.get('{{ env('APP_URL') }}/managements/controllers/showall');
+                    const response = await axios.get('/managements/controllers/showall');
                     if(response.status == 200) {
                         this.controllers = response.data.controllers;
                     }
@@ -181,7 +181,7 @@
             async getFunctions() {
                 this.form.function_id = ''
                 try {
-                    const response = await axios.get('{{ env('APP_URL') }}/managements/functions/showall');
+                    const response = await axios.get('/managements/functions/showall');
                     if(response.status == 200) {
                         this.functions = response.data.functions;
                         // this.renderFunctionOption();
@@ -227,7 +227,7 @@
                                                         <td colspan="5" class="p-2 px-5 text-center">Loading...</td>
                                                 </tr>`;
                 try {
-                    const response = await axios.get('{{ env('APP_URL') }}/managements/actions/showall/'+this.module_id);
+                    const response = await axios.get('/managements/actions/showall/'+this.module_id);
                     this.actionDom = '';
                     this.actionsValue = [];
                     if(response.status == 200) {

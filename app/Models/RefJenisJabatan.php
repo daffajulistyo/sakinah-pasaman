@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class RefJenisJabatan extends Model
 {
-    protected $table = 'ref_jenis_jabatan';
+    protected $table = 'master_jenis_jabatan';
     protected $keyType = 'string';
     public $incrementing = false;
     protected $guarded = [];

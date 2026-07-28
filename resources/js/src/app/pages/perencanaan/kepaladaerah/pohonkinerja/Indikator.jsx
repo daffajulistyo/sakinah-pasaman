@@ -200,7 +200,7 @@ const Indikator = () => {
             formData.append('pohon_kinerja_tujuan_id', selectedTujuanId)
             formData.append('pohon_kinerja_sasaran_id', selectedSasaranId)
             formData.append('order', form.order)
-            formData.append('opd_pendukung', opd_pendukung)
+            formData.append('opd_pendukung', JSON.stringify(opd_pendukung))
             formData.append('indikator', form.indikator)
             formData.append('is_tujuan', isTujuan ? 1 : 0)
             formData.append('is_active', form.isActive ? 1 : 0)

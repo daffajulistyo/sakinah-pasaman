@@ -96,6 +96,39 @@ class FunctionsTableSeeder extends Seeder
                 'created_at' => '2023-10-19 02:14:43',
                 'updated_at' => '2023-10-19 02:14:43',
             ),
+            7 => 
+            array (
+                'id' => '3ae20943-8c4f-4823-bf61-190490e235b8',
+                'function_name' => 'roles',
+                'function_desc' => 'Fungsi untuk menampilkan data roles',
+                'type' => 'core',
+                'created_by' => 'superadmin',
+                'updated_by' => NULL,
+                'created_at' => '2025-01-01 00:00:00',
+                'updated_at' => '2025-01-01 00:00:00',
+            ),
+            8 => 
+            array (
+                'id' => 'f533771d-12ec-4ae4-9229-9ee0683028e3',
+                'function_name' => 'masteropd',
+                'function_desc' => 'Fungsi untuk menampilkan data master OPD',
+                'type' => 'core',
+                'created_by' => 'superadmin',
+                'updated_by' => NULL,
+                'created_at' => '2025-01-01 00:00:00',
+                'updated_at' => '2025-01-01 00:00:00',
+            ),
+            9 => 
+            array (
+                'id' => 'beef874e-a2b3-4d3e-97dd-0191962eb20b',
+                'function_name' => 'tambah',
+                'function_desc' => 'Fungsi untuk menampilkan halaman tambah data',
+                'type' => 'core',
+                'created_by' => 'superadmin',
+                'updated_by' => NULL,
+                'created_at' => '2025-01-01 00:00:00',
+                'updated_at' => '2025-01-01 00:00:00',
+            ),
         ));
         
         
