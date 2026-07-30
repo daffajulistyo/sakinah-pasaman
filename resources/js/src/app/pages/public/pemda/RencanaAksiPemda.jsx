@@ -124,11 +124,11 @@ const RencanaAksiPemda = () => {
         <PublicLayout loading={publicDataState.loading}>
             <div className="w-full px-4 md:py-6 py-2">
                 <div className="w-full mx-auto max-w-screen-2xl">
-                    <h1 className="font-bold md:text-2xl sm:text-xl text-lg text-primaryWebColor">RENCANA AKSI PEMERINTAH PROVINSI SUMATERA BARAT</h1>
+                    <h1 className="font-bold md:text-2xl sm:text-xl text-lg text-primaryWebColor">RENCANA AKSI PEMERINTAH KABUPATEN PASAMAN</h1>
                 </div>
             </div>
             <div className="w-full max-w-screen-2xl min-h-screen bg-white mx-auto border p-4 rounded-lg">
-                <h1 className="text-xl font-bold text-center mb-3"> RENCANA AKSI GUBERNUR {selectedYear !== '' ? ('TAHUN '+selectedYear) : ''}</h1>
+                <h1 className="text-xl font-bold text-center mb-3"> RENCANA AKSI BUPATI {selectedYear !== '' ? ('TAHUN '+selectedYear) : ''}</h1>
                 <div className="w-full flex justify-end py-2">
                     <div className="w-full md:w-1/4 sm:w-1/3 md:py-5 py-2">
                         <label htmlFor="" className="py-2 font-semibold dark:text-white">Tahun</label>

@@ -51,7 +51,7 @@
 </style>
 </head>
 <body>
-    <h2 style="text-align:center;"> DATA KINERJA GUBERNUR</h2>
+    <h2 style="text-align:center;"> DATA KINERJA BUPATI</h2>
     <h2 style="text-align:center;"> PERIODE :  {{ $data['visi']->period_starts }} s/d {{ $data['visi']->period_ends }}</h2>
     <p>Generated at: {{ $data['generated_at'] }}</p>
 

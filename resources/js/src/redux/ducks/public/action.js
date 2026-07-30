@@ -3,7 +3,7 @@ import * as types from './types'
 const getListPublicPohonKinerjaPemda = (payload) => async (dispatch, getState, Api) => {
     dispatch({ type: types.GET_PUBLIC_POHONKINERJA_PEMDA_START })
 
-    const response = await Api.getList_publicPohonKinerjaGubernur()
+    const response = await Api.getList_publicPohonKinerjaBupati()
     if(response.error === null){
         dispatch({ type: types.GET_PUBLIC_POHONKINERJA_PEMDA_SUCCESS, payload: response.data ? response.data : response.actions })
     }
@@ -15,7 +15,7 @@ const getListPublicPohonKinerjaPemda = (payload) => async (dispatch, getState, A
 const getPublicVisiPemda = (payload) => async (dispatch, getState, Api) => {
     dispatch({ type: types.GET_PUBLIC_VISI_PEMDA_START })
 
-    const response = await Api.get_publicVisiGubernur()
+    const response = await Api.get_publicVisiBupati()
     if(response.error === null){
         dispatch({ type: types.GET_PUBLIC_VISI_PEMDA_SUCCESS, payload: response.data ? response.data : response.actions })
     }
@@ -27,7 +27,7 @@ const getPublicVisiPemda = (payload) => async (dispatch, getState, Api) => {
 const getPublicRencanaKinerjaPemda = (payload) => async (dispatch, getState, Api) => {
     dispatch({ type: types.GET_PUBLIC_RENCANAKINERJA_PEMDA_START })
 
-    const response = await Api.getList_publicRencanaKinerjaGubernur(payload)
+    const response = await Api.getList_publicRencanaKinerjaBupati(payload)
     if(response.error === null){
         dispatch({ type: types.GET_PUBLIC_RENCANAKINERJA_PEMDA_SUCCESS, payload: response.data ? response.data : response.actions })
     }
@@ -39,7 +39,7 @@ const getPublicRencanaKinerjaPemda = (payload) => async (dispatch, getState, Api
 const getPublicRpjmdPemda = (payload) => async (dispatch, getState, Api) => {
     dispatch({ type: types.GET_PUBLIC_RPJMD_PEMDA_START })
 
-    const response = await Api.getList_publicRpjmdGubernur(payload)
+    const response = await Api.getList_publicRpjmdBupati(payload)
     if(response.error === null){
         dispatch({ type: types.GET_PUBLIC_RPJMD_PEMDA_SUCCESS, payload: response.data ? response.data : response.actions })
     }
@@ -51,7 +51,7 @@ const getPublicRpjmdPemda = (payload) => async (dispatch, getState, Api) => {
 const getPublicPkPemda = (payload) => async (dispatch, getState, Api) => {
     dispatch({ type: types.GET_PUBLIC_PK_PEMDA_START })
 
-    const response = await Api.getList_publicPkGubernur(payload)
+    const response = await Api.getList_publicPkBupati(payload)
     if(response.error === null){
         dispatch({ type: types.GET_PUBLIC_PK_PEMDA_SUCCESS, payload: response.data ? response.data : response.actions })
     }
@@ -63,7 +63,7 @@ const getPublicPkPemda = (payload) => async (dispatch, getState, Api) => {
 const getPublicRenaksiPemda = (payload) => async (dispatch, getState, Api) => {
     dispatch({ type: types.GET_PUBLIC_RENAKSI_PEMDA_START })
 
-    const response = await Api.getList_publicRenaksiGubernur(payload)
+    const response = await Api.getList_publicRenaksiBupati(payload)
     if(response.error === null){
         dispatch({ type: types.GET_PUBLIC_RENAKSI_PEMDA_SUCCESS, payload: response.data ? response.data : response.actions })
     }
@@ -75,7 +75,7 @@ const getPublicRenaksiPemda = (payload) => async (dispatch, getState, Api) => {
 const getPublicRealisasiRenaksiPemda = (payload) => async (dispatch, getState, Api) => {
     dispatch({ type: types.GET_PUBLIC_REALISASIRENAKSI_PEMDA_START })
 
-    const response = await Api.getList_publicRealisasiRenaksiGubernur(payload)
+    const response = await Api.getList_publicRealisasiRenaksiBupati(payload)
     if(response.error === null){
         dispatch({ type: types.GET_PUBLIC_REALISASIRENAKSI_PEMDA_SUCCESS, payload: response.data ? response.data : response.actions })
     }

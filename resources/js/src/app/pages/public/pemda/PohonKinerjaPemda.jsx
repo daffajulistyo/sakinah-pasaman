@@ -115,11 +115,11 @@ const PohonKinerjaPemda = () => {
         <PublicLayout loading={publicDataState.loading}>
             <div className="w-full px-4 md:py-6 py-2">
                 <div className="w-full mx-auto max-w-screen-2xl">
-                    <h1 className="font-bold md:text-2xl sm:text-xl text-lg text-primaryWebColor">POHON KINERJA PEMERINTAH PROVINSI SUMATERA BARAT</h1>
+                    <h1 className="font-bold md:text-2xl sm:text-xl text-lg text-primaryWebColor">POHON KINERJA PEMERINTAH KABUPATEN PASAMAN</h1>
                 </div>
             </div>
             <div className="w-full max-w-screen-2xl min-h-screen bg-white mx-auto border p-4 rounded-lg">
-                <h1 className="text-xl font-bold text-center mb-3"> POHON KINERJA GUBERNUR <br /> {tahunLabel} </h1>
+                <h1 className="text-xl font-bold text-center mb-3"> POHON KINERJA BUPATI <br /> {tahunLabel} </h1>
                 <div id="canvas" className='w-full' ref={canvasRef}></div>
             </div>
         </PublicLayout>

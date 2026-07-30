@@ -115,7 +115,7 @@ const RpjmdPemda = () => {
         <PublicLayout loading={publicDataState.loading}>
             <div className="w-full px-4 md:py-6 py-2">
                 <div className="w-full mx-auto max-w-screen-2xl">
-                    <h1 className="font-bold md:text-2xl sm:text-xl text-lg text-primaryWebColor">RPJMD PEMERINTAH PROVINSI SUMATERA BARAT</h1>
+                    <h1 className="font-bold md:text-2xl sm:text-xl text-lg text-primaryWebColor">RPJMD PEMERINTAH KABUPATEN PASAMAN</h1>
                 </div>
             </div>
             <div className="w-full max-w-screen-2xl min-h-screen bg-white mx-auto border p-4 rounded-lg">

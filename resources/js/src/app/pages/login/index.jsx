@@ -151,7 +151,7 @@ const Login = () => {
                     </div>
                 </section>
                 <div className="absolute bottom-1 w-full flex justify-center item-center flex-col">
-                    <div className="text-sm dark:text-white text-center">©2024 Pemerintah Provinsi Sumatera Barat</div>
+                    <div className="text-sm dark:text-white text-center">©2024 Pemerintah Kabupaten Pasaman</div>
                     <div className="text-sm dark:text-white text-center">Powered by Diskominfotik</div>
                 </div>
             </div>

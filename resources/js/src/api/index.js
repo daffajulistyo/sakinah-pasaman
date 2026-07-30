@@ -2686,7 +2686,7 @@ class Api {
         }
     }
 
-    async getList_publicPohonKinerjaGubernur()
+    async getList_publicPohonKinerjaBupati()
     {
         try {
 
@@ -2701,7 +2701,7 @@ class Api {
         }
     }
 
-    async get_publicVisiGubernur()
+    async get_publicVisiBupati()
     {
         try {
 
@@ -2716,7 +2716,7 @@ class Api {
         }
     }
 
-    async getList_publicRencanaKinerjaGubernur(payload)
+    async getList_publicRencanaKinerjaBupati(payload)
     {
         try {
             let params = { params: payload }
@@ -2731,7 +2731,7 @@ class Api {
         }
     }
     
-    async getList_publicRpjmdGubernur(payload)
+    async getList_publicRpjmdBupati(payload)
     {
         try {
             let params = { params: payload }
@@ -2746,7 +2746,7 @@ class Api {
         }
     }
 
-    async getList_publicPkGubernur(payload)
+    async getList_publicPkBupati(payload)
     {
         try {
             let params = { params: payload }
@@ -2762,7 +2762,7 @@ class Api {
         }
     }
 
-    async getList_publicRenaksiGubernur(payload)
+    async getList_publicRenaksiBupati(payload)
     {
         try {
             let params = { params: payload }
@@ -2777,7 +2777,7 @@ class Api {
         }
     }
 
-    async getList_publicRealisasiRenaksiGubernur(payload)
+    async getList_publicRealisasiRenaksiBupati(payload)
     {
         try {
 

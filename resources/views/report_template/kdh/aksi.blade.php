@@ -51,7 +51,7 @@
 </style>
 </head>
 <body>
-    <h2 style="text-align:center;"> RENCANA AKSI GUBERNUR</h2>
+    <h2 style="text-align:center;"> RENCANA AKSI BUPATI</h2>
     <h2 style="text-align:center;"> PERIODE :  {{ $data['periode'] }} TAHUN {{ $data['tahun'] }}</h2>
     <p>Generated at: {{ $data['generated_at'] }}</p>
 

@@ -72,7 +72,7 @@
     <p>Generated at: {{ $data['generated_at'] }}</p>
 
     <div class="baris">
-        <span class="kiri"> PEMERINTAH PROVINSI SUMATERA BARAT</span>
+        <span class="kiri"> PEMERINTAH KABUPATEN PASAMAN</span>
         <span class="kanan"> PERIODE :  {{ $data['data_skp']['periode_awal'] }} s/d {{ $data['data_skp']['periode_akhir'] }}</span>
     </div><br>
 

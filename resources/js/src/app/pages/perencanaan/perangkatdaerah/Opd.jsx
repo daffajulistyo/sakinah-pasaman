@@ -19,7 +19,7 @@ const Opd = () => {
                         <div>
                             <img src={GoodNotes} alt="Perencanaan Kepala Daerah" className="object-contain" />
                         </div>
-                        <div className="lg:text-lg font-bold text-teal-500 dark:text-white">Perencanaan Perangkat Daerah Provinsi Sumatera Barat</div>
+                        <div className="lg:text-lg font-bold text-teal-500 dark:text-white">Perencanaan Perangkat Daerah Kabupaten Pasaman</div>
                     </div>
                 </div>
             </div>
