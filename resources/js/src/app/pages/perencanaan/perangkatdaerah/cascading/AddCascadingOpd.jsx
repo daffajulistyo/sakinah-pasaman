@@ -83,7 +83,7 @@ const AddCascadingOpd = () => {
     };
 
     const setExistingProgram = (currentSasaran) => {
-        const opd_id = authState?.biodata?.opd?.ikd_opd_id ?? ""
+        const opd_id = authState?.biodata?.opd?.kode_opd ?? ""
         if(currentSasaran.program_pendukung){
             if(currentSasaran.program_pendukung.length > 0){
                 let filterProgram = currentSasaran.program_pendukung.filter((item) => item.id_skpd === opd_id)

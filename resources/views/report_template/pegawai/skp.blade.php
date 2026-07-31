@@ -121,19 +121,19 @@
             <td> :  {{ $data['atasan']['unit_kerja_atasan'] }}</td>
         </tr>
 
-        
-       
+
+
 
     </table>
     <p>&nbsp;</p>
 
-    
+
     <table class="report">
         <thead>
             <!-- header baris 1 (lebih kompleks) -->
             <tr >
                 <th colspan="9" style="background-color:#DEEBF7;" align="left"> Hasil Kerja </th>
-            </tr>   
+            </tr>
             <tr>
                 <th class="col-no" rowspan="2" width="5%">No</th>
                 <th rowspan="2" width="25%">Sasaran Kerja Pimpinan Yang Diintervensi</th>
@@ -160,14 +160,14 @@
                 <td colspan="6"><strong> {{ $node['sasaran'] }} </strong> </td>
                 <td > &nbsp; </strong> </td>
             </tr>
-                 
+
                 <!---------Sasaran Pegawai  -->
                  @if($node['sasaran_pegawai']->count() > 0)
                   @php $i = 1; @endphp
                   @foreach($node['sasaran_pegawai'] as $sp)
-                    @php 
-                        $i++; 
-                        $inside_rows = ($sp['indikator']->count() > 0) ? $sp['indikator']->count() : 1; 
+                    @php
+                        $i++;
+                        $inside_rows = ($sp['indikator']->count() > 0) ? $sp['indikator']->count() : 1;
                     @endphp
                         <tr>
                             <td rowspan="{{ $inside_rows }}" colspan="2"> &nbsp;</td>
@@ -176,7 +176,7 @@
                                 @foreach($sp['indikator'] as $di)
                                     @php $x++; @endphp
                                     @if($x==1)
-                                    <td> {{ $di['indikator'] }}</td>                          
+                                    <td> {{ $di['indikator'] }}</td>
                                     <td text-align="center"> {{ !empty($di['target_tw1']) ? $di['target_tw1'] : '' }}</td>
                                     <td text-align="center"> {{ !empty($di['target_tw2']) ? $di['target_tw2'] : '' }}</td>
                                     <td text-align="center"> {{ !empty($di['target_tw3']) ? $di['target_tw3'] : '' }}</td>
@@ -202,12 +202,12 @@
                                                 </ol>
                                             @endforeach
                                         </td>
-                                        
+
                                     </tr>
                                     @endif
-                                @endforeach 
+                                @endforeach
                         </tr>
-                   @endforeach                 
+                   @endforeach
                  @else
                  <tr>
                     <td colspan="100%" style="text-align:center;">Sasaran Not found< /td>
@@ -223,8 +223,8 @@
                 <td colspan="100%" style="text-align:center;">No data found< /td>
             </tr>
             @endif
-       
-    </table> 
+
+    </table>
 
 
      <table width="100%" class="border-0">
@@ -240,9 +240,9 @@
         <tr class="border-0">
             <td class="border-0">
                 <p style="margin-top:3rem;">  {{ $data['profil']['name']}} </p>
-                <p> {{ $data['profil']['nip']}}</p> 
+                <p> {{ $data['profil']['nip']}}</p>
             </td>
-            <td class="border-0" text-align="right"> 
+            <td class="border-0" text-align="right">
                  <p style="margin-top:3rem;"> {{ $data['atasan']['nama_atasan'] }} </p>
                 <p> {{ $data['atasan']['nip_atasan'] }} </p>
             </td>

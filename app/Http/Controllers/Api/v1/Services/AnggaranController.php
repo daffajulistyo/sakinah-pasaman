@@ -16,12 +16,6 @@ class AnggaranController extends Controller
             ->where('is_active', true)
             ->get();
 
-        if ($programs->isEmpty()) {
-            $programs = MasterProgram::with(['kegiatans.subKegiatans'])
-                ->where('is_active', true)
-                ->get();
-        }
-
         return $programs->map(function ($prog) {
             return [
                 'id_program' => $prog->id,
