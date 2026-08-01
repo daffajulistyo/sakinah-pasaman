@@ -29,8 +29,8 @@ class PegawaiController extends Controller
             if ($request->search) {
                 $s = $request->search;
                 $query->where(function ($q) use ($s) {
-                    $q->where('nip', 'ilike', "%{$s}%")
-                      ->orWhere('nama', 'ilike', "%{$s}%");
+                    $q->where('nip', 'like', "%{$s}%")
+                      ->orWhere('nama', 'like', "%{$s}%");
                 });
             }
 

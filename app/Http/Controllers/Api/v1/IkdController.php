@@ -1,5 +1,11 @@
 <?php
 
+/*
+ * NOTE: Controller ini DI-NONAKTIFKAN (di-comment) karena integrasi dengan
+ * IKD BPKAD diganti oleh master lokal. Body di-comment untuk menghilangkan
+ * client_secret IKD yang terekspos. Simpan sebagai referensi jika suatu saat
+ * integrasi dengan IKD BPKAD dibutuhkan kembali.
+ *
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
@@ -95,3 +101,4 @@ class IkdController extends Controller
 
 
 }
+*/
