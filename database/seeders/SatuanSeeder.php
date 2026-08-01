@@ -21,6 +21,8 @@ class SatuanSeeder extends Seeder
             ['id' => Str::uuid(), 'satuan' => 'Rupiah', 'keterangan' => 'Mata Uang', 'is_active' => true, 'created_by' => $username, 'created_at' => $now, 'updated_at' => $now],
         ];
 
+        DB::table('master_satuan')->delete();
+
         DB::table('master_satuan')->insert($satuan);
     }
 }

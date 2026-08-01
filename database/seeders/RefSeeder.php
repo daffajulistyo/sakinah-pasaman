@@ -10,6 +10,12 @@ class RefSeeder extends Seeder
 {
     public function run(): void
     {
+        DB::table('master_eselon')->delete();
+        DB::table('master_golongan')->delete();
+        DB::table('master_jenis_jabatan')->delete();
+        DB::table('master_jabatan')->delete();
+        DB::table('master_sub_opd')->delete();
+
         DB::table('master_eselon')->insert([
             ['id' => Str::uuid(), 'kode' => '11', 'nama' => 'I.A', 'level' => 1, 'is_active' => true, 'created_at' => now(), 'updated_at' => now()],
             ['id' => Str::uuid(), 'kode' => '12', 'nama' => 'I.B', 'level' => 1, 'is_active' => true, 'created_at' => now(), 'updated_at' => now()],

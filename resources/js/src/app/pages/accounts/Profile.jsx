@@ -73,8 +73,8 @@ const Profile = () => {
 
     
     React.useEffect(() => {
-        if(authState.biodata.opd?.simpeg_opd_id && authState.biodata.level === "Pegawai"){
-            dispatch(getListPegawaiPengampuIndikatorOpd(authState.biodata.opd?.simpeg_opd_id || 0))
+        if(authState.biodata.opd?.kode_opd && authState.biodata.level === "Pegawai"){
+            dispatch(getListPegawaiPengampuIndikatorOpd(authState.biodata.opd?.id || ""))
         }
     },[])
 

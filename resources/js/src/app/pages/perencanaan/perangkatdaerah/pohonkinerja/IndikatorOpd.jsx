@@ -30,6 +30,7 @@ const IndikatorOpd = () => {
     const tujuanOpdState = useSelector((state) => state.tujuanOpdState)
     const sasaranOpdState = useSelector((state) => state.sasaranOpdState)
     const indikatorOpdState = useSelector((state) => state.indikatorOpdState)
+    const authState = useSelector((state) => state.authState)
     const [searchParams, setSearchParams] = useSearchParams()
     const [openModal, setOpenModal] = React.useState(false)
     const [openModal2, setOpenModal2] = React.useState(false)
@@ -260,7 +261,7 @@ const IndikatorOpd = () => {
     }
     const pengampuIndikatorOpdState = useSelector((state) => state.pengampuIndikatorOpdState)
     React.useEffect(() => {
-        dispatch(getListPegawaiPengampuIndikatorOpd(2496))
+        dispatch(getListPegawaiPengampuIndikatorOpd(authState?.biodata?.opd?.id ?? ""))
     },[])
 
     const daftarPegawai = () => {

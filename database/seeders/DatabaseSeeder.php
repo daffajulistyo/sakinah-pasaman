@@ -14,6 +14,16 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         set_time_limit(999999);
+        \DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        try {
+            $this->seed();
+        } finally {
+            \DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+        }
+    }
+
+    private function seed()
+    {
         $this->call(FunctionsTableSeeder::class);
         $this->call(ControllersTableSeeder::class);
         $this->call(ModulesTableSeeder::class);

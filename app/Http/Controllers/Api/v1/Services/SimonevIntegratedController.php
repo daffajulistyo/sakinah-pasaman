@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * NOTE: Controller ini DI-NONAKTIFKAN (di-comment) karena diganti oleh
+ * master lokal (AnggaranController). Simpan sebagai referensi jika suatu
+ * saat integrasi dengan SIMONEV Bappeda dibutuhkan kembali.
+ *
 namespace App\Http\Controllers\Api\v1\Services;
 
 use Illuminate\Http\Request;
@@ -20,3 +25,4 @@ class SimonevIntegratedController extends Controller
         ]);
     }
 }
+*/

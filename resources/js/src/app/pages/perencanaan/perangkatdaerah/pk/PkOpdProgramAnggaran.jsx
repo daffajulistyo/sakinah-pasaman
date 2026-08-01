@@ -20,7 +20,7 @@ const PkOpdProgramAnggaran = () => {
     const programAnggaranState = useSelector((state) => state.programAnggaranState)
     const pkOpdState = useSelector((state) => (state.pkOpdState))
     const authState = useSelector((state) => state.authState)
-    const getOpdId = () => (authState.biodata?.opd?.simonev_opd_id ?? "")
+    const getOpdId = () => (authState.biodata?.opd?.kode_opd ?? "")
     const navigate = useNavigate()
     React.useEffect(() => {
         let payload = {

@@ -768,21 +768,27 @@ class Api {
             }
         }
     }
-    async getProgramAnggaranSkpdSimonev(idskpd = "", year = "")
-    {
-        try {
-            let tahun = year != "" ? year : new Date().getFullYear()
-            const authorization = this.getAuthorization()
-            const { status, data } = await axios.get(`${BASE_HOST_URL}/v1/integrated/simonev-bappeda/anggaran/skpd-program/${idskpd}/${tahun}`, authorization)            
-            if(status === 200) return { data, error: null }
-            else return { error: true }
-        } catch (error) {
-            return {
-                status: error.status,
-                error: error.response.data.message ?? error.message
-            }
-        }
-    }
+
+    // NOTE: Method integrasi SIMONEV Bappeda di-comment (diganti master lokal).
+    // Aktifkan kembali jika integrasi dibutuhkan.
+    // /**
+    //  * get program anggaran skpd simonev
+    //  */
+    // async getProgramAnggaranSkpdSimonev(idskpd = "", year = "")
+    // {
+    //     try {
+    //         let tahun = year != "" ? year : new Date().getFullYear()
+    //         const authorization = this.getAuthorization()
+    //         const { status, data } = await axios.get(`${BASE_HOST_URL}/v1/integrated/simonev-bappeda/anggaran/skpd-program/${idskpd}/${tahun}`, authorization)            
+    //         if(status === 200) return { data, error: null }
+    //         else return { error: true }
+    //     } catch (error) {
+    //         return {
+    //             status: error.status,
+    //             error: error.response.data.message ?? error.message
+    //         }
+    //     }
+    // }
 
     /**
      * get list RPJMD KDH

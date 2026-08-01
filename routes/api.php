@@ -403,15 +403,18 @@ Route::prefix('v1')
     // modul service integrated
     Route::prefix('integrated')->group(function(){
 
+        // NOTE: Route integrasi IKD BPKAD & SIMONEV Bappeda di-comment (diganti master lokal).
+        // Aktifkan kembali jika integrasi dibutuhkan (controller sudah ada, di-comment).
+        //
         // integrated with IKD BPKAD
-        Route::prefix('ikd-bpkad')->group(function(){
-            Route::get('/anggaran/skpd-program/{idskpd}/{year}', [App\Http\Controllers\Api\v1\Services\IkdIntegratedController::class, 'getProgramAnggaranSkpd']);
-        });
-
-        // integrated with SIMONEV Bappeda 
-        Route::prefix('simonev-bappeda')->group(function(){
-            Route::get('/anggaran/skpd-program/{idskpd}/{year}', [App\Http\Controllers\Api\v1\Services\SimonevIntegratedController::class, 'getProgramAnggaranSkpd']);
-        });
+        // Route::prefix('ikd-bpkad')->group(function(){
+        //     Route::get('/anggaran/skpd-program/{idskpd}/{year}', [App\Http\Controllers\Api\v1\Services\IkdIntegratedController::class, 'getProgramAnggaranSkpd']);
+        // });
+        //
+        // integrated with SIMONEV Bappeda
+        // Route::prefix('simonev-bappeda')->group(function(){
+        //     Route::get('/anggaran/skpd-program/{idskpd}/{year}', [App\Http\Controllers\Api\v1\Services\SimonevIntegratedController::class, 'getProgramAnggaranSkpd']);
+        // });
 
         // integrated with SIMPEG
         Route::prefix('simpeg')

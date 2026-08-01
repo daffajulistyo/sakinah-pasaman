@@ -35,6 +35,7 @@ const IndikatorOperasionalOpd = () => {
     const sasaranOpdState = useSelector((state) => state.sasaranOpdState)
     const sasaranOperasionalOpdState = useSelector((state) => state.sasaranOperasionalOpdState)
     const indikatorOperasionalOpdState = useSelector((state) => state.indikatorOperasionalOpdState)
+    const authState = useSelector((state) => state.authState)
     const [selectedSasaranInduk, setSelectedSasaranInduk] = React.useState("")
     const [selectedSasaranOperasional, setSelectedSasaranOperasional] = React.useState("")
     React.useEffect(() => {
@@ -261,7 +262,7 @@ const IndikatorOperasionalOpd = () => {
     }
     const pengampuIndikatorOpdState = useSelector((state) => state.pengampuIndikatorOpdState)
     React.useEffect(() => {
-        dispatch(getListPegawaiPengampuIndikatorOpd(2496))
+        dispatch(getListPegawaiPengampuIndikatorOpd(authState?.biodata?.opd?.id ?? ""))
     },[])
     const daftarPegawai = () => {
         let data = []

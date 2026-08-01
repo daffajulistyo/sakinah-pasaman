@@ -17,7 +17,7 @@ const TablePA = ({
             if(keg != null){                
                 var kegiatan = program.data_kegiatan.find((k,b) => (k.kode_kegiatan === keg))
                 if(subkeg !== null){
-                    var subkegiatan = kegiatan.data_sub_kegiatan.find((s,c) => (s.kode_kegiatan === subkeg))
+                    var subkegiatan = kegiatan.data_sub_kegiatan.find((s,c) => (s.kode_sub_kegiatan === subkeg))
                     return {
                         checked: subkegiatan.checked ?? false,
                         anggaran: subkegiatan.uAnggaran ?? 0
@@ -45,7 +45,7 @@ const TablePA = ({
                         let subkeg = []
                         if(k.data_sub_kegiatan.length > 0){
                             subkeg = k.data_sub_kegiatan.map((sk) => {
-                                var zxc = isCheckedFromExistingData(item.kode_program, k.kode_kegiatan, sk.kode_kegiatan)               
+                                var zxc = isCheckedFromExistingData(item.kode_program, k.kode_kegiatan, sk.kode_sub_kegiatan)               
                                 return {
                                     ...sk,
                                     checked: zxc.checked,

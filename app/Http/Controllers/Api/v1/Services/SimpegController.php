@@ -21,33 +21,37 @@ class SimpegController extends Controller
 {
     public function getPegawaiOpd(Request $request)
     {   
-        $idskpd = $request->simpeg_opd_id;
-        $token = "";
+        $master_opd_id = $request->get('payload')->opd->id ?? null;
 
-        $simpeg_opd_id = $request->get('payload')->opd->simpeg_opd_id;
-
-        if($simpeg_opd_id==1)
-        $url = "url simpeg";
-            else
-            $url = "url simpeg";
-
-        $response = Http::withoutVerifying()
-                    ->withHeaders([
-                        'Authorization' => ''
-                    ])
-                    ->get($url);
-        
-        if(!$response){
+        if (empty($master_opd_id)) {
             return response()->json([
                 "success" => false,
-                "message" => "Unable to Connect ",
-                "data" => ""
-            ]);
+                "message" => "OPD pengguna tidak ditemukan.",
+                "data" => []
+            ], 404);
         }
+
+        $pegawai = PegawaiModel::with(['refJabatan', 'refJenisJabatan', 'refEselon'])
+                    ->where('master_opd_id', $master_opd_id)
+                    ->get();
+
+        $result = $pegawai->map(function ($item) {
+            return [
+                "nip" => $item->nip,
+                "nama_pns" => $item->nama,
+                "jabatan_id" => $item->ref_jabatan_id,
+                "jabatan_nm" => $item->refJabatan->nama ?? null,
+                "jns_jbtn_id" => $item->ref_jenis_jabatan_id,
+                "jns_jbtn_nm" => $item->refJenisJabatan->nama ?? null,
+                "eselon_id" => $item->refEselon->kode ?? null,
+                "eselon_nm" => $item->refEselon->nama ?? null,
+            ];
+        });
+
         return response()->json([
             "success" => true,
-            "message" => $response->json()['response'],
-            "data" => $response->json()['result']
+            "message" => "Data pegawai OPD",
+            "data" => $result
         ]);
     }
 

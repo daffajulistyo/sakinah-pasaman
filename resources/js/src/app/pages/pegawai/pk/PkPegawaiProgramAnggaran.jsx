@@ -18,7 +18,7 @@ const PkPegawaiProgramAnggaran = () => {
     const [searchParams, setSearchParams] = useSearchParams()
     const sasaran_opd_id = searchParams.get('id')
     const programAnggaranState = useSelector((state) => state.programAnggaranState)
-    const getOpdId = () => (authState.biodata?.opd?.ikd_opd_id ?? "")
+    const getOpdId = () => (authState.biodata?.opd?.kode_opd ?? "")
     const navigate = useNavigate()
     const [programExisted,setProgramExisted] = React.useState(null)
     const authState = useSelector((state) => state.authState)

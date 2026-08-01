@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * NOTE: Controller ini DI-NONAKTIFKAN (di-comment) karena diganti oleh
+ * master lokal (AnggaranController). Simpan sebagai referensi jika suatu
+ * saat integrasi dengan IKD BPKAD dibutuhkan kembali.
+ *
 namespace App\Http\Controllers\Api\v1\Services;
 
 use App\Http\Controllers\Controller;
@@ -28,3 +33,4 @@ class IkdIntegratedController extends Controller
         ]);
     }
 }
+*/
