@@ -1757,11 +1757,7 @@ class Api {
     async getList_pegawai_pengampuIndikatorOpd(idskpd)
     {
         try {
-            let params = {
-                simpeg_opd_id: idskpd
-            }
             const authorization = this.getAuthorization()
-            authorization.params = params
             const { status, data } = await axios.get(`${BASE_HOST_URL}/v1/integrated/simpeg/pegawai/${idskpd}`, authorization)
             if(status === 200) return { data, error: null }
             else return { error: true }

@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Sakip\Services\UserSimpeg;
 use App\Models\Data\UserSakip;
 use App\Models\User;
+use App\Models\Pegawai as PegawaiModel;
 use App\Models\Sakip\MASTER\MasterOpd;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
